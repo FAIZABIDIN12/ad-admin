@@ -8,7 +8,7 @@ class KamarModel extends Model
 {
     protected $table = 'kamar';
     protected $primaryKey = 'id_kamar';
-    protected $allowedFields = ['no_kamar', 'status'];
+    protected $allowedFields = ['no_kamar', 'status', 'keterangan'];
 
     // Metode untuk menyimpan data kamar baru
     public function tambahKamar($data)

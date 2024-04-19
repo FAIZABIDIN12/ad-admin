@@ -2,16 +2,41 @@
 <?= $this->extend('layouts/main') ?>
 
 <?= $this->section('content') ?>
-<!-- Begin Page Content -->
 <div class="container-fluid">
+    <!-- Di tampilan utama (index.php) -->
+    <?php if (session()->has('success')) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session('success') ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php elseif (session()->has('error')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session('error') ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
+    <!-- Tombol Tambah Kamar -->
+    <div class="text-right mb-4">
+        <a href="/tambahKamar" class="btn btn-success">Tambah Kamar</a>
+    </div>
+
     <div class="row">
+
         <!-- Daftar Kamar -->
         <?php foreach ($kamars as $kamar) : ?>
-            <div class="col-md-4 mb-4">
+            <div class="col-md-3 mb-4">
                 <div class="card h-100">
-                    <div class="card-header badge-primary">
+                    <div class="card-header badge-primary d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Kamar No.<?= $kamar['no_kamar'] ?></h5>
+                        <!-- Tombol Edit -->
+                        <a href="/editKamar/<?= $kamar['id_kamar'] ?>" class="btn btn-sm btn-warning">Edit</a>
                     </div>
+
                     <div class="card-body">
                         <div class="btn-group d-flex" role="group">
                             <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
@@ -27,6 +52,7 @@
         <?php endforeach; ?>
     </div>
 </div>
+
 <!-- Modal untuk detail reservasi -->
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -118,6 +144,5 @@
             var idKamar = $(this).data('kamar');
             $('#id_kamar').val(idKamar); // Set nilai id_kamar di input field tersembunyi
         });
-
     });
 </script>
