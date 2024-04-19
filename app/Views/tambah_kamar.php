@@ -10,7 +10,7 @@
                     <h5 class="card-title">Tambah Kamar Baru</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/simpanKamar" method="post">
+                    <form action="/simpan-kamar" method="post">
                         <div class="form-group">
                             <label for="no_kamar">Nomor Kamar</label>
                             <input type="text" class="form-control" id="no_kamar" name="no_kamar" required>

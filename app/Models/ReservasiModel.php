@@ -8,7 +8,7 @@ class ReservasiModel extends Model
 {
     protected $table = 'reservasi';
     protected $primaryKey = 'id_reservasi';
-    protected $allowedFields = ['nama', 'tgl_checkin', 'tgl_checkout', 'jumlah_orang', 'jumlah_kamar', 'harga', 'id_kamar'];
+    protected $allowedFields = ['nama', 'checkin', 'checkout', 'jumlah_orang', 'jumlah_kamar', 'harga', 'id_kamar'];
 
     public function tambahReservasi($data)
     {
@@ -19,6 +19,6 @@ class ReservasiModel extends Model
     public function getKamarById($idKamar)
     {
         // Ambil data kamar berdasarkan id_kamar dari tabel reservasi
-        return $this->db->table('kamar')->where('id_kamar', $idKamar)->get()->getRowArray();
+        return $this->db->table('reservasi')->where('id_kamar', $idKamar)->get()->getRowArray();
     }
 }

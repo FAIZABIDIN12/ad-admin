@@ -12,14 +12,17 @@ class KamarController extends Controller
     public function index()
     {
         $kamarModel = new \App\Models\KamarModel();
+        $reservasiModel = new \App\Models\ReservasiModel();
+
         $data['kamars'] = $kamarModel->semuaKamar();
+        $data['pemesanan'] =$reservasiModel->findAll();
 
         return view('index', $data);
     }
 
     public function tambahKamar()
     {
-        return view('tambahKamar');
+        return view('tambah_kamar');
     }
 
     public function simpanKamar()
@@ -107,9 +110,6 @@ class KamarController extends Controller
         $jumlahKamar = $this->request->getPost('jumlah_kamar');
         $harga = $this->request->getPost('harga');
         $idKamar = $this->request->getPost('id_kamar'); // Ambil id_kamar dari form
-
-        // Debug statement untuk memeriksa nilai id_kamar
-        var_dump($idKamar);
 
         // Menyiapkan data untuk disimpan
         $data = [

@@ -22,30 +22,46 @@
 
     <!-- Tombol Tambah Kamar -->
     <div class="text-right mb-4">
-        <a href="/tambahKamar" class="btn btn-success">Tambah Kamar</a>
+        <a href="/tambah-kamar  " class="btn btn-success">Tambah Kamar</a>
     </div>
 
     <div class="row">
-
         <!-- Daftar Kamar -->
         <?php foreach ($kamars as $kamar) : ?>
             <div class="col-md-3 mb-4">
                 <div class="card h-100">
                     <div class="card-header badge-primary d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Kamar No.<?= $kamar['no_kamar'] ?></h5>
+
                         <!-- Tombol Edit -->
                         <a href="/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-sm btn-warning">Edit</a>
                     </div>
 
                     <div class="card-body">
-                        <div class="btn-group d-flex" role="group">
-                            <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
-                                Input Reservation
-                            </button>
-                            <button type="button" class="btn btn-info ml-2 detail" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $kamar['id_kamar'] ?>">
-                                Detail
-                            </button>
-                        </div>
+                    <?php foreach ($pemesanan as $p) : ?>
+                            <?php if ($p['id_kamar'] == $kamar['id_kamar']) : ?>
+                                <div class="mb-3">
+                                    <?= $p['nama'] ?>
+                                    <?= $p['checkout'] ?>
+                                </div>
+                                <div class="btn-group d-flex" role="group">
+                                    <button type="button" class="btn btn-danger input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                        CHECKOUT
+                                    </button>
+                                    <button type="button" class="btn btn-info ml-2 detail" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                        Detail
+                                    </button>
+                                </div>
+                            <?php else: ?>
+                                <div class="btn-group d-flex" role="group">
+                                    <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                        Input Reservation
+                                    </button>
+                                </div>
+                            <?php endif ?>
+                            
+                        <?php endforeach ?>
+
                     </div>
                 </div>
             </div>
@@ -112,13 +128,12 @@
         </div>
     </div>
 </div>
-<?= $this->endSection() ?>
 <script>
     $(document).ready(function() {
         $('.detail').click(function() {
             var kamarId = $(this).data('kamar');
             $.ajax({
-                url: '/home/detailReservasi/' + kamarId,
+                url: '/detail-reservasi/' + kamarId,
                 type: 'GET',
                 success: function(response) {
                     if (response) {
@@ -146,3 +161,4 @@
         });
     });
 </script>
+<?= $this->endSection() ?>

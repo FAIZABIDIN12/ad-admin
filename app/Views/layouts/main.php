@@ -24,7 +24,8 @@
 
 <!-- Menggunakan base URL untuk stylesheet kustom -->
 <link href="<?= base_url('css/sb-admin-2.min.css') ?>" rel="stylesheet">
-
+    <!-- Menggunakan base URL untuk jQuery -->
+    <script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
 </head>
 
 
@@ -200,8 +201,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <!-- Menggunakan base URL untuk jQuery -->
-    <script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
+
 
     <!-- Menggunakan base URL untuk Bootstrap JavaScript -->
     <script src="<?= base_url('vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
