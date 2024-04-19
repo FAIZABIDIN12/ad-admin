@@ -34,7 +34,7 @@
                     <div class="card-header badge-primary d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">Kamar No.<?= $kamar['no_kamar'] ?></h5>
                         <!-- Tombol Edit -->
-                        <a href="/editKamar/<?= $kamar['id_kamar'] ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-sm btn-warning">Edit</a>
                     </div>
 
                     <div class="card-body">

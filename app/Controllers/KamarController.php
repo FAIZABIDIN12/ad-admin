@@ -6,7 +6,7 @@ use App\Models\ReservasiModel;
 use App\Models\KamarModel;
 use CodeIgniter\Controller;
 
-class Home extends Controller
+class KamarController extends Controller
 {
     // Method untuk menampilkan halaman utama
     public function index()
@@ -93,7 +93,7 @@ class Home extends Controller
         }
 
         // Redirect kembali ke halaman utama
-        return redirect()->to('/');
+        return redirect()->to(base_url());
     }
 
 
@@ -130,7 +130,7 @@ class Home extends Controller
         session()->setFlashdata('success', 'Reservasi berhasil disimpan.');
 
         // Redirect ke halaman utama
-        return redirect()->to('../');
+        return redirect()->to(base_url());
     }
     public function edit($id_reservasi)
     {

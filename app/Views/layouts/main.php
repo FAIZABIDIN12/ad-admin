@@ -14,13 +14,13 @@
 <!-- Custom fonts for this template-->
 
 <!-- Menggunakan base URL untuk stylesheet dari CDN Bootstrap -->
-<link rel="stylesheet" type="text/css" href="<?= base_url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css') ?>">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Menggunakan base URL untuk stylesheet Font Awesome -->
 <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
 
 <!-- Menggunakan base URL untuk font dari Google Fonts -->
-<link href="<?= base_url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i') ?>" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <!-- Menggunakan base URL untuk stylesheet kustom -->
 <link href="<?= base_url('css/sb-admin-2.min.css') ?>" rel="stylesheet">
@@ -212,12 +212,7 @@
     <!-- Menggunakan base URL untuk custom scripts -->
     <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
 
-    <!-- Menggunakan base URL untuk plugin Chart.js -->
-    <script src="<?= base_url('vendor/chart.js/Chart.min.js') ?>"></script>
 
-    <!-- Menggunakan base URL untuk custom scripts pada level halaman -->
-    <script src="<?= base_url('js/demo/chart-area-demo.js') ?>"></script>
-    <script src="<?= base_url('js/demo/chart-pie-demo.js') ?>"></script>
 
 
 

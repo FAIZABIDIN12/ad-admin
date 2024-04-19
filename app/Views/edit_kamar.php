@@ -21,7 +21,8 @@
                 </div>
                 <div class="card-body">
                     <!-- Formulir Edit Kamar -->
-                    <form action="/updateKamar" method="post">
+                    <form action="/update-kamar" method="post">
+                        <input type="hidden" name="id_kamar" value="<?= $kamar['id_kamar'] ?>">
                         <div class="form-group">
                             <label for="no_kamar">Nomor Kamar</label>
                             <input type="text" class="form-control" id="no_kamar" name="no_kamar" value="<?= $kamar['no_kamar'] ?>">

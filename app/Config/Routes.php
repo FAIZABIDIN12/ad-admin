@@ -5,13 +5,13 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
-$routes->post('/home/simpanReservasi', 'Home::simpanReservasi');
-$routes->get('/home/detailReservasi/(:num)', 'Home::detailReservasi/$1');
-$routes->get('/editKamar/(:num)', 'Home::editKamar/$1');
-$routes->post('/updateKamar', 'Home::updateKamar');
-$routes->get('/tambahKamar', 'Home::tambahKamar');
-$routes->post('/simpanKamar', 'Home::simpanKamar');
+$routes->get('/', 'KamarController::index');
+$routes->post('/home/simpanReservasi', 'KamarController::simpanReservasi');
+$routes->get('/home/detailReservasi/(:num)', 'KamarController::detailReservasi/$1');
+$routes->get('/edit-kamar/(:num)', 'KamarController::editKamar/$1');
+$routes->post('/update-kamar', 'KamarController::updateKamar');
+$routes->get('/tambahKamar', 'KamarController::tambahKamar');
+$routes->post('/simpanKamar', 'KamarController::simpanKamar');
 
 
 $routes->get('/pemesanan', 'PemesananController::index');

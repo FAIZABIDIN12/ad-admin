@@ -95,8 +95,13 @@ class ComposerStaticInit657ac079313fab046eb8c29fe1d6992b
     );
 
     public static $classMap = array (
+        'App\\Controllers\\Auth' => __DIR__ . '/../..' . '/app/Controllers/Auth.php',
         'App\\Controllers\\BaseController' => __DIR__ . '/../..' . '/app/Controllers/BaseController.php',
         'App\\Controllers\\Home' => __DIR__ . '/../..' . '/app/Controllers/Home.php',
+        'App\\Controllers\\PemesananController' => __DIR__ . '/../..' . '/app/Controllers/PemesananController.php',
+        'App\\Models\\KamarModel' => __DIR__ . '/../..' . '/app/Models/KamarModel.php',
+        'App\\Models\\PemesananModel' => __DIR__ . '/../..' . '/app/Models/PemesananModel.php',
+        'App\\Models\\ReservasiModel' => __DIR__ . '/../..' . '/app/Models/ReservasiModel.php',
         'CodeIgniter\\API\\ResponseTrait' => __DIR__ . '/..' . '/codeigniter4/framework/system/API/ResponseTrait.php',
         'CodeIgniter\\Autoloader\\Autoloader' => __DIR__ . '/..' . '/codeigniter4/framework/system/Autoloader/Autoloader.php',
         'CodeIgniter\\Autoloader\\FileLocator' => __DIR__ . '/..' . '/codeigniter4/framework/system/Autoloader/FileLocator.php',
