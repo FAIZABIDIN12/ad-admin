@@ -12,7 +12,7 @@ class PemesananController extends BaseController
         $model = new PemesananModel();
         $data['pemesanan'] = $model->findAll();
 
-        return view('pemesanan/index', $data);
+        return view('admin/pemesanan/index', $data);
     }
 
     // Fungsi untuk menambah pemesanan baru
@@ -21,7 +21,7 @@ class PemesananController extends BaseController
     public function tambahData()
     {
         // Menampilkan view form tambah data
-        return view('pemesanan/tambah_data');
+        return view('admin/pemesanan/tambah_data');
     }
 
     public function tambah()
@@ -51,7 +51,7 @@ class PemesananController extends BaseController
         $pemesananModel->insert($data);
 
         // Redirect ke halaman utama
-        return redirect()->to('/pemesanan');
+        return redirect()->to(base_url('admin/pemesanan'));
     }
 
     public function edit($id_pemesanan)
@@ -63,7 +63,7 @@ class PemesananController extends BaseController
         $data['pemesanan'] = $pemesananModel->find($id_pemesanan);
 
         // Menampilkan view untuk mengedit data
-        return view('pemesanan/edit', $data);
+        return view('admin/pemesanan/edit', $data);
     }
 
     public function updateData($id_pemesanan)
@@ -87,7 +87,7 @@ class PemesananController extends BaseController
         $model->update($id_pemesanan, $data);
 
         // Redirect ke halaman pemesanan setelah pembaruan berhasil
-        return redirect()->to('pemesanan');
+        return redirect()->to(base_url('admin/pemesanan'));
     }
 
 
@@ -102,6 +102,6 @@ class PemesananController extends BaseController
 
         $model->update($id_pemesanan, $data);
 
-        return redirect()->to('pemesanan');
+        return redirect()->to(base_url('admin/pemesanan'));
     }
 }
