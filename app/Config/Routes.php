@@ -1,14 +1,17 @@
 <?php
 
+use CodeIgniter\Commands\Utilities\Routes;
 use CodeIgniter\Router\RouteCollection;
 
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', function() {return view('index');});
+$routes->get('/', function () {
+    return view('index');
+});
 
 // main dahsboard (kamar)
-$routes->group('admin', function($routes) {
+$routes->group('admin', function ($routes) {
     $routes->get('/', 'KamarController::index');
     $routes->get('edit-kamar/(:num)', 'KamarController::editKamar/$1');
     $routes->post('update-kamar', 'KamarController::updateKamar');
@@ -26,6 +29,16 @@ $routes->group('admin', function($routes) {
     $routes->post('pemesanan/update-data/(:num)', 'PemesananController::updateData/$1');
     $routes->post('pemesanan/tambah', 'PemesananController::tambah');
     $routes->get('pemesanan/tambah-data', 'PemesananController::tambahData');
+
+    //Komplain tamu
+    $routes->get('komplain', 'KomplainController::index');
+    $routes->get('tambah-komplain', 'KomplainController::tambah');
+    $routes->post('simpan-komplain', 'KomplainController::simpan');
+
+    //Kas
+    $routes->get('kas', 'KasController::index');
+    $routes->get('kas-masuk', 'KasController::kas-masuk');
+    $routes->post('kas-keluar', 'KasController::kas-keluar');
 });
 
 // autentifikasi

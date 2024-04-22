@@ -1,19 +1,21 @@
-<!-- app/Views/index.php -->
 <?= $this->extend('admin/layouts/main') ?>
 
 <?= $this->section('content') ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <div class="card">
+        <!-- Page Heading -->
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Data Pemesanan</h6>
+        </div>
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Data Pemesanan</h1>
-
-    <!-- Tambahkan tombol "Tambah Data" -->
-    <a href="/admin/pemesanan/tambah-data" class="btn btn-primary mb-3">Tambah Data</a>
-
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
+        <!-- Tambahkan tombol "Tambah Data" -->
         <div class="card-body">
+            <a href="/admin/pemesanan/tambah-data" class="btn btn-primary mb-3">
+                <i class="fas fa-plus-circle mr-1"></i> Tambah Data
+            </a>
+
+            <!-- DataTales Example -->
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -43,7 +45,9 @@
                                 <td><?= $row['status_pembayaran'] ?></td>
                                 <td><?= $row['status_pemesanan'] ?></td>
                                 <td>
-                                    <a href="/admin/pemesanan/edit/<?= $row['id_pemesanan'] ?>" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="/admin/pemesanan/edit/<?= $row['id_pemesanan'] ?>" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -53,7 +57,6 @@
             </div>
         </div>
     </div>
-
 </div>
 <!-- /.container-fluid -->
 <?= $this->endSection() ?>

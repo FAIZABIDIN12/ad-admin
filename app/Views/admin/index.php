@@ -3,78 +3,74 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
-    
-    <!-- Di tampilan utama (index.php) -->
+
+    <!-- Alert -->
     <?php if (session()->has('success')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?= session('success') ?>
+            <strong>Sukses!</strong> <?= session('success') ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     <?php elseif (session()->has('error')) : ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?= session('error') ?>
+            <strong>Error!</strong> <?= session('error') ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
     <?php endif; ?>
 
-    <!-- Tombol Tambah Kamar -->
+    <!-- Dashboard Title -->
     <div class="d-flex justify-content-between mb-4 align-items-center">
         <h2>Dashboard</h2>
-        <a href="/admin/tambah-kamar" class="btn btn-success">Tambah Kamar</a>
+        <a href="/admin/tambah-kamar" class="btn btn-success">Tambah Kamar <i class="fas fa-plus-circle"></i></a>
     </div>
 
+    <!-- Daftar Kamar -->
     <div class="row">
-        <!-- Daftar Kamar -->
-        <?php $is_data = []; ?>
         <?php foreach ($kamars as $key => $kamar) : ?>
-            <?php $is_data[$key] = false; ?>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <div class="card-header badge-primary d-flex justify-content-between align-items-center">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                         <h5 class="font-weight-bold card-title mb-0">Kamar No.<?= $kamar['no_kamar'] ?></h5>
-
-                        <!-- Tombol Edit -->
-                        <a href="/admin/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/admin/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-warning btn-sm">Edit <i class="fas fa-edit"></i></a>
                     </div>
-
                     <div class="card-body">
-                    <?php foreach ($reservations as $reservation) : ?>
+                        <?php $roomTaken = false; ?>
+                        <?php foreach ($reservations as $reservation) : ?>
                             <?php if ($reservation['id_kamar'] == $kamar['id_kamar']) : ?>
-                                <?php $is_data[$key] = true; ?>
-                                <span class="badge badge-pill badge-danger mb-3">Room Taken</span>
+                                <?php $roomTaken = true; ?>
+                                <span class="badge badge-danger mb-3">Room Taken</span>
                                 <div class="mb-3">
-                                    <?= $reservation['nama'] ?>
-                                    <?= $reservation['checkout'] ?>
+                                    <strong>Nama:</strong> <?= $reservation['nama'] ?>
+                                    <br>
+                                    <strong>Check-out:</strong> <?= $reservation['checkout'] ?>
                                 </div>
                                 <div class="btn-group d-flex" role="group">
                                     <a href="/admin/checkout/<?= $reservation['id_reservasi'] ?>" type="button" class="btn btn-danger input-reservation">
-                                        Check Out
+                                        Check Out <i class="fas fa-sign-out-alt"></i>
                                     </a>
                                     <button type="button" class="btn btn-info ml-2 detail" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $kamar['id_kamar'] ?>">
-                                        Detail
+                                        Detail <i class="fas fa-info-circle"></i>
                                     </button>
-                                </div>                                
+                                </div>
                             <?php endif ?>
-                            
-                    <?php endforeach ?>
-
-                    <?php if (!$is_data[$key]) : ?>
-                        <span class="badge badge-pill badge-success mb-3">Room Ready</span>
-                    <div class="btn-group d-flex" role="group">
-                        <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
-                            Input Reservation
-                        </button>
-                    </div>
-                    <?php endif; ?>
+                        <?php endforeach ?>
+                        <?php if (!$roomTaken) : ?>
+                            <span class="badge badge-success mb-3">Room Ready</span>
+                            <div class="btn-group d-flex" role="group">
+                                <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                    Input Reservation <i class="fas fa-calendar-plus"></i>
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+
 </div>
 
 <!-- Modal untuk detail reservasi -->
@@ -93,6 +89,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal untuk input reservasi -->
 <div class="modal fade" id="inputReservationModal" tabindex="-1" role="dialog" aria-labelledby="inputReservationLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
