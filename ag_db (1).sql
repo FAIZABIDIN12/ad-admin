@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2024 at 08:41 AM
+-- Generation Time: Apr 23, 2024 at 10:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `akun`
+--
+
+CREATE TABLE `akun` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `role` enum('super_admin','admin','front_office') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kamar`
 --
 
@@ -39,11 +53,68 @@ CREATE TABLE `kamar` (
 --
 
 INSERT INTO `kamar` (`id_kamar`, `no_kamar`, `status`, `keterangan`) VALUES
-(2, '123', 'ready', 'tess'),
-(3, '345', '', ''),
-(4, '344', '', ''),
-(5, '543', '', ''),
-(7, '77777', NULL, NULL);
+(2, '001', 'Ready', 'djasdnjas'),
+(3, '002', 'Ready', ''),
+(4, '003', 'Ready', ''),
+(5, '004', 'Ready', ''),
+(7, '005', 'Ready', 'as'),
+(8, '006', 'Ready', ''),
+(9, '007', 'Ready', ''),
+(10, '008', 'Ready', ''),
+(11, '009', NULL, NULL),
+(12, '010', 'Ready', ''),
+(13, '011', NULL, NULL),
+(14, '012', NULL, NULL),
+(15, '013', NULL, NULL),
+(16, '014', NULL, NULL),
+(17, '015', NULL, NULL),
+(18, '016', NULL, NULL),
+(19, '017', NULL, NULL),
+(20, '018', NULL, NULL),
+(21, '019', NULL, NULL),
+(22, '020', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kas`
+--
+
+CREATE TABLE `kas` (
+  `id` int(11) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `tanggal` date DEFAULT NULL,
+  `jenis` enum('cr','db') DEFAULT NULL,
+  `nominal` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kas`
+--
+
+INSERT INTO `kas` (`id`, `keterangan`, `tanggal`, `jenis`, `nominal`) VALUES
+(7, 'fasfasaaaaaaaaaaaaaaa', '2024-04-23', 'cr', 3432),
+(8, 'fasfasaaaaaaaaaaaaaaa', '2024-04-23', 'db', 343234534);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `komplain`
+--
+
+CREATE TABLE `komplain` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `komplain` text NOT NULL,
+  `status` enum('slesai','proses','no-action') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `komplain`
+--
+
+INSERT INTO `komplain` (`id`, `nama`, `komplain`, `status`) VALUES
+(13, 'afdsf', 'dsfsdfsd', 'no-action');
 
 -- --------------------------------------------------------
 
@@ -68,8 +139,10 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `tanggal_checkin`, `tanggal_checkout`, `jumlah_kamar`, `jumlah_orang`, `nama_pemesan`, `no_hp`, `status_pembayaran`, `status_pemesanan`) VALUES
-(7, '2024-04-20', '2024-05-04', 1, 2, 'rosyad', '81918582908', 'belum lunas', 'BOOKING'),
-(8, '2024-04-19', '2024-04-22', 1, 2, 'rosyad', '81918582908', 'lunas', 'DONE');
+(7, '2024-04-20', '2024-05-04', 33, 2, 'rosyad', '81918582908', 'belum lunas', 'BATAL'),
+(8, '2024-04-19', '2024-04-22', 1, 2, 'rosyadaaa', '81918582908', 'lunas', 'DONE'),
+(9, '2024-04-22', '2024-04-23', 2, 2, 'rosyad', '081918582908', 'lunas', 'BOOKING'),
+(10, '2024-04-23', '2024-04-24', 2, 2, 'rosyad', '081918582908', 'lunas', 'BOOKING');
 
 -- --------------------------------------------------------
 
@@ -83,31 +156,53 @@ CREATE TABLE `reservasi` (
   `jumlah_orang` int(11) NOT NULL,
   `jumlah_kamar` int(11) NOT NULL,
   `id_kamar` int(11) NOT NULL,
-  `harga` decimal(10,2) NOT NULL,
+  `harga` int(11) NOT NULL,
   `checkin` date NOT NULL,
   `checkout` date NOT NULL,
-  `tgl_reservasi` timestamp NOT NULL DEFAULT current_timestamp()
+  `tgl_reservasi` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status_order` enum('done','checkin') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reservasi`
 --
 
-INSERT INTO `reservasi` (`id_reservasi`, `nama`, `jumlah_orang`, `jumlah_kamar`, `id_kamar`, `harga`, `checkin`, `checkout`, `tgl_reservasi`) VALUES
-(32, 'faiz abidin', 32, 2, 0, 233.00, '0000-00-00', '0000-00-00', '2024-04-17 08:13:53'),
-(33, 'faiz abidin', 32, 2, 0, 233.00, '0000-00-00', '0000-00-00', '2024-04-18 03:22:15'),
-(34, 'faiz abidin', 32, 2, 0, 233.00, '0000-00-00', '0000-00-00', '2024-04-18 03:26:20'),
-(35, 'faiz abidin', 32, 2, 0, 233.00, '0000-00-00', '0000-00-00', '2024-04-18 07:34:49');
+INSERT INTO `reservasi` (`id_reservasi`, `nama`, `jumlah_orang`, `jumlah_kamar`, `id_kamar`, `harga`, `checkin`, `checkout`, `tgl_reservasi`, `status_order`) VALUES
+(47, 'sadas', 2, 2, 2, 3, '2024-04-22', '2024-04-22', '2024-04-22 08:05:15', 'done'),
+(49, 'asdasf', 2, 3, 2, 343, '2024-04-22', '2024-04-22', '2024-04-22 08:16:18', 'done'),
+(50, 'asfasf', 3, 3, 2, 3, '2024-04-22', '2024-04-22', '2024-04-22 08:18:23', 'done'),
+(51, 'dian', 3, 2, 2, 400000, '2024-04-23', '2024-04-23', '2024-04-23 06:01:58', 'done'),
+(52, 'dian', 3, 2, 2, 400000, '2024-04-23', '2024-04-23', '2024-04-23 06:22:20', 'done'),
+(53, 'fsdfsdfsd', 3, 2, 2, 3, '2024-04-23', '2024-04-23', '2024-04-23 06:43:33', 'done'),
+(54, 'fsdfsdfsd', 3, 2, 2, 3, '2024-04-23', '2024-04-23', '2024-04-23 07:47:25', 'done');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `akun`
+--
+ALTER TABLE `akun`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `kamar`
 --
 ALTER TABLE `kamar`
   ADD PRIMARY KEY (`id_kamar`);
+
+--
+-- Indexes for table `kas`
+--
+ALTER TABLE `kas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `komplain`
+--
+ALTER TABLE `komplain`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pemesanan`
@@ -127,22 +222,40 @@ ALTER TABLE `reservasi`
 --
 
 --
+-- AUTO_INCREMENT for table `akun`
+--
+ALTER TABLE `akun`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `kamar`
 --
 ALTER TABLE `kamar`
-  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_kamar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `kas`
+--
+ALTER TABLE `kas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `komplain`
+--
+ALTER TABLE `komplain`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `reservasi`
 --
 ALTER TABLE `reservasi`
-  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_reservasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
