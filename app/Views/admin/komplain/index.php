@@ -2,6 +2,7 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
+    <!-- Notifikasi -->
     <?php if (session()->has('success')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= session('success') ?>
@@ -15,6 +16,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif ?>
+
     <!-- Card -->
     <div class="card shadow mb-4">
         <!-- Card Header -->
@@ -29,24 +31,32 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-            <!-- Table -->
+            <!-- Tabel -->
             <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <!-- Table Head -->
+                <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <!-- Header Tabel -->
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
                             <th>Komplain</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
-                    <!-- Table Body -->
+                    <!-- Isi Tabel -->
                     <tbody>
                         <?php foreach ($komplain as $row) : ?>
                             <tr>
-                                <td><?= $row['id'] ?></td>
-                                <td><?= $row['nama'] ?></td>
-                                <td><?= $row['komplain'] ?></td>
+                                <td><?= $row->id ?></td>
+                                <td><?= $row->nama ?></td>
+                                <td><?= $row->komplain ?></td>
+                                <td>
+                                    <?= $row->status ?>
+                                    <a href="<?= base_url('/admin/edit-status/' . $row->id) ?>" class="btn btn-sm btn-info">
+                                        <i class="fas fa-edit"></i> Edit Status
+                                    </a>
+                                </td>
+
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -54,6 +64,14 @@
             </div>
         </div>
     </div>
-
 </div>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<!-- DataTables JS -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable();
+    });
+</script>
 <?= $this->endSection() ?>

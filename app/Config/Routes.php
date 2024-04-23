@@ -34,6 +34,10 @@ $routes->group('admin', function ($routes) {
     $routes->get('komplain', 'KomplainController::index');
     $routes->get('tambah-komplain', 'KomplainController::tambah');
     $routes->post('simpan-komplain', 'KomplainController::simpan');
+    $routes->get('edit-status/(:num)', 'KomplainController::editStatus/$1');
+    $routes->post('update-status/(:num)', 'KomplainController::updateStatus/$1');
+
+
 
     //Kas
     $routes->get('kas', 'KasController::index');

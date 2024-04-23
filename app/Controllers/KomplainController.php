@@ -28,10 +28,11 @@ class KomplainController extends Controller
         // Mengambil data dari form
         $nama = $this->request->getPost('nama');
         $komplain = $this->request->getPost('komplain');
+        $status = 'no-action'; // Set status default
 
         // Menyimpan data ke database
         $komplainModel = new KomplainModel();
-        $success = $komplainModel->insert(['nama' => $nama, 'komplain' => $komplain]);
+        $success = $komplainModel->insert(['nama' => $nama, 'komplain' => $komplain, 'status' => $status]);
 
         if ($success) {
             // Set flashdata untuk notifikasi berhasil
@@ -42,6 +43,26 @@ class KomplainController extends Controller
         }
 
         // Redirect ke halaman index
+        return redirect()->to(base_url('admin/komplain'));
+    }
+
+    public function editStatus($id)
+    {
+        // Menampilkan form untuk mengubah status komplain
+        $data['komplain'] = (new KomplainModel())->find($id);
+        return view('admin/komplain/edit_status', $data);
+    }
+
+    public function updateStatus($id)
+    {
+        // Memperbarui status komplain berdasarkan ID
+        $model = new KomplainModel();
+        $data = [
+            'status' => $this->request->getPost('status')
+        ];
+        $model->update($id, $data);
+
+        // Redirect ke halaman komplain setelah pembaruan berhasil
         return redirect()->to(base_url('admin/komplain'));
     }
 }
