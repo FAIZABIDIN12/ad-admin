@@ -37,7 +37,7 @@
                     <!-- Header Tabel -->
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Nama</th>
                             <th>Komplain</th>
                             <th>Status</th>
@@ -45,9 +45,10 @@
                     </thead>
                     <!-- Isi Tabel -->
                     <tbody>
+                        <?php $nomor = 1; ?>
                         <?php foreach ($komplain as $row) : ?>
                             <tr>
-                                <td><?= $row->id ?></td>
+                                <td><?= $nomor++ ?></td>
                                 <td><?= $row->nama ?></td>
                                 <td><?= $row->komplain ?></td>
                                 <td>
@@ -56,10 +57,11 @@
                                         <i class="fas fa-edit"></i> Edit Status
                                     </a>
                                 </td>
-
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
+
+
                 </table>
             </div>
         </div>

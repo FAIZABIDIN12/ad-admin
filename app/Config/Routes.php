@@ -22,6 +22,8 @@ $routes->group('admin', function ($routes) {
     $routes->get('detail-reservasi/(:num)', 'ReservasiController::detailReservasi/$1');
     $routes->get('checkout/(:num)', 'ReservasiController::checkout/$1');
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
+    $routes->get('laporan', 'ReservasiController::checkedOutReservations');
+
 
     // pemesanan
     $routes->get('pemesanan', 'PemesananController::index');

@@ -6,7 +6,8 @@ use App\Models\ReservasiModel;
 
 class ReservasiController extends BaseController
 {
-    public function detailReservasi($id) {
+    public function detailReservasi($id)
+    {
         $reservasiModel = new ReservasiModel();
         $detailReservasi = $reservasiModel->getKamarById($id);
 
@@ -63,5 +64,29 @@ class ReservasiController extends BaseController
         } else {
             return redirect()->to(base_url('admin'))->with('error', 'Gagal checkout');
         }
+    }
+
+    public function checkedOutReservations()
+    {
+        $reservasiModel = new ReservasiModel();
+        $jumlahKamarTerpakaiPerTanggal = $reservasiModel->getJumlahKamarTerpakaiPerTanggal();
+        $rataHargaPerTanggal = $reservasiModel->getRataHargaPerTanggal();
+
+        // Gabungkan data jumlah kamar terpakai dan rata-rata harga per tanggal
+        $data = [];
+        foreach ($jumlahKamarTerpakaiPerTanggal as $reservation) {
+            $tanggal = $reservation['checkout'];
+            $data[$tanggal] = [
+                'jumlah_kamar' => $reservation['jumlah_kamar']
+            ];
+        }
+        foreach ($rataHargaPerTanggal as $reservation) {
+            $tanggal = $reservation['checkout'];
+            if (isset($data[$tanggal])) {
+                $data[$tanggal]['rata_harga'] = $reservation['rata_harga'];
+            }
+        }
+
+        return view('admin/checked_out_reservations', ['data' => $data]);
     }
 }

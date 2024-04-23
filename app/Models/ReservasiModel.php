@@ -21,9 +21,30 @@ class ReservasiModel extends Model
         // Ambil data kamar berdasarkan id_kamar dari tabel reservasi
         return $this->db->table('reservasi')->where('id_kamar', $idKamar)->where('status_order', 'checkin')->get()->getRowArray();
     }
-    
+
     public function getAllCheckinReservasi()
     {
         return $this->where('status_order', 'checkin')->findAll();
+    }
+    public function getCheckedOutReservations()
+    {
+        // Query untuk mengambil data reservasi yang statusnya sudah checkout
+        return $this->where('status_order', 'done')->findAll();
+    }
+    public function getRataHargaPerTanggal()
+    {
+        // Ambil rata-rata harga per tanggal checkout
+        $this->select('checkout, AVG(harga) as rata_harga');
+        $this->where('status_order', 'done');
+        $this->groupBy('checkout');
+        return $this->findAll();
+    }
+    public function getJumlahKamarTerpakaiPerTanggal()
+    {
+        // Ambil data reservasi yang sudah di-checkout dan kelompokkan berdasarkan tanggal checkout
+        $this->select('checkout, SUM(jumlah_kamar) as jumlah_kamar');
+        $this->where('status_order', 'done');
+        $this->groupBy('checkout');
+        return $this->findAll();
     }
 }
