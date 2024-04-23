@@ -37,8 +37,7 @@ $routes->group('admin', function ($routes) {
 
     //Kas
     $routes->get('kas', 'KasController::index');
-    $routes->get('kas-masuk', 'KasController::kas-masuk');
-    $routes->post('kas-keluar', 'KasController::kas-keluar');
+    $routes->post('kas/simpan', 'KasController::simpan');
 });
 
 // autentifikasi

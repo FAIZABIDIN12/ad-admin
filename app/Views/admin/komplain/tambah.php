@@ -2,6 +2,8 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
+    <!-- Tampilkan notifikasi -->
+
     <!-- Card -->
     <div class="card shadow mb-4">
         <!-- Card Header -->
@@ -10,6 +12,8 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
+
+
             <form action="<?= base_url('admin/simpan-komplain') ?>" method="post">
                 <div class="form-group">
                     <label for="nama">Nama:</label>
@@ -27,6 +31,5 @@
             </form>
         </div>
     </div>
-
 </div>
 <?= $this->endSection() ?>

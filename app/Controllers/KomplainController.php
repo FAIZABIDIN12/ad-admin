@@ -31,7 +31,15 @@ class KomplainController extends Controller
 
         // Menyimpan data ke database
         $komplainModel = new KomplainModel();
-        $komplainModel->insert(['nama' => $nama, 'komplain' => $komplain]);
+        $success = $komplainModel->insert(['nama' => $nama, 'komplain' => $komplain]);
+
+        if ($success) {
+            // Set flashdata untuk notifikasi berhasil
+            session()->setFlashdata('success', 'Komplain berhasil disimpan.');
+        } else {
+            // Set flashdata untuk notifikasi gagal
+            session()->setFlashdata('error', 'Gagal menyimpan komplain.');
+        }
 
         // Redirect ke halaman index
         return redirect()->to(base_url('admin/komplain'));

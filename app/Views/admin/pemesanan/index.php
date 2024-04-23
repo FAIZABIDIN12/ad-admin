@@ -3,6 +3,21 @@
 <?= $this->section('content') ?>
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <!-- Tambahkan notifikasi -->
+    <?php if (session()->has('success')) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif ?>
+
+    <?php if (session()->has('error')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif ?>
+
     <div class="card">
         <!-- Page Heading -->
         <div class="card-header py-3">
@@ -52,11 +67,23 @@
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>
     </div>
 </div>
 <!-- /.container-fluid -->
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<!-- DataTables JS -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Inisialisasi DataTables
+        $('#dataTable').DataTable();
+    });
+</script>
 <?= $this->endSection() ?>

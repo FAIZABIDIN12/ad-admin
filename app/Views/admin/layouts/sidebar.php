@@ -29,6 +29,9 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/admin/laporan">
+                    <i class="fas fa-file-alt mr-2"></i> Laporan
+                </a>
                 <a class="collapse-item" href="/admin/tambah-kamar">
                     <i class="fas fa-plus-circle mr-2"></i> Tambah Kamar
                 </a>

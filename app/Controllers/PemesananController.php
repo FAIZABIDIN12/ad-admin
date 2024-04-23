@@ -16,8 +16,6 @@ class PemesananController extends BaseController
     }
 
     // Fungsi untuk menambah pemesanan baru
-    // PemesananController.php
-
     public function tambahData()
     {
         // Menampilkan view form tambah data
@@ -48,11 +46,18 @@ class PemesananController extends BaseController
 
         // Memanggil model untuk menyimpan data pemesanan
         $pemesananModel = new PemesananModel();
-        $pemesananModel->insert($data);
+        if ($pemesananModel->insert($data)) {
+            // Jika data berhasil ditambahkan, set notifikasi berhasil
+            session()->setFlashdata('success', 'Data berhasil ditambahkan');
+        } else {
+            // Jika data gagal ditambahkan, set notifikasi gagal
+            session()->setFlashdata('error', 'Gagal menambahkan data');
+        }
 
         // Redirect ke halaman utama
         return redirect()->to(base_url('admin/pemesanan'));
     }
+
 
     public function edit($id_pemesanan)
     {
@@ -84,14 +89,18 @@ class PemesananController extends BaseController
         ];
 
         // Memanggil metode update dari model untuk memperbarui data pemesanan
-        $model->update($id_pemesanan, $data);
+        if ($model->update($id_pemesanan, $data)) {
+            // Jika pembaruan berhasil, set notifikasi berhasil
+            session()->setFlashdata('success', 'Data berhasil diperbarui');
+        } else {
+            // Jika pembaruan gagal, set notifikasi gagal
+            session()->setFlashdata('error', 'Gagal memperbarui data');
+        }
 
         // Redirect ke halaman pemesanan setelah pembaruan berhasil
         return redirect()->to(base_url('admin/pemesanan'));
     }
 
-
-    // Fungsi untuk mengupdate status pembayaran pemesanan berdasarkan ID
     public function updateStatusPembayaran($id_pemesanan)
     {
         $model = new PemesananModel();
@@ -100,7 +109,14 @@ class PemesananController extends BaseController
             'status_pembayaran' => $this->request->getPost('status_pembayaran'),
         ];
 
-        $model->update($id_pemesanan, $data);
+        // Memanggil metode update dari model untuk memperbarui status pembayaran pemesanan
+        if ($model->update($id_pemesanan, $data)) {
+            // Jika pembaruan berhasil, set notifikasi berhasil
+            session()->setFlashdata('success', 'Status pembayaran berhasil diperbarui');
+        } else {
+            // Jika pembaruan gagal, set notifikasi gagal
+            session()->setFlashdata('error', 'Gagal memperbarui status pembayaran');
+        }
 
         return redirect()->to(base_url('admin/pemesanan'));
     }
