@@ -34,19 +34,16 @@
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                 <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
+                        <a href="#home" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:text-white md:dark:hover:bg-transparent">About</a>
+                        <a href="#asri-graha-section" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-white md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">About</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Services</a>
+                        <a href="#Lokasi" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:text-white md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">lokasi</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:text-white md:dark:hover:bg-transparent">Pricing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:text-white md:dark:hover:bg-transparent">Contact</a>
+                        <a href="#contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:text-white md:dark:hover:bg-transparent">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -54,7 +51,7 @@
     </nav>
 
 
-    <section class="relative bg-center bg-cover bg-no-repeat bg-[url('/img/bg-asri.png')]">
+    <section id="home" class="relative bg-center bg-cover bg-no-repeat bg-[url('/img/bg-asri.png')]">
         <div class="absolute inset-0 bg-black opacity-60"></div>
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-64">
             <h1 data-aos="fade-right" data-aos-duration="800" class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-8xl">ASRI GRAHA</h1>
@@ -93,7 +90,7 @@
     </form>
 </div> -->
 
-    <section>
+    <section id="asri-graha-section">
         <div data-aos="zoom-in-up" class="px-4 mx-auto max-w-screen-xl text-center py-12 lg:py-24">
             <h2 class="mb-4 text-xl font-extrabold tracking-tight leading-none md:text-2xl lg:text-3xl">ASRI GRAHA</h2>
             <p class="mb-8 font-normal">Selamat datang di tempat di mana kenyamanan bertemu dengan nilai terbaik dengan harga yang terjangkau. Di Hotel Asri Graha, kami tidak hanya menawarkan tempat istirahat yang nyaman, tetapi juga pengalaman tak terlupakan di tengah hiruk-pikuk kota Jogja yang dinamis. Dengan harga yang ramah di kantong, Anda dapat menikmati segala keunggulan fasilitas dan layanan kami tanpa perlu khawatir menguras anggaran.</p>
@@ -149,16 +146,14 @@
                             <path d="M6.78906 15.4902C9.93906 13.0502 14.0491 13.0502 17.1991 15.4902" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             <path opacity="0.4" d="M9.40039 19.1499C10.9804 17.9299 13.0304 17.9299 14.6104 19.1499" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-
                     </div>
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Fasilitas Memadai</h5>
                     <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Hotel Asri Graha menawarkan kenyamanan tanpa mengorbankan kualitas. Nikmati fasilitas seperti AC, Smart TV, Parkir, Resepsionis 24 jam, dan Wi-Fi.</p>
                 </div>
-
             </div>
         </div>
     </section>
-    <section>
+    <section id="Lokasi">
         <div class="px-4 mx-auto max-w-screen-xl py-12 lg:py-24 grid gap-3 lg:grid-cols-2">
             <div data-aos="fade-right" data-aos-offset="300" data-aos-duration="600">
                 <h2 class="mb-12 text-2xl font-extrabold tracking-tight leading-none md:text-2xl lg:text-3xl">Tempat Terdekat</h2>
@@ -183,37 +178,39 @@
         </div>
     </section>
 
+    <section id="contact">
 
-    <footer class="bg-gray-900">
-        <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-            <div class="md:flex md:justify-between">
-                <div class="mb-6 md:mb-0">
-                    <a href="https://flowbite.com/" class="flex items-center">
-                        <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" /> -->
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Asri Graha</span>
-                    </a>
+
+        <footer class="bg-gray-900">
+            <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+                <div class="md:flex md:justify-between">
+                    <div class="mb-6 md:mb-0">
+                        <a href="https://flowbite.com/" class="flex items-center">
+                            <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 me-3" alt="FlowBite Logo" /> -->
+                            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Asri Graha</span>
+                        </a>
+                    </div>
+                    <div class="max-w-sm">
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Kontak Kami</h2>
+                        <ul class="text-gray-500 text-gray-400 font-medium">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">+62 82 XXXXXXX</a>
+                            </li>
+                            <li>
+                                <a href="#" class="hover:underline">Jl. Veteran No.184 A, Pandeyan, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55161</a>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
-                <div class="max-w-sm">
-                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase text-white">Kontak Kami</h2>
-                    <ul class="text-gray-500 text-gray-400 font-medium">
-                        <li class="mb-4">
-                            <a href="#" class="hover:underline">+62 82 XXXXXXX</a>
-                        </li>
-                        <li>
-                            <a href="#" class="hover:underline">Jl. Veteran No.184 A, Pandeyan, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55161</a>
-                        </li>
-                    </ul>
+                <hr class="my-6 border-gray-200 sm:mx-auto border-gray-700 lg:my-8" />
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <span class="text-sm text-gray-500 sm:text-center text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Asri Graha</a>. All Rights Reserved.
+                    </span>
                 </div>
-
             </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto border-gray-700 lg:my-8" />
-            <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-gray-500 sm:text-center text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">Asri Graha</a>. All Rights Reserved.
-                </span>
-            </div>
-        </div>
-    </footer>
-
+        </footer>
+    </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

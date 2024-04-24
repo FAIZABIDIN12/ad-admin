@@ -47,4 +47,10 @@ class ReservasiModel extends Model
         $this->groupBy('checkout');
         return $this->findAll();
     }
+
+    public function history()
+    {
+        // Query untuk mengambil semua data riwayat reservasi
+        return $this->findAll();
+    }
 }

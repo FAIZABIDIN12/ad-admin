@@ -21,12 +21,12 @@
     <div class="card shadow mb-4">
         <!-- Card Header -->
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar Komplain</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar Komplain Tamu</h6>
             <a class="btn btn-primary btn-icon-split" href="<?= base_url('admin/tambah-komplain') ?>">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
-                <span class="text">Tambah Komplain</span>
+                <span class="text">Tambah</span>
             </a>
         </div>
         <!-- Card Body -->

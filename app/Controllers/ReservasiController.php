@@ -89,4 +89,16 @@ class ReservasiController extends BaseController
 
         return view('admin/checked_out_reservations', ['data' => $data]);
     }
+
+    public function history()
+    {
+        // Membuat instance dari model ReservasiModel
+        $reservasiModel = new ReservasiModel();
+
+        // Mengambil data history reservasi dari model
+        $historyReservasi = $reservasiModel->history();
+
+        // Mengirim data history reservasi ke tampilan history.php
+        return view('admin/history', ['historyReservasi' => $historyReservasi]);
+    }
 }

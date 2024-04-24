@@ -21,7 +21,7 @@
     <div class="card">
         <!-- Page Heading -->
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Pemesanan</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Booking</h6>
         </div>
 
         <!-- Tambahkan tombol "Tambah Data" -->

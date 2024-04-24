@@ -24,7 +24,7 @@
     <!-- Dashboard Title -->
     <div class="d-flex justify-content-between mb-4 align-items-center">
         <h2>Dashboard</h2>
-        <a href="/admin/tambah-kamar" class="btn btn-success">Tambah Kamar <i class="fas fa-plus-circle"></i></a>
+        <a href="/admin/history" class="btn btn-secondary">History <i class="fas fa-history"></i></a>
     </div>
 
     <!-- Daftar Kamar -->
@@ -61,7 +61,7 @@
                             <span class="badge badge-success mb-3">Room Ready</span>
                             <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
-                                    Input Reservation <i class="fas fa-calendar-plus"></i>
+                                    Input Checkin <i class="fas fa-calendar-plus"></i>
                                 </button>
                             </div>
                         <?php endif; ?>
@@ -95,7 +95,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="inputReservationLabel">Input Reservation</h5>
+                <h5 class="modal-title" id="inputReservationLabel">Input Checkin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

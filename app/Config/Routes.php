@@ -18,11 +18,13 @@ $routes->group('admin', function ($routes) {
     $routes->get('tambah-kamar', 'KamarController::tambahKamar');
     $routes->post('simpan-kamar', 'KamarController::simpanKamar');
 
+
     // reservasi
     $routes->get('detail-reservasi/(:num)', 'ReservasiController::detailReservasi/$1');
     $routes->get('checkout/(:num)', 'ReservasiController::checkout/$1');
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');
+    $routes->get('history', 'ReservasiController::history');
 
 
     // pemesanan
