@@ -34,7 +34,7 @@
                     <i class="fas fa-bed"></i> Tambah Kamar
                 </a>
                 <a class="collapse-item" href="/admin/pemesanan">
-                    <i class="fas fa-calendar-check"></i> Booking Kamar
+                    <i class="fas fa-calendar-check"></i> Reservasi
                 </a>
                 <a class="collapse-item" href="/admin/troubel-kamar">
                     <i class="fas fa-exclamation-triangle"></i> Troubel Kamar

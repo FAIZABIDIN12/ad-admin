@@ -22,47 +22,53 @@
     <?php endif; ?>
 
     <!-- Dashboard Title -->
-    <div class="d-flex justify-content-between mb-4 align-items-center">
-        <h2>Dashboard</h2>
-        <a href="/admin/history" class="btn btn-secondary">History <i class="fas fa-history"></i></a>
+    <div class="d-flex justify-content-between mb-2 align-items-center"> <!-- Mengurangi margin menjadi mb-2 -->
+        <h3 style="font-size: 1.5rem;">Dashboard</h3> <!-- Mengubah ukuran font menjadi 1.5rem -->
+        <a href="/admin/history" class="btn btn-secondary btn-sm">History <i class="fas fa-history"></i></a> <!-- Mengubah tombol menjadi kecil dengan menambahkan kelas btn-sm -->
     </div>
 
     <!-- Daftar Kamar -->
     <div class="row">
         <?php foreach ($kamars as $key => $kamar) : ?>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <h5 class="font-weight-bold card-title mb-0">Kamar No.<?= $kamar['no_kamar'] ?></h5>
-                        <a href="/admin/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-warning btn-sm">Edit <i class="fas fa-edit"></i></a>
-                    </div>
-                    <div class="card-body">
-                        <?php $roomTaken = false; ?>
+            <?php $roomTaken = false; ?> <!-- Mendefinisikan variabel $roomTaken sebelum loop foreach -->
+            <div class="col-md-3 mb-4"> <!-- Mengubah col-md-4 menjadi col-md-3 dan mengubah margin menjadi mb-4 -->
+                <div class="card"> <!-- Menghapus kelas h-100 untuk membiarkan ketinggian menyesuaikan konten -->
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2"> <!-- Mengurangi padding secara vertikal dengan py-2 -->
+                        <h5 class="font-weight-bold card-title mb-0" style="font-size: 0.9rem;">Kamar No.<?= $kamar['no_kamar'] ?></h5> <!-- Mengubah ukuran font menjadi 0.9rem -->
                         <?php foreach ($reservations as $reservation) : ?>
                             <?php if ($reservation['id_kamar'] == $kamar['id_kamar']) : ?>
                                 <?php $roomTaken = true; ?>
-                                <span class="badge badge-danger mb-3">Room Taken</span>
-                                <div class="mb-3">
-                                    <strong>Nama:</strong> <?= $reservation['nama'] ?>
-                                    <br>
-                                    <strong>Check-out:</strong> <?= $reservation['checkout'] ?>
+                                <span class="badge badge-danger ml-2">Room Taken</span> <!-- Menambahkan margin kiri dengan ml-2 -->
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </div>
+                    <div class="card-body py-2"> <!-- Mengurangi padding secara vertikal dengan py-2 -->
+                        <?php foreach ($reservations as $reservation) : ?>
+                            <?php if ($reservation['id_kamar'] == $kamar['id_kamar']) : ?>
+                                <?php $roomTaken = true; ?>
+                                <div class="mb-1" style="font-size: 0.8rem;"> <!-- Mengubah ukuran font menjadi 0.8rem dan mengurangi margin bawah menjadi mb-1 -->
+                                    <?= $reservation['nama'] ?> <!-- Menampilkan nama -->
+                                </div>
+                                <div class="mb-1" style="font-size: 0.8rem;"> <!-- Mengubah ukuran font menjadi 0.8rem dan mengurangi margin bawah menjadi mb-1 -->
+                                    Check-out: <?= $reservation['checkout'] ?> <!-- Menampilkan tanggal check-out -->
                                 </div>
                                 <div class="btn-group d-flex" role="group">
-                                    <a href="/admin/checkout/<?= $reservation['id_reservasi'] ?>" type="button" class="btn btn-danger input-reservation">
+                                    <a href="/admin/checkout/<?= $reservation['id_reservasi'] ?>" type="button" class="btn btn-danger input-reservation btn-sm" style="font-size: 0.7rem;">
                                         Check Out <i class="fas fa-sign-out-alt"></i>
                                     </a>
-                                    <button type="button" class="btn btn-info ml-2 detail" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                    <button type="button" class="btn btn-info ml-2 detail btn-sm" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $kamar['id_kamar'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
                                         Detail <i class="fas fa-info-circle"></i>
                                     </button>
                                 </div>
                             <?php endif ?>
                         <?php endforeach ?>
                         <?php if (!$roomTaken) : ?>
-                            <span class="badge badge-success mb-3">Room Ready</span>
+                            <span class="badge badge-success mb-0">Room Ready</span>
                             <div class="btn-group d-flex" role="group">
-                                <button type="button" class="btn btn-primary input-reservation" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>">
+                                <button type="button" class="btn btn-primary input-reservation btn-sm" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $kamar['id_kamar'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
                                     Input Checkin <i class="fas fa-calendar-plus"></i>
                                 </button>
+                                <a href="/admin/edit-kamar/<?= $kamar['id_kamar'] ?>" class="btn btn-warning btn-sm ml-auto" style="font-size: 0.7rem;">Edit <i class="fas fa-edit"></i></a> <!-- Mengubah ukuran font menjadi 0.7rem dan menggunakan ml-auto untuk menempatkan tombol edit di ujung kanan -->
                             </div>
                         <?php endif; ?>
                     </div>
@@ -144,7 +150,7 @@
                         <p>Tanggal Check-out: <span>${response.checkout}</span></p>
                         <p>Jumlah Orang: <span>${response.jumlah_orang}</span></p>
                         <p>Jumlah Kamar: <span>${response.jumlah_kamar}</span></p>
-                        <p>Harga: <span>${response.harga}</span></p>
+                        <p>Harga: <span> Rp.${response.harga}</span></p>
                     `);
                     } else {
                         $('#detail-reservasi').html('<p>Data reservasi tidak ditemukan.</p>');

@@ -5,7 +5,7 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Tambah Data Pemesanan</h1>
+    <h1 class="h3 mb-4 text-gray-800">Tambah Data Booking</h1>
 
     <!-- Form Tambah Data -->
     <div class="card shadow mb-4">
