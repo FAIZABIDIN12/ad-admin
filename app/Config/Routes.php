@@ -11,7 +11,7 @@ $routes->get('/', function () {
 });
 
 // main dahsboard (kamar)
-$routes->group('admin', function ($routes) {
+$routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'KamarController::index');
     $routes->get('edit-kamar/(:num)', 'KamarController::editKamar/$1');
     $routes->post('update-kamar', 'KamarController::updateKamar');
@@ -49,6 +49,8 @@ $routes->group('admin', function ($routes) {
 });
 
 // autentifikasi
-$routes->post('register', 'Auth::register');
+$routes->post('signup', 'Auth::signup');
 $routes->get('login', 'Auth::login');
+$routes->post('login', 'Auth::login');
 $routes->get('register', 'Auth::register');
+$routes->get('logout', 'Auth::logout');
