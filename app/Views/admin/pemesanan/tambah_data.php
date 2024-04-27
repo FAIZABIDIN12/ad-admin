@@ -42,12 +42,34 @@
                         <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" required>
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="status_pembayaran">Status Pembayaran:</label>
                     <select class="form-control" id="status_pembayaran" name="status_pembayaran" required>
                         <option value="lunas">Lunas</option>
                         <option value="belum lunas">Belum Lunas</option>
                     </select>
+                </div> -->
+                <div class="form-group">
+                    <label for="status_pembayaran">Deposit:</label>
+                    <input type="text" class="form-control" placeholder="Deposit">
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col">
+                            <label for="metode_pembayaran">Metode Pembayaran</label>
+                            <select class="form-control" id="metode_pembayaran" name="metode_pembayaran" required>
+                                <option value="cash">Cash</option>
+                                <option value="bca">Transfer BCA</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                        <label for="keterangan">Keterangan</label>
+                        <input type="text" class="form-control" placeholder="Keterangan">
+                        </div>
+                    </div>
+
+                    
                 </div>
                 <div class="form-group">
                     <label for="status_pemesanan">Status Pemesanan:</label>

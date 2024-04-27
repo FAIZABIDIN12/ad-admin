@@ -34,7 +34,7 @@
 <?php endif ?>
 <?php if(session()->getFlashdata('error')): ?>
     <div class="alert alert-danger" role="alert">
-            <?= $error ?>
+            <?= session()->getFlashdata('error') ?>
     </div>
 <?php endif ?>
             <div class="col-xl-5 col-lg-12 col-md-9">
