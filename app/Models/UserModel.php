@@ -4,9 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AkunModel extends Model
+class UserModel extends Model
 {
-    protected $table = 'akun';
-    protected $primaryKey = 'id';
+    protected $table            = 'user';
+    protected $primaryKey       = 'id';
     protected $allowedFields = ['username', 'nama', 'password', 'role'];
 }

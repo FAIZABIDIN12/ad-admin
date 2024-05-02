@@ -5,12 +5,10 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Tambah Data Booking</h1>
-
     <!-- Form Tambah Data -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Data</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Tambah Reservasi</h6>
         </div>
         <div class="card-body">
             <form action="/admin/pemesanan/tambah" method="post">
@@ -42,41 +40,46 @@
                         <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" required>
                     </div>
                 </div>
-                <!-- <div class="form-group">
-                    <label for="status_pembayaran">Status Pembayaran:</label>
-                    <select class="form-control" id="status_pembayaran" name="status_pembayaran" required>
-                        <option value="lunas">Lunas</option>
-                        <option value="belum lunas">Belum Lunas</option>
-                    </select>
-                </div> -->
-                <div class="form-group">
-                    <label for="status_pembayaran">Deposit:</label>
-                    <input type="text" class="form-control" placeholder="Deposit">
-
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <label for="metode_pembayaran">Metode Pembayaran</label>
-                            <select class="form-control" id="metode_pembayaran" name="metode_pembayaran" required>
-                                <option value="cash">Cash</option>
-                                <option value="bca">Transfer BCA</option>
-                            </select>
-                        </div>
-                        <div class="col">
-                        <label for="keterangan">Keterangan</label>
-                        <input type="text" class="form-control" placeholder="Keterangan">
-                        </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="rate">Rate:</label>
+                        <input id="rate" type="text" name="rate" class="form-control" placeholder="Harga">
                     </div>
+                    <div class="form-group col-md-6">
+                        <label for="bayar">Deposit:</label>
+                        <input id="bayar" type="text" name="bayar" class="form-control" placeholder="Deposit">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="metode_pembayaran">Metode Pembayaran</label>
+                        <select class="form-control" id="metode_pembayaran" name="metode_bayar" required>
+                            <option value="cash">Cash</option>
+                            <option value="bca">Transfer BCA</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="keterangan">Keterangan</label>
+                        <input type="text" name="keterangan" class="form-control" placeholder="Keterangan">
+                    </div>
+                </div>
 
                     
+                <div class="form-group">
+                    <label for="status_pembayaran">Status Pembayaran:</label>
+                    <select class="form-control" id="status_pembayaran" name="status_bayar" required>
+                        <option value="lunas">Lunas</option>
+                        <option value="belum_lunas">Belum Lunas</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="status_pemesanan">Status Pemesanan:</label>
-                    <select class="form-control" id="status_pemesanan" name="status_pemesanan" required>
-                        <option value="BOOKING">BOOKING</option>
-                        <option value="DONE">DONE</option>
-                        <option value="BATAL">BATAL</option>
+                    <select class="form-control" id="status_pemesanan" name="status_order" required>
+                        <option value="book">BOOKING</option>
+                        <option value="checkin">CHECKIN</option>
+                        <option value="done">DONE</option>
+                        <option value="cancel">BATAL</option>
                     </select>
                 </div>
                 <!-- Tambahkan input untuk data lainnya seperti tanggal checkout, jumlah orang, jumlah kamar, harga, dll. -->

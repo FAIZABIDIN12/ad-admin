@@ -21,7 +21,7 @@
     <div class="card">
         <!-- Page Heading -->
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Booking</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Reservasi</h6>
         </div>
 
         <!-- Tambahkan tombol "Tambah Data" -->
@@ -51,16 +51,16 @@
                         <?php foreach ($pemesanan as $index => $row) : ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
-                                <td><?= $row['nama_pemesan'] ?></td>
+                                <td><?= $row['nama'] ?></td>
                                 <td><?= $row['no_hp'] ?></td>
-                                <td><?= $row['tanggal_checkin'] ?></td>
-                                <td><?= $row['tanggal_checkout'] ?></td>
-                                <td><?= $row['jumlah_kamar'] ?></td>
-                                <td><?= $row['jumlah_orang'] ?></td>
-                                <td><?= $row['status_pembayaran'] ?></td>
-                                <td><?= $row['status_pemesanan'] ?></td>
+                                <td><?= $row['tgl_checkin'] ?></td>
+                                <td><?= $row['tgl_checkout'] ?></td>
+                                <td><?= $row['jml_kamar'] ?></td>
+                                <td><?= $row['jml_orang'] ?></td>
+                                <td><?= $row['status_bayar'] ?></td>
+                                <td><?= $row['status_order'] ?></td>
                                 <td>
-                                    <a href="/admin/pemesanan/edit/<?= $row['id_pemesanan'] ?>" class="btn btn-sm btn-warning">
+                                    <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                 </td>

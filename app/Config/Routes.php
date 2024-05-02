@@ -12,27 +12,25 @@ $routes->get('/', function () {
 
 // main dahsboard (kamar)
 $routes->group('admin', ['filter' => 'auth'], function ($routes) {
-    $routes->get('/', 'KamarController::index');
-    $routes->get('edit-kamar/(:num)', 'KamarController::editKamar/$1');
-    $routes->post('update-kamar', 'KamarController::updateKamar');
-    $routes->get('tambah-kamar', 'KamarController::tambahKamar');
-    $routes->post('simpan-kamar', 'KamarController::simpanKamar');
+    $routes->get('/', 'RoomController::index');
+    $routes->get('edit-kamar/(:num)', 'RoomController::editKamar/$1');
+    $routes->post('update-kamar', 'RoomController::updateKamar');
+    $routes->get('tambah-kamar', 'RoomController::tambahKamar');
+    $routes->post('simpan-kamar', 'RoomController::simpanKamar');
 
 
-    // reservasi
-    $routes->get('detail-reservasi/(:num)', 'ReservasiController::detailReservasi/$1');
-    $routes->get('checkout/(:num)', 'ReservasiController::checkout/$1');
+   
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');
-    $routes->get('history', 'ReservasiController::history');
+    
 
 
     // pemesanan
-    $routes->get('pemesanan', 'PemesananController::index');
-    $routes->get('pemesanan/edit/(:num)', 'PemesananController::edit/$1');
-    $routes->post('pemesanan/update-data/(:num)', 'PemesananController::updateData/$1');
-    $routes->post('pemesanan/tambah', 'PemesananController::tambah');
-    $routes->get('pemesanan/tambah-data', 'PemesananController::tambahData');
+    $routes->get('pemesanan', 'ReservationController::index');
+    $routes->get('pemesanan/edit/(:num)', 'ReservationController::edit/$1');
+    $routes->post('pemesanan/update-data/(:num)', 'ReservationController::updateData/$1');
+    $routes->post('pemesanan/tambah', 'ReservationController::tambah');
+    $routes->get('pemesanan/tambah-data', 'ReservationController::tambahData');
 
     //Komplain tamu
     $routes->get('komplain', 'KomplainController::index');
@@ -46,6 +44,16 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     //Kas
     $routes->get('kas', 'KasController::index');
     $routes->post('kas/simpan', 'KasController::simpan');
+
+    // report
+    $routes->get('report', 'ReportController::index');
+
+
+    //checkin
+    $routes->post('simpan-checkin', 'CheckinController::simpan_checkin');
+    $routes->get('checkout/(:num)', 'CheckinController::checkout/$1');
+    $routes->get('history', 'CheckinController::history');
+    $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');
 });
 
 // autentifikasi

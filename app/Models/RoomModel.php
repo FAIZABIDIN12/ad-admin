@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KamarModel extends Model
+class RoomModel extends Model
 {
-    protected $table = 'kamar';
-    protected $primaryKey = 'id_kamar';
+    protected $table = 'room';
+    protected $primaryKey = 'id';
     protected $allowedFields = ['no_kamar', 'status', 'keterangan'];
 
     // Metode untuk menyimpan data kamar baru
@@ -31,6 +31,6 @@ class KamarModel extends Model
     // Relasi dengan tabel reservasi
     public function reservasi()
     {
-        return $this->hasMany(ReservasiModel::class, 'id_kamar');
+        return $this->hasMany(ReservasiModel::class, 'id');
     }
 }

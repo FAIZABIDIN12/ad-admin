@@ -1,0 +1,3 @@
+DB Name:  sghkitac_ag_admin
+DB User:  sghkitac_ag_admin
+Password: tFM7XbhkxMqBeRFJWDUT

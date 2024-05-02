@@ -14,7 +14,6 @@
                             <th>Check-in</th>
                             <th>Check-out</th>
                             <th>Jumlah Orang</th>
-                            <th>Jumlah Kamar</th>
                             <th>Harga</th>
                             <th>Status Order</th>
                         </tr>
@@ -25,9 +24,8 @@
                                 <td><?= $reservasi['nama']; ?></td>
                                 <td><?= $reservasi['checkin']; ?></td>
                                 <td><?= $reservasi['checkout']; ?></td>
-                                <td><?= $reservasi['jumlah_orang']; ?></td>
-                                <td><?= $reservasi['jumlah_kamar']; ?></td>
-                                <td><?= $reservasi['harga']; ?></td>
+                                <td><?= $reservasi['jml_orang']; ?></td>
+                                <td><?= $reservasi['bayar']; ?></td>
                                 <td><?= $reservasi['status_order']; ?></td>
                             </tr>
                         <?php endforeach; ?>

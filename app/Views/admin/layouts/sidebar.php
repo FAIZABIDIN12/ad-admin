@@ -19,25 +19,39 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <!-- <div class="sidebar-heading">
         Kamar
-    </div>
+    </div> -->
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-cogs"></i>
-            <span>Sub Menu</span>
+            <span>Kamar</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="/admin/tambah-kamar">
                     <i class="fas fa-bed"></i> Tambah Kamar
                 </a>
-                <a class="collapse-item" href="/admin/pemesanan">
-                    <i class="fas fa-calendar-check"></i> Reservasi
-                </a>
                 <a class="collapse-item" href="/admin/troubel-kamar">
                     <i class="fas fa-exclamation-triangle"></i> Troubel Kamar
+                </a>
+
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reservasi" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-bed"></i>
+            <span>Reservasi</span>
+        </a>
+        <div id="reservasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/admin/pemesanan">
+                    <i class="fas fa-bed"></i> Daftar Reservasi
+                </a>
+                <a class="collapse-item" href="/admin/pemesanan/tambah-data">
+                    <i class="fas fa-plus"></i> Tambah Reservasi
                 </a>
 
             </div>
@@ -47,26 +61,25 @@
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
-        Menu
+        Keuangan
     </div>
 
     <!-- Nav Item - Laporan -->
     <li class="nav-item">
-        <a class="nav-link" href="/admin/laporan">
+        <a class="nav-link" href="/admin/report">
             <i class="fas fa-chart-bar"></i>
             <span>Laporan</span></a>
     </li>
-    <!-- Nav Item - Komplain Tamu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/komplain">
             <i class="fas fa-exclamation-circle mr-2"></i>
             <span>Komplain Tamu</span></a>
-    </li>
-    <li class="nav-item">
+    </li> -->
+    <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/kas">
             <i class="fas fa-coins mr-2"></i>
             <span>Keuangan</span></a>
-    </li>
+    </li> -->
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->

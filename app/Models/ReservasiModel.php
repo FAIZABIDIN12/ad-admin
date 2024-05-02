@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class ReservasiModel extends Model
 {
-    protected $table = 'reservasi';
+    protected $table = 'reservation';
     protected $primaryKey = 'id_reservasi';
     protected $allowedFields = ['nama', 'checkin', 'checkout', 'jumlah_orang', 'jumlah_kamar', 'harga', 'id_kamar', 'status_order'];
 

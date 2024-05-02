@@ -3,20 +3,21 @@
 namespace App\Controllers;
 
 use App\Models\ReservasiModel;
-use App\Models\KamarModel;
+use App\Models\RoomModel;
 use CodeIgniter\Controller;
+use App\Models\CheckinModel;
 
-class KamarController extends Controller
+class RoomController extends Controller
 {
     // Method untuk menampilkan halaman utama
     public function index()
     {
-        $kamarModel = new \App\Models\KamarModel();
-        $reservasiModel = new \App\Models\ReservasiModel();
+        $roomModel = new RoomModel();
+        $checkinModel = new CheckinModel();
 
         $data['title'] = 'Dashboard';
-        $data['kamars'] = $kamarModel->semuaKamar();
-        $data['reservations'] =$reservasiModel->getAllCheckinReservasi();
+        $data['rooms'] = $roomModel->semuaKamar();
+        $data['checkins'] =$checkinModel->getAllCheckin();
 
         return view('admin/index', $data);
     }
@@ -41,7 +42,7 @@ class KamarController extends Controller
         ];
 
         // Memanggil model untuk menyimpan data kamar
-        $kamarModel = new KamarModel();
+        $kamarModel = new RoomModel();
         $kamarModel->tambahKamar($data);
 
         // Set pesan sukses
@@ -54,7 +55,7 @@ class KamarController extends Controller
     public function editKamar($id_kamar)
     {
         // Membuat instance dari model KamarModel
-        $kamarModel = new KamarModel();
+        $kamarModel = new RoomModel();
 
         // Mendapatkan data kamar berdasarkan ID
         $data['kamar'] = $kamarModel->find($id_kamar);
@@ -86,8 +87,8 @@ class KamarController extends Controller
         ];
 
         // Memanggil model untuk update data kamar
-        $kamarModel = new KamarModel();
-        $affectedRows = $kamarModel->where('id_kamar', $idKamar)->set($data)->update();
+        $kamarModel = new RoomModel();
+        $affectedRows = $kamarModel->where('id', $idKamar)->set($data)->update();
 
         if ($affectedRows > 0) {
             // Set pesan sukses jika ada baris yang terpengaruh
