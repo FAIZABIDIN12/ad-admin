@@ -77,7 +77,7 @@ class Reservation extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('front_office','user','id');
+        $this->forge->addForeignKey('front_office', 'user', 'id');
         $this->forge->createTable('reservation');
     }
 

@@ -36,13 +36,15 @@
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>Tgl Reservasi</th>
                             <th>Nama Pemesan</th>
                             <th>No.HP</th>
                             <th>Check-in</th>
                             <th>Check-out</th>
                             <th>Jumlah Kamar</th>
                             <th>Jumlah Orang</th>
-                            <th>Status Pembayaran</th>
+                            <th>Rate</th>
+                            <th>Bayar</th>
                             <th>Status Pemesanan</th>
                             <th>Aksi</th>
                         </tr>
@@ -51,13 +53,15 @@
                         <?php foreach ($pemesanan as $index => $row) : ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
+                                <td><?= $row['tgl'] ?></td>
                                 <td><?= $row['nama'] ?></td>
                                 <td><?= $row['no_hp'] ?></td>
                                 <td><?= $row['tgl_checkin'] ?></td>
                                 <td><?= $row['tgl_checkout'] ?></td>
                                 <td><?= $row['jml_kamar'] ?></td>
                                 <td><?= $row['jml_orang'] ?></td>
-                                <td><?= $row['status_bayar'] ?></td>
+                                <td><?= $row['rate'] ?></td>
+                                <td><?= $row['bayar'] ?></td>
                                 <td><?= $row['status_order'] ?></td>
                                 <td>
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">

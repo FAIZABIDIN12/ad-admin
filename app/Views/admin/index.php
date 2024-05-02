@@ -20,13 +20,11 @@
             </button>
         </div>
     <?php endif; ?>
-
     <!-- Dashboard Title -->
     <div class="d-flex justify-content-between mb-2 align-items-center"> <!-- Mengurangi margin menjadi mb-2 -->
         <h5 class="font-weight-bold">Kamar</h5> <!-- Mengubah ukuran font menjadi 1.5rem -->
         <a href="/admin/history" class="btn btn-secondary btn-sm">History <i class="fas fa-history"></i></a> <!-- Mengubah tombol menjadi kecil dengan menambahkan kelas btn-sm -->
     </div>
-
     <!-- Daftar Kamar -->
     <div class="row">
         <?php foreach ($rooms as $key => $room) : ?>
@@ -34,7 +32,7 @@
             <div class="col-md-2 mb-4"> <!-- Mengubah col-md-4 menjadi col-md-3 dan mengubah margin menjadi mb-4 -->
                 <div class="card"> <!-- Menghapus kelas h-100 untuk membiarkan ketinggian menyesuaikan konten -->
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2"> <!-- Mengurangi padding secara vertikal dengan py-2 -->
-                        <h5 class="font-weight-bold card-title mb-0" style="font-size: 0.9rem;">Kamar No.<?= $room['no_kamar'] ?></h5> <!-- Mengubah ukuran font menjadi 0.9rem -->
+                        <h5 class="font-weight-bold card-title mb-0" style="font-size: 0.9rem;">No.<?= $room['no_kamar'] ?></h5> <!-- Mengubah ukuran font menjadi 0.9rem -->
                         <?php foreach ($checkins as $checkin) : ?>
                             <?php if ($checkin['id_room'] == $room['id']) : ?>
                                 <?php $roomTaken = true; ?>
@@ -76,7 +74,6 @@
             </div>
         <?php endforeach; ?>
     </div>
-
 </div>
 
 <!-- Modal untuk detail reservasi -->
@@ -152,11 +149,10 @@
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="keterangan">Keterangan</label>
+                                <label for="keterangan">Status Order</label>
                                 <input type="text" class="form-control" id="keterangan" name="keterangan">
                             </div>
                         </div>
- 
                     </div>
                     <button type="submit" class="btn btn-primary">Check-in</button>
                 </form>
