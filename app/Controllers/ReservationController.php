@@ -106,13 +106,13 @@ class ReservationController extends BaseController
 
         // Mengambil data dari form yang dikirimkan
         $data = [
-            'tanggal_checkin' => $this->request->getPost('tanggal_checkin'),
-            'tanggal_checkout' => $this->request->getPost('tanggal_checkout'),
-            'jumlah_kamar' => $this->request->getPost('jumlah_kamar'),
-            'jumlah_orang' => $this->request->getPost('jumlah_orang'),
-            'nama_pemesan' => $this->request->getPost('nama_pemesan'),
+            'nama' => $this->request->getPost('nama'),
+            'tgl_checkin' => $this->request->getPost('tgl_checkin'),
+            'tgl_checkout' => $this->request->getPost('tgl_checkout'),
+            'jml_kamar' => $this->request->getPost('jml_kamar'),
+            'jml_orang' => $this->request->getPost('jml_orang'),
             'no_hp' => $this->request->getPost('no_hp'),
-            'status_pembayaran' => $this->request->getPost('status_pembayaran'),
+            'status_pembayaran' => $this->request->getPost('status_bayar'),
             'status_pemesanan' => $this->request->getPost('status_pemesanan'),
         ];
 
