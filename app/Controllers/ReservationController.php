@@ -36,7 +36,7 @@ class ReservationController extends BaseController
         }
 
         $userData = session()->get('username');
-        
+
         $userModel = new UserModel();
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
@@ -64,7 +64,7 @@ class ReservationController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan' => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan') ,
+            'keterangan' => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan'),
             'jenis'   => 'cr',
             'kategori'   => 'reservasi',
             'nominal' => str_replace('.', '', $this->request->getPost('bayar')),
@@ -87,22 +87,22 @@ class ReservationController extends BaseController
     }
 
 
-    public function edit($id_pemesanan)
+    public function edit($id)
     {
         // Membuat instance model pemesanan
-        $pemesananModel = new \App\Models\PemesananModel();
+        $reservationmodel = new \App\Models\ReservationModel();
 
         // Mengambil data pemesanan berdasarkan ID
-        $data['pemesanan'] = $pemesananModel->find($id_pemesanan);
+        $data['reservation'] = $reservationmodel->find($id);
 
         // Menampilkan view untuk mengedit data
         return view('admin/pemesanan/edit', $data);
     }
 
-    public function updateData($id_pemesanan)
+    public function updateData($id)
     {
-        // Membuat instance model PemesananModel
-        $model = new PemesananModel();
+        // Membuat instance model reservationmodel
+        $model = new ReservationModel();
 
         // Mengambil data dari form yang dikirimkan
         $data = [
@@ -117,7 +117,7 @@ class ReservationController extends BaseController
         ];
 
         // Memanggil metode update dari model untuk memperbarui data pemesanan
-        if ($model->update($id_pemesanan, $data)) {
+        if ($model->update($id, $data)) {
             // Jika pembaruan berhasil, set notifikasi berhasil
             session()->setFlashdata('success', 'Data berhasil diperbarui');
         } else {
@@ -129,16 +129,16 @@ class ReservationController extends BaseController
         return redirect()->to(base_url('admin/pemesanan'));
     }
 
-    public function updateStatusPembayaran($id_pemesanan)
+    public function updateStatusPembayaran($id)
     {
-        $model = new PemesananModel();
+        $model = new ReservationModel();
 
         $data = [
-            'status_pembayaran' => $this->request->getPost('status_pembayaran'),
+            'status_pembayaran' => $this->request->getPost('status_bayar'),
         ];
 
         // Memanggil metode update dari model untuk memperbarui status pembayaran pemesanan
-        if ($model->update($id_pemesanan, $data)) {
+        if ($model->update($id, $data)) {
             // Jika pembaruan berhasil, set notifikasi berhasil
             session()->setFlashdata('success', 'Status pembayaran berhasil diperbarui');
         } else {
@@ -148,6 +148,4 @@ class ReservationController extends BaseController
 
         return redirect()->to(base_url('admin/pemesanan'));
     }
-
-    
 }

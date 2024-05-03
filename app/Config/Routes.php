@@ -19,10 +19,10 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('simpan-kamar', 'RoomController::simpanKamar');
 
 
-   
+
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');
-    
+
 
 
     // pemesanan
