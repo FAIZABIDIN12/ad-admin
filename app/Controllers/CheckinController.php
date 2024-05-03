@@ -61,7 +61,7 @@ class CheckinController extends BaseController
             'keterangan'   => 'Bayar checkin ' . $kodeOrder . ' ' . $nama,
             'jenis'   => 'cr',
             'kategori'   => 'checkin',
-            'nominal' => $bayar,
+            'nominal' => str_replace('.', '', $bayar),
             'front_office' => $frontOffice
         ];
 
