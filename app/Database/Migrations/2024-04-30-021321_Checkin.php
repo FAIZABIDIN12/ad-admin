@@ -19,6 +19,10 @@ class Checkin extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'kode_order' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+            ],
             'no_hp' => [
                 'type' => 'VARCHAR',
                 'constraint' => 20,

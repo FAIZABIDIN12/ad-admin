@@ -3,7 +3,6 @@
 
 <?= $this->section('content') ?>
 <div class="container-fluid">
-
     <!-- Alert -->
     <?php if (session()->has('success')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -39,6 +38,7 @@
                                 <span class="badge badge-danger mb-2">Taken</span> <!-- Menambahkan margin kiri dengan ml-2 -->
                             <?php endif ?>
                         <?php endforeach ?>
+                        <?= $roomTaken ? '' : '<span class="badge badge-success mb-1">Ready</span>'; ?>
                     </div>
                     <div class="p-2"> <!-- Mengurangi padding secara vertikal dengan py-2 -->
                         <?php foreach ($checkins as $checkin) : ?>
@@ -61,7 +61,7 @@
                             <?php endif ?>
                         <?php endforeach ?>
                         <?php if (!$roomTaken) : ?>
-                            <span class="badge badge-success mb-1">Ready</span>
+                            
                             <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-primary input-reservation btn-sm" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $room['id'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
                                     Checkin <i class="fas fa-calendar-plus"></i>
@@ -107,6 +107,20 @@
                 <form action="/admin/simpan-checkin" method="post">
                     <input type="hidden" id="id_kamar" name="id_kamar" value="">
                     <div class="form-group">
+                        <label for="order_id">Kode Order (Jika sudah resevasi)</label>
+                        <select name="kode_order" id="order_id" class="form-control">
+                            <?php if($reservations) : ?>
+                                <option value="" selected>Choose...</option>
+                            
+                            <?php foreach($reservations as $reservation) : ?>
+                                <option value="<?= $reservation['kode_order'] ?>"><?= $reservation['kode_order'] ?> - <?= $reservation['nama'] ?></option>
+                            <?php endforeach; else: ?>
+                                <option value="" selected disabled>Belum ada data reservasi...</option>
+                            <?php endif;?>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <div class="row">
                             <div class="col">
                                 <label for="nama">Nama</label>
@@ -130,11 +144,11 @@
                         <div class="row">
                             <div class="col">
                                 <label for="rate">Rate</label>
-                                <input type="number" class="form-control" id="rate" name="rate" required>
+                                <input type="text" class="form-control uang-input" id="rate" name="rate" required>
                             </div>
                             <div class="col">
                                 <label for="bayar">Bayar</label>
-                                <input type="number" class="form-control" id="bayar" name="bayar" required>
+                                <input type="text" class="form-control uang-input" id="bayar" name="bayar" required>
                             </div>
                         </div>
                     </div>
@@ -191,6 +205,36 @@
         $('.input-reservation').click(function() {
             var idKamar = $(this).data('kamar');
             $('#id_kamar').val(idKamar); // Set nilai id_kamar di input field tersembunyi
+        });
+
+        function formatRupiah(angka) {
+            var number_string = angka.toString().replace(/[^,\d]/g, ''),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // Tambahkan titik sebagai pemisah ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            // Tambahkan koma untuk pecahan desimal
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+            return rupiah;
+        }
+
+        // Fungsi untuk mengubah nilai input menjadi format mata uang saat input berubah
+        $('.uang-input').on('input', function(e) {
+            var uang = e.target.value;
+
+            // Hilangkan semua karakter selain angka dan koma
+            uang = uang.replace(/[^\d,]/g, '');
+
+            // Ubah format menjadi format mata uang Indonesia
+            e.target.value = formatRupiah(uang);
         });
     });
 </script>

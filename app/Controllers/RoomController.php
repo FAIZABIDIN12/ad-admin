@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Models\ReservasiModel;
+use App\Models\ReservationModel;
 use App\Models\RoomModel;
 use CodeIgniter\Controller;
 use App\Models\CheckinModel;
@@ -14,7 +14,9 @@ class RoomController extends Controller
     {
         $roomModel = new RoomModel();
         $checkinModel = new CheckinModel();
+        $reservationModel = new ReservationModel();
 
+        $data['reservations'] = $reservationModel->where('status_order', 'book')->findAll();
         $data['title'] = 'Dashboard';
         $data['rooms'] = $roomModel->semuaKamar();
         $data['checkins'] =$checkinModel->getAllCheckin();
@@ -99,50 +101,6 @@ class RoomController extends Controller
         }
 
         // Redirect kembali ke halaman utama
-        return redirect()->to(base_url('admin'));
-    }
-
-    public function edit($id_reservasi)
-    {
-        $reservasiModel = new \App\Models\ReservasiModel();
-        $data['reservasi'] = $reservasiModel->find($id_reservasi);
-
-        return view('admin/edit', $data);
-    }
-
-    public function tambahData()
-    {
-        // Mengambil data dari form
-        $nama = $this->request->getPost('nama');
-        $tglCheckin = $this->request->getPost('tgl_checkin');
-        $tglCheckout = $this->request->getPost('tgl_checkout');
-        $jumlahOrang = $this->request->getPost('jumlah_orang');
-        $jumlahKamar = $this->request->getPost('jumlah_kamar');
-        $harga = $this->request->getPost('harga');
-        $idKamar = $this->request->getPost('id_kamar'); // Ambil id_kamar dari form
-
-        // Debug statement untuk memeriksa nilai id_kamar
-        var_dump($idKamar);
-
-        // Menyiapkan data untuk disimpan
-        $data = [
-            'nama' => $nama,
-            'jumlah_orang' => $jumlahOrang,
-            'jumlah_kamar' => $jumlahKamar,
-            'harga' => $harga,
-            'checkin' => $tglCheckin,
-            'checkout' => $tglCheckout,
-            'id_kamar' => $idKamar // Sertakan id_kamar ke dalam data
-        ];
-
-        // Memanggil model untuk menyimpan data reservasi
-        $reservasiModel = new ReservasiModel();
-        $reservasiModel->tambahReservasi($data);
-
-        // Set pesan sukses
-        session()->setFlashdata('success', 'Data berhasil ditambahkan.');
-
-        // Redirect ke halaman utama
         return redirect()->to(base_url('admin'));
     }
 }

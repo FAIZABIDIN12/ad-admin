@@ -8,7 +8,22 @@ class CheckinModel extends Model
 {
     protected $table            = 'checkin';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['nama', 'no_hp', 'checkin', 'checkout','checkout_plan', 'jml_orang', 'id_room', 'rate', 'bayar', 'metode_bayar', 'keterangan', 'status_order', 'front_office'];
+    protected $allowedFields    = [
+        'nama',
+        'kode_order',
+        'no_hp',
+        'checkin',
+        'checkout',
+        'checkout_plan',
+        'jml_orang',
+        'id_room',
+        'rate',
+        'bayar',
+        'metode_bayar',
+        'keterangan',
+        'status_order',
+        'front_office'
+    ];
 
     protected $useTimestamps = false;
 

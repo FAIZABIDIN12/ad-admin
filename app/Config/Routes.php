@@ -42,8 +42,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 
     //Kas
-    $routes->get('kas', 'KasController::index');
-    $routes->post('kas/simpan', 'KasController::simpan');
+    $routes->get('finance', 'FinanceController::index');
+    $routes->post('add-cash-flow', 'FinanceController::simpan');
 
     // report
     $routes->get('report', 'ReportController::index');

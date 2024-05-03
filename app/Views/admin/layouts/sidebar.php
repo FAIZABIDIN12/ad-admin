@@ -75,11 +75,11 @@
             <i class="fas fa-exclamation-circle mr-2"></i>
             <span>Komplain Tamu</span></a>
     </li> -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="/admin/kas">
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/finance">
             <i class="fas fa-coins mr-2"></i>
             <span>Keuangan</span></a>
-    </li> -->
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->

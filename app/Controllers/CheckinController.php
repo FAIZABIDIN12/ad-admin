@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\CheckinModel;
 use App\Models\UserModel;
+use App\Models\FinanceModel;
+use App\Services\GenerateOrderCode;
 
 class CheckinController extends BaseController
 {
@@ -31,9 +33,16 @@ class CheckinController extends BaseController
         $userModel = new UserModel();
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
+        
+        $kodeOrder = $this->request->getPost('kode_order');
+
+        if ($kodeOrder === null) {
+            $kodeOrder = GenerateOrderCode::generateOrderId();
+        }
 
         $data = [
             'nama' => $nama,
+            'kode_order' => $kodeOrder,
             'no_hp' => $noHp,
             'checkin' => date('Y-m-d'),
             'checkout_plan' => $tglCheckout,
@@ -46,6 +55,18 @@ class CheckinController extends BaseController
             'status_order' => 'checkin',
             'front_office' => $frontOffice
         ];
+
+        $dataFinance = [
+            'tanggal' => date("Y-m-d H:i:s"),
+            'keterangan'   => 'Bayar checkin ' . $kodeOrder . ' ' . $nama,
+            'jenis'   => 'cr',
+            'kategori'   => 'checkin',
+            'nominal' => $bayar,
+            'front_office' => $frontOffice
+        ];
+
+        $financeModel = new FinanceModel();
+        $financeModel->save($dataFinance);
 
         $checkinModel = new CheckinModel();
         $checkinModel->addCheckinData($data);

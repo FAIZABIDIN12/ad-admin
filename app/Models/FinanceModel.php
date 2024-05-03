@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class KasModel extends Model
+class FinanceModel extends Model
 {
-    protected $table = 'kas';
+    protected $table = 'finance';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['keterangan', 'tanggal', 'jenis', 'nominal'];
+    protected $allowedFields = ['tanggal', 'keterangan', 'jenis', 'kategori', 'nominal', 'front_office'];
 
     protected $returnType = 'array';
     protected $useTimestamps = false;
 
-    protected $validationRules    = [
+    protected $validationRules = [
         'tanggal' => 'required|valid_date',
         'jenis'   => 'required|in_list[cr,db]',
         'nominal' => 'required|integer'

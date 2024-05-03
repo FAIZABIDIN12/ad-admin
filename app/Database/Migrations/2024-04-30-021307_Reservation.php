@@ -15,6 +15,10 @@ class Reservation extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
+            'kode_order' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+            ],
             'tgl' => [
                 'type' => 'DATETIME',
             ],
@@ -77,6 +81,7 @@ class Reservation extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
+        $this->forge->addUniqueKey('kode_order');
         $this->forge->addForeignKey('front_office', 'user', 'id');
         $this->forge->createTable('reservation');
     }

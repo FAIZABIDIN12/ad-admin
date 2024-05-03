@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\ReservationModel;
 use App\Models\UserModel;
+use App\Models\FinanceModel;
+use App\Services\GenerateOrderCode;
 
 class ReservationController extends BaseController
 {
@@ -38,10 +40,12 @@ class ReservationController extends BaseController
         $userModel = new UserModel();
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
+        $orderId = GenerateOrderCode::generateOrderId();
 
         // Menyiapkan data untuk disimpan
         $data = [
             'tgl' => date("Y-m-d H:i:s"),
+            'kode_order' => $orderId,
             'nama' => $this->request->getPost('nama_pemesan'),
             'no_hp' => $this->request->getPost('no_hp'),
             'tgl_checkin' => $this->request->getPost('tanggal_checkin'),
@@ -58,6 +62,17 @@ class ReservationController extends BaseController
             'front_office' => $frontOffice, // Menggunakan nilai yang sudah diverifikasi
         ];
 
+        $dataFinance = [
+            'tanggal' => date("Y-m-d H:i:s"),
+            'keterangan'   => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan') ,
+            'jenis'   => 'cr',
+            'kategori'   => 'reservasi',
+            'nominal' => $this->request->getPost('bayar'),
+            'front_office' => $frontOffice
+        ];
+
+        $financeModel = new FinanceModel();
+        $financeModel->save($dataFinance);
         // Memanggil model untuk menyimpan data pemesanan
         $reservationModel = new ReservationModel();
         if ($reservationModel->insert($data)) {
@@ -134,4 +149,6 @@ class ReservationController extends BaseController
 
         return redirect()->to(base_url('admin/pemesanan'));
     }
+
+    
 }
