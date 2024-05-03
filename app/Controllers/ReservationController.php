@@ -52,8 +52,8 @@ class ReservationController extends BaseController
             'tgl_checkout' => $this->request->getPost('tanggal_checkout'),
             'jml_kamar' => $this->request->getPost('jumlah_kamar'),
             'jml_orang' => $this->request->getPost('jumlah_orang'),
-            'rate' => $this->request->getPost('rate'),
-            'bayar' => $this->request->getPost('bayar'),
+            'rate' => str_replace('.', '', $this->request->getPost('rate')),
+            'bayar' => str_replace('.', '', $this->request->getPost('bayar')),
             'kurang_bayar' => 0,
             'metode_bayar' => $this->request->getPost('metode_bayar'),
             'keterangan' => $this->request->getPost('keterangan'),
@@ -64,18 +64,17 @@ class ReservationController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan'   => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan') ,
+            'keterangan' => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan') ,
             'jenis'   => 'cr',
             'kategori'   => 'reservasi',
-            'nominal' => $this->request->getPost('bayar'),
+            'nominal' => str_replace('.', '', $this->request->getPost('bayar')),
             'front_office' => $frontOffice
         ];
 
+
         $financeModel = new FinanceModel();
-        $financeModel->save($dataFinance);
-        // Memanggil model untuk menyimpan data pemesanan
         $reservationModel = new ReservationModel();
-        if ($reservationModel->insert($data)) {
+        if ($reservationModel->insert($data) && $financeModel->save($dataFinance)) {
             // Jika data berhasil ditambahkan, set notifikasi berhasil
             session()->setFlashdata('success', 'Data berhasil ditambahkan');
         } else {
