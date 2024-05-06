@@ -27,7 +27,7 @@
         <!-- Tambahkan tombol "Tambah Data" -->
         <div class="card-body">
             <a href="/admin/pemesanan/tambah-data" class="btn btn-primary mb-3">
-                <i class="fas fa-plus-circle mr-1"></i> Tambah Data
+                <i class="fas fa-plus-circle mr-1"></i> Tambah Reservasi
             </a>
 
             <!-- DataTales Example -->
@@ -35,33 +35,27 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Tgl Reservasi</th>
+                            <th>Tanggal Reservasi</th>
+                            <th>Kode Order</th>
                             <th>Nama Pemesan</th>
-                            <th>No.HP</th>
                             <th>Check-in</th>
                             <th>Check-out</th>
                             <th>Jumlah Kamar</th>
-                            <th>Jumlah Orang</th>
-                            <th>Rate</th>
-                            <th>Bayar</th>
-                            <th>Status Pemesanan</th>
+                            <th>Deposit</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($pemesanan as $index => $row) : ?>
                             <tr>
-                                <td><?= $index + 1 ?></td>
                                 <td><?= $row['tgl'] ?></td>
+                                <td><?= $row['kode_order'] ?></td>
                                 <td><?= $row['nama'] ?></td>
-                                <td><?= $row['no_hp'] ?></td>
-                                <td><?= $row['tgl_checkin'] ?></td>
-                                <td><?= $row['tgl_checkout'] ?></td>
+                                <td><?= date('d F Y', strtotime($row['tgl_checkin'])) ?></td>
+                                <td><?= date('d F Y', strtotime($row['tgl_checkout'])) ?></td>
                                 <td><?= $row['jml_kamar'] ?></td>
-                                <td><?= $row['jml_orang'] ?></td>
-                                <td><?= $row['rate'] ?></td>
-                                <td><?= $row['bayar'] ?></td>
+                                <td><?= number_format($row['bayar'], 0, ',', '.') ?></td>
                                 <td><?= $row['status_order'] ?></td>
                                 <td>
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
@@ -87,7 +81,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Inisialisasi DataTables
-        $('#dataTable').DataTable();
+        // $('#dataTable').DataTable();
     });
 </script>
 <?= $this->endSection() ?>

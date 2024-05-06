@@ -31,7 +31,7 @@
             <div class="col-md-2 mb-4"> <!-- Mengubah col-md-4 menjadi col-md-3 dan mengubah margin menjadi mb-4 -->
                 <div class="card"> <!-- Menghapus kelas h-100 untuk membiarkan ketinggian menyesuaikan konten -->
                     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-2"> <!-- Mengurangi padding secara vertikal dengan py-2 -->
-                        <h5 class="font-weight-bold card-title mb-0" style="font-size: 0.9rem;">No.<?= $room['no_kamar'] ?></h5> <!-- Mengubah ukuran font menjadi 0.9rem -->
+                        <h6 class="font-weight-bold card-title mb-0"><i class="fas fa-bed"></i><span class="ml-1"><?= $room['no_kamar'] ?></span></h6> <!-- Mengubah ukuran font menjadi 0.9rem -->
                         <?php foreach ($checkins as $checkin) : ?>
                             <?php if ($checkin['id_room'] == $room['id']) : ?>
                                 <?php $roomTaken = true; ?>
@@ -44,11 +44,8 @@
                         <?php foreach ($checkins as $checkin) : ?>
                             <?php if ($checkin['id_room'] == $room['id']) : ?>
                                 <?php $roomTaken = true; ?>
-                                <div class="mb-1" style="font-size: 0.8rem;"> <!-- Mengubah ukuran font menjadi 0.8rem dan mengurangi margin bawah menjadi mb-1 -->
+                                <div class="mb-1">
                                     <?= $checkin['nama'] ?> <!-- Menampilkan nama -->
-                                </div>
-                                <div class="mb-1" style="font-size: 0.8rem;"> <!-- Mengubah ukuran font menjadi 0.8rem dan mengurangi margin bawah menjadi mb-1 -->
-                                    Check-out: <?= $checkin['checkout_plan'] ?> <!-- Menampilkan tanggal check-out -->
                                 </div>
                                 <div class="btn-group d-flex" role="group">
                                     <a href="/admin/checkout/<?= $checkin['id'] ?>" type="button" class="btn btn-danger input-reservation btn-sm" style="font-size: 0.7rem;">
@@ -133,8 +130,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="checkout_plan">Check-out</label>
-                        <input type="date" class="form-control" id="checkout_plan" name="checkout_plan" required>
+                    <label for="tanggal_checkout">Rencana Check-out:</label>
+                        <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                            <input type="text" name="checkout_plan" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                            <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_orang">Jumlah Orang</label>
@@ -176,6 +178,12 @@
 </div>
 <script>
     $(document).ready(function() {
+        $(function () {
+            $('#datetimepicker3').datetimepicker({
+                locale: 'id'
+            });
+        });
+
         $('.detail').click(function() {
             var kamarId = $(this).data('kamar');
             $.ajax({

@@ -22,6 +22,10 @@
 <link href="<?= base_url('css/sb-admin-2.min.css') ?>" rel="stylesheet">
 <!-- Menggunakan base URL untuk jQuery -->
 <script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
+
+<script src="<?= base_url('js/moment.js') ?>"></script>
+<script src="<?= base_url('js/tempusdominus-bootstrap-4.min.js') ?>"></script>
+<link rel="stylesheet" href="<?= base_url('css/tempusdominus-bootstrap-4.min.css') ?>" />
 </head>
 
 
@@ -85,6 +89,7 @@
 
 <!-- Menggunakan base URL untuk custom scripts -->
 <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
+
 
 </body>
 </html>

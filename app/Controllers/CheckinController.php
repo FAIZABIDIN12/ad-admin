@@ -18,10 +18,13 @@ class CheckinController extends BaseController
 
     public function simpan_checkin()
     {
+        date_default_timezone_set('Asia/Jakarta');
+
         $idKamar = $this->request->getPost('id_kamar');
         $nama = $this->request->getPost('nama');
         $noHp = $this->request->getPost('no_hp');
         $tglCheckout = $this->request->getPost('checkout_plan');
+        $tgl_checkout = \DateTime::createFromFormat('d/m/Y H.i', $tglCheckout)->format('Y-m-d H:i:s');
         $jumlahOrang = $this->request->getPost('jumlah_orang');
         $rate = $this->request->getPost('rate');
         $bayar = $this->request->getPost('bayar');
@@ -44,8 +47,8 @@ class CheckinController extends BaseController
             'nama' => $nama,
             'kode_order' => $kodeOrder,
             'no_hp' => $noHp,
-            'checkin' => date('Y-m-d'),
-            'checkout_plan' => $tglCheckout,
+            'checkin' => date("Y-m-d H:i:s"),
+            'checkout_plan' => $tgl_checkout,
             'jml_orang' => $jumlahOrang,
             'id_room' => $idKamar,
             'rate' => str_replace('.', '', $rate),
@@ -76,6 +79,7 @@ class CheckinController extends BaseController
     }
     public function checkout($id)
     {
+        date_default_timezone_set('Asia/Jakarta');
         $checkinModel = new CheckinModel();
         $updated = $checkinModel->update($id, ['status_order' => 'done', 'checkout' => date('Y-m-d')]);
 

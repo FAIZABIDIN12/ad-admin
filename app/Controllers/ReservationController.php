@@ -27,6 +27,7 @@ class ReservationController extends BaseController
 
     public function tambah()
     {
+        date_default_timezone_set('Asia/Jakarta');  
         // Memeriksa apakah input untuk status_pemesanan tidak null
         $status_order = $this->request->getPost('status_order');
 
@@ -42,14 +43,21 @@ class ReservationController extends BaseController
         $frontOffice = $user['id'];
         $orderId = GenerateOrderCode::generateOrderId();
 
-        // Menyiapkan data untuk disimpan
+        
+        $tanggal_checkin = $this->request->getPost('tanggal_checkin');
+        $tanggal_checkout = $this->request->getPost('tanggal_checkout');
+
+        // Buat objek DateTime dari tanggal yang diberikan dengan format yang tepat
+        $tgl_checkin = \DateTime::createFromFormat('d/m/Y H.i', $tanggal_checkin)->format('Y-m-d H:i:s');
+        $tgl_checkout = \DateTime::createFromFormat('d/m/Y H.i', $tanggal_checkout)->format('Y-m-d H:i:s');
+
         $data = [
             'tgl' => date("Y-m-d H:i:s"),
             'kode_order' => $orderId,
             'nama' => $this->request->getPost('nama_pemesan'),
             'no_hp' => $this->request->getPost('no_hp'),
-            'tgl_checkin' => $this->request->getPost('tanggal_checkin'),
-            'tgl_checkout' => $this->request->getPost('tanggal_checkout'),
+            'tgl_checkin' => $tgl_checkin,
+            'tgl_checkout' => $tgl_checkout,
             'jml_kamar' => $this->request->getPost('jumlah_kamar'),
             'jml_orang' => $this->request->getPost('jumlah_orang'),
             'rate' => str_replace('.', '', $this->request->getPost('rate')),

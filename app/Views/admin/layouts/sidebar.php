@@ -3,7 +3,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-crown"></i>
+            <i class="fas fa-hotel"></i>
         </div>
         <div class="sidebar-brand-text mx-3">Asri Graha</div>
     </a>
