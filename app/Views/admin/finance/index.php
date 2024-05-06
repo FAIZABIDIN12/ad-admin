@@ -7,27 +7,33 @@
         <h6 class="m-0 font-weight-bold text-primary">Laporan Keuangan</h6>
     </div>
     <!-- Tambahkan input tanggal -->
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="start_date">Mulai</label>
-            <input type="date" class="form-control" id="start_date">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="end_date">Akhir</label>
-            <input type="date" class="form-control" id="end_date">
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary" id="filterBtn">Filter</button>
-
 
     <div class="card-body">
+            <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
+                Tambah Data <i class="fas fa-plus"></i>
+            </button>
+    
         <div class="row">
-            <div class="col-md-6">
-                <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
-                    Tambah Data <i class="fas fa-plus"></i>
-                </button>
+            <div class="col">
+                <div class="form-group row">
+                    <label for="start_date" class="col-sm-5 col-form-label">Tanngal Awal</label>
+                    <div class="">
+                        <input type="date" class="form-control" id="start_date">
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 text-right">
+            <div class="col">
+                <div class="form-group row">
+                    <label for="end_date" class="col-sm-5 col-form-label">Tangal Akhir</label>
+                    <div class="">
+                        <input type="date" class="form-control" id="end_date">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col">
+                <button type="button" class="btn btn-primary" id="filterBtn">Filter</button>
+            </div>
+            <div class="col text-right">
                 <!-- Tombol untuk download Excel -->
                 <button type="button" class="btn btn-success btn-lg mb-3 mr-2" id="downloadExcelBtn" style="font-size: 0.7rem;">
                     Download Excel <i class="fas fa-file-excel"></i>
@@ -122,6 +128,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 <script>
     $(document).ready(function() {
+        var filterFunction = null; // Variabel untuk menyimpan fungsi pencarian tambahan
         $('#dataTable').DataTable({
             responsive: true
         });
@@ -133,29 +140,27 @@
 
             // Lakukan filter jika kedua tanggal telah dipilih
             if (startDate !== '' && endDate !== '') {
-                $.fn.dataTable.ext.search.push(
-                    function(settings, data, dataIndex) {
-                        var dataDate = new Date(data[0]); // Kolom pertama adalah tanggal
-                        var filterStartDate = new Date(startDate);
-                        var filterEndDate = new Date(endDate);
+                filterFunction = function(settings, data, dataIndex) {
+                    var dataDate = new Date(data[0]); // Kolom pertama adalah tanggal
+                    var filterStartDate = new Date(startDate);
+                    var filterEndDate = new Date(endDate);
 
-                        // Set waktu ke 00:00:00 untuk memastikan hanya tanggal yang dibandingkan
-                        dataDate.setHours(0, 0, 0, 0);
-                        filterStartDate.setHours(0, 0, 0, 0);
-                        filterEndDate.setHours(0, 0, 0, 0);
+                    // Set waktu ke 00:00:00 untuk memastikan hanya tanggal yang dibandingkan
+                    dataDate.setHours(0, 0, 0, 0);
+                    filterStartDate.setHours(0, 0, 0, 0);
+                    filterEndDate.setHours(0, 0, 0, 0);
 
-                        if (dataDate >= filterStartDate && dataDate <= filterEndDate) {
-                            return true;
-                        }
-                        return false;
+                    if (dataDate >= filterStartDate && dataDate <= filterEndDate) {
+                        return true;
                     }
-                );
+                    return false;
+                };
+
+                // Tambahkan fungsi pencarian tambahan
+                $.fn.dataTable.ext.search.push(filterFunction);
 
                 // Redraw tabel setelah filter diterapkan
                 $('#dataTable').DataTable().draw();
-
-                // Hapus filter setelah digunakan agar tidak mempengaruhi filter lainnya
-                $.fn.dataTable.ext.search.pop();
             }
         });
 
@@ -163,16 +168,21 @@
         $('#downloadExcelBtn').on('click', function() {
             var table = $('#dataTable').DataTable();
             var data = table.rows().data().toArray(); // Ambil data dari semua baris tabel
-            var ws = XLSX.utils.json_to_sheet(data);
 
             // Buat workbook dan tambahkan worksheet
+            var ws = XLSX.utils.json_to_sheet(data);
             var wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
             // Simpan workbook ke file Excel dan unduh
             XLSX.writeFile(wb, 'data.xlsx');
-        });
 
+            // Hapus fungsi pencarian tambahan
+            if (filterFunction !== null) {
+                $.fn.dataTable.ext.search.pop();
+                filterFunction = null; // Atur kembali variabel filterFunction ke null
+            }
+        });
         // Handle download CSV
         $('#downloadCsvBtn').on('click', function() {
             var table = $('#dataTable').DataTable();

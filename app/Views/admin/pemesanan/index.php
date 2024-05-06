@@ -61,7 +61,7 @@
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-info btn-detail" data-reservation-id="<?= $row['id'] ?>">
+                                    <button type="button" class="btn btn-sm btn-info btn-detail" data-toggle="modal"  data-reservation-id="<?= $row['id'] ?>" data-target="#detailModal">
                                         <i class="fas fa-info-circle"></i>
                                     </button>
                                 </td>
@@ -112,21 +112,26 @@
                 success: function(response) {
                     if (response) {
                         console.log(response);
-                        // $('#detail-reservasi').html(`
-                        // <p>Nama: <span>${response.nama}</span></p>
-                        // <p>No. HP: <span>${response.no_hp}</span></p>
-                        // <p>Tanggal Check-in: <span>${response.checkin}</span></p>
-                        // <p>Tanggal Check-out: <span>${response.checkout_plan}</span></p>
-                        // <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
-                        // <p>Bayar: <span> Rp.${response.bayar}</span></p>
-                        // <p>Status: <span> ${response.status_order}</span></p>
-                        // `);
+                        $('#detailContent').html(`
+                        <p>Tanggal Reservasi: <span>${response.tgl}</span></p>
+                        <p>Kode Order: <span>${response.kode_order}</span></p>
+                        <p>Nama: <span>${response.nama}</span></p>
+                        <p>No. HP: <span>${response.no_hp}</span></p>
+                        <p>Tanggal Check-in: <span>${response.tgl_checkin}</span></p>
+                        <p>Tanggal Check-out: <span>${response.tgl_checkout}</span></p>
+                        <p>Jumlah Kamar: <span>${response.jml_kamar}</span></p>
+                        <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
+                        <p>Harga: <span> Rp.${response.rate}</span></p>
+                        <p>Deposit: <span> Rp.${response.bayar}</span></p>
+                        <p>Status Pembayaran: <span> Rp.${response.status_bayar}</span></p>
+                        <p>Status Tamu: <span> ${response.status_order}</span></p>
+                        `);
                     } else {
-                        $('#detail-reservasi').html('<p>Data reservasi tidak ditemukan.</p>');
+                        $('#detailContent').html('<p>Data reservasi tidak ditemukan.</p>');
                     }
                 },
                 error: function() {
-                    $('#detail-reservasi').html('<p>Terjadi kesalahan saat mengambil data reservasi.</p>');
+                    $('#detailContent').html('<p>Terjadi kesalahan saat mengambil data reservasi.</p>');
                 }
             });
         });
