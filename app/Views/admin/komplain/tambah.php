@@ -12,16 +12,21 @@
         </div>
         <!-- Card Body -->
         <div class="card-body">
-
-
-            <form action="<?= base_url('admin/simpan-komplain') ?>" method="post">
+            <form action="<?= base_url('admin/komplain/simpan') ?>" method="post">
                 <div class="form-group">
                     <label for="nama">Nama:</label>
                     <input type="text" name="nama" id="nama" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="komplain">Komplain:</label>
-                    <textarea name="komplain" id="komplain" class="form-control" required></textarea>
+                    <label for="keterangan">Keterangan:</label>
+                    <textarea name="keterangan" id="keterangan" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select name="status" id="status" class="form-control" required>
+                        <option value="0">No Action</option>
+                        <option value="1">Done</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">

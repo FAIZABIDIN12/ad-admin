@@ -19,7 +19,7 @@ class RoomController extends Controller
         $data['reservations'] = $reservationModel->where('status_order', 'book')->findAll();
         $data['title'] = 'Dashboard';
         $data['rooms'] = $roomModel->semuaKamar();
-        $data['checkins'] =$checkinModel->getAllCheckin();
+        $data['checkins'] = $checkinModel->getAllCheckin();
 
         return view('admin/index', $data);
     }

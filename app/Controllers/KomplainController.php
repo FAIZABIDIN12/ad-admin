@@ -2,67 +2,86 @@
 
 namespace App\Controllers;
 
+use App\Controllers\BaseController;
 use App\Models\KomplainModel;
 use CodeIgniter\Controller;
 
-class KomplainController extends Controller
+class KomplainController extends BaseController
 {
     public function index()
     {
-        // Mengambil semua komplain dari database
         $komplainModel = new KomplainModel();
-        $data['komplain'] = $komplainModel->findAll();
+        $data['komplains'] = $komplainModel->findAll();
 
-        // Menampilkan data komplain ke view
         return view('admin/komplain/index', $data);
     }
 
     public function tambah()
     {
-        // Menampilkan form untuk menambahkan komplain
         return view('admin/komplain/tambah');
     }
 
     public function simpan()
     {
-        // Mengambil data dari form
-        $nama = $this->request->getPost('nama');
-        $komplain = $this->request->getPost('komplain');
-        $status = 'no-action'; // Set status default
+        // Load CodeIgniter's form validation library
+        $validation = \Config\Services::validation();
 
-        // Menyimpan data ke database
-        $komplainModel = new KomplainModel();
-        $success = $komplainModel->insert(['nama' => $nama, 'komplain' => $komplain, 'status' => $status]);
+        // Define validation rules
+        $validation->setRules([
+            'nama' => 'required',
+            'keterangan' => 'required',
+            'status' => 'required|in_list[0,1]', // Ensure status is either 0 or 1
+        ]);
 
-        if ($success) {
-            // Set flashdata untuk notifikasi berhasil
-            session()->setFlashdata('success', 'Komplain berhasil disimpan.');
-        } else {
-            // Set flashdata untuk notifikasi gagal
-            session()->setFlashdata('error', 'Gagal menyimpan komplain.');
+        // Run validation
+        if (!$validation->withRequest($this->request)->run()) {
+            // If validation fails, redirect back to the form with errors
+            return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
 
-        // Redirect ke halaman index
-        return redirect()->to(base_url('admin/komplain'));
-    }
+        // If validation passes, proceed to insert data into the database
+        $komplainModel = new KomplainModel();
 
-    public function editStatus($id)
-    {
-        // Menampilkan form untuk mengubah status komplain
-        $data['komplain'] = (new KomplainModel())->find($id);
-        return view('admin/komplain/edit_status', $data);
-    }
-
-    public function updateStatus($id)
-    {
-        // Memperbarui status komplain berdasarkan ID
-        $model = new KomplainModel();
         $data = [
-            'status' => $this->request->getPost('status')
+            'nama' => $this->request->getPost('nama'),
+            'keterangan' => $this->request->getPost('keterangan'),
+            'status' => $this->request->getPost('status'),
         ];
-        $model->update($id, $data);
 
-        // Redirect ke halaman komplain setelah pembaruan berhasil
-        return redirect()->to(base_url('admin/komplain'));
+        $komplainModel->insert($data);
+
+        return redirect()->to('/admin/komplain')->with('success', 'Komplain berhasil ditambahkan');
+    }
+
+
+    public function edit($id)
+    {
+        $komplainModel = new KomplainModel();
+        $data['komplain'] = $komplainModel->find($id);
+
+        return view('admin/komplain/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $komplainModel = new KomplainModel();
+
+        $data = [
+            'nama' => $this->request->getPost('nama'),
+            'keterangan' => $this->request->getPost('keterangan'),
+            'status' => $this->request->getPost('status'),
+        ];
+
+        $komplainModel->update($id, $data);
+
+        return redirect()->to('/admin/komplain')->with('success', 'Komplain berhasil diperbarui');
+    }
+
+    public function delete($id)
+    {
+        $komplainModel = new KomplainModel();
+        $komplainModel->delete($id);
+
+        return redirect()->to('/admin/komplain')->with('success', 'Komplain berhasil dihapus');
     }
 }

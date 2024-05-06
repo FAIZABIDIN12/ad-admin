@@ -19,13 +19,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('simpan-kamar', 'RoomController::simpanKamar');
 
 
-
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');
-
-
-
-
 
     // pemesanan
     $routes->get('pemesanan', 'ReservationController::index');
@@ -35,21 +30,20 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('pemesanan/tambah-data', 'ReservationController::tambahData');
     $routes->get('pemesanan/detail/(:num)', 'ReservationController::detail/$1');
 
-    //Komplain tamu
-    $routes->get('komplain', 'KomplainController::index');
-    $routes->get('tambah-komplain', 'KomplainController::tambah');
-    $routes->post('simpan-komplain', 'KomplainController::simpan');
-    $routes->get('edit-status/(:num)', 'KomplainController::editStatus/$1');
-    $routes->post('update-status/(:num)', 'KomplainController::updateStatus/$1');
-
-
-
     //Kas
     $routes->get('finance', 'FinanceController::index');
     $routes->post('add-cash-flow', 'FinanceController::simpan');
 
     // report
     $routes->get('report', 'ReportController::index');
+
+
+    // komplain
+    $routes->get('komplain', 'KomplainController::index');
+    $routes->get('komplain/tambah', 'KomplainController::tambah');
+    $routes->post('komplain/simpan', 'KomplainController::simpan');
+    $routes->get('komplain/edit/(:num)', 'KomplainController::edit/$1');
+    $routes->POST('komplain/update/(:num)', 'KomplainController::update/$1');
 
 
     //checkin

@@ -29,7 +29,6 @@
             <a href="/admin/pemesanan/tambah-data" class="btn btn-primary mb-3">
                 <i class="fas fa-plus-circle mr-1"></i> Tambah Reservasi
             </a>
-
             <!-- DataTales Example -->
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -61,7 +60,7 @@
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-info btn-detail" data-toggle="modal"  data-reservation-id="<?= $row['id'] ?>" data-target="#detailModal">
+                                    <button type="button" class="btn btn-sm btn-info btn-detail" data-toggle="modal" data-reservation-id="<?= $row['id'] ?>" data-target="#detailModal">
                                         <i class="fas fa-info-circle"></i>
                                     </button>
                                 </td>

@@ -57,6 +57,12 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/komplain">
+            <i class="fas fa-comment-alt mr-2"></i> <!-- Menggunakan ikon komplain -->
+            <span>Komplain Tamu</span>
+        </a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -80,6 +86,9 @@
             <i class="fas fa-coins mr-2"></i>
             <span>Keuangan</span></a>
     </li>
+
+
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->
