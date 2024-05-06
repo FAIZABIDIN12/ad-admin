@@ -42,6 +42,7 @@
                             <th>Jumlah Kamar</th>
                             <th>Deposit</th>
                             <th>Status</th>
+                            <th>FO</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -56,6 +57,7 @@
                                 <td><?= $row['jml_kamar'] ?></td>
                                 <td><?= number_format($row['bayar'], 0, ',', '.') ?></td>
                                 <td><?= $row['status_order'] ?></td>
+                                <td><?= $row['front_office'] ?></td>
                                 <td>
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
