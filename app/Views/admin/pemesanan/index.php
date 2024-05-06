@@ -61,12 +61,33 @@
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
+                                    <button type="button" class="btn btn-sm btn-info btn-detail" data-reservation-id="<?= $row['id'] ?>">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+            <!-- Modal untuk menampilkan detail reservasi -->
+            <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="detailModalLabel">Detail Reservasi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Tempat untuk menampilkan detail reservasi -->
+                            <div id="detailContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -79,9 +100,37 @@
 <!-- DataTables JS -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Inisialisasi DataTables
-        // $('#dataTable').DataTable();
+    $(document).ready(function() {
+        // Ketika tombol detail diklik
+
+
+        $('.btn-detail').click(function() {
+            var reservationId = $(this).data('reservation-id');
+            $.ajax({
+                url: '/admin/pemesanan/detail/' + reservationId,
+                type: 'GET',
+                success: function(response) {
+                    if (response) {
+                        console.log(response);
+                        // $('#detail-reservasi').html(`
+                        // <p>Nama: <span>${response.nama}</span></p>
+                        // <p>No. HP: <span>${response.no_hp}</span></p>
+                        // <p>Tanggal Check-in: <span>${response.checkin}</span></p>
+                        // <p>Tanggal Check-out: <span>${response.checkout_plan}</span></p>
+                        // <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
+                        // <p>Bayar: <span> Rp.${response.bayar}</span></p>
+                        // <p>Status: <span> ${response.status_order}</span></p>
+                        // `);
+                    } else {
+                        $('#detail-reservasi').html('<p>Data reservasi tidak ditemukan.</p>');
+                    }
+                },
+                error: function() {
+                    $('#detail-reservasi').html('<p>Terjadi kesalahan saat mengambil data reservasi.</p>');
+                }
+            });
+        });
     });
 </script>
+
 <?= $this->endSection() ?>

@@ -9,6 +9,7 @@ use App\Services\GenerateOrderCode;
 
 class ReservationController extends BaseController
 {
+
     // Fungsi untuk menampilkan semua pemesanan
     public function index()
     {
@@ -27,7 +28,7 @@ class ReservationController extends BaseController
 
     public function tambah()
     {
-        date_default_timezone_set('Asia/Jakarta');  
+        date_default_timezone_set('Asia/Jakarta');
         // Memeriksa apakah input untuk status_pemesanan tidak null
         $status_order = $this->request->getPost('status_order');
 
@@ -43,7 +44,7 @@ class ReservationController extends BaseController
         $frontOffice = $user['id'];
         $orderId = GenerateOrderCode::generateOrderId();
 
-        
+
         $tanggal_checkin = $this->request->getPost('tanggal_checkin');
         $tanggal_checkout = $this->request->getPost('tanggal_checkout');
 
@@ -155,5 +156,20 @@ class ReservationController extends BaseController
         }
 
         return redirect()->to(base_url('admin/pemesanan'));
+    }
+
+    // Dalam Controller
+    public function detail($id)
+    {
+        // Ambil data reservasi berdasarkan ID
+        $reservation = new ReservationModel();
+        $detail = $reservation->find($id);
+        if ($detail) {
+            // Jika data ditemukan, kirim respons JSON
+            return $this->response->setJSON($detail);
+        } else {
+            // Jika data tidak ditemukan, kirim respons JSON dengan pesan error
+            return $this->response->setJSON(['error' => 'Data not found'])->setStatusCode(404);
+        }
     }
 }

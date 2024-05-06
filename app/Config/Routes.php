@@ -25,12 +25,15 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 
 
+
+
     // pemesanan
     $routes->get('pemesanan', 'ReservationController::index');
     $routes->get('pemesanan/edit/(:num)', 'ReservationController::edit/$1');
     $routes->post('pemesanan/update-data/(:num)', 'ReservationController::updateData/$1');
     $routes->post('pemesanan/tambah', 'ReservationController::tambah');
     $routes->get('pemesanan/tambah-data', 'ReservationController::tambahData');
+    $routes->get('pemesanan/detail/(:num)', 'ReservationController::detail/$1');
 
     //Komplain tamu
     $routes->get('komplain', 'KomplainController::index');
