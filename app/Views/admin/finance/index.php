@@ -55,6 +55,7 @@
                         <th>Jenis</th>
                         <th>Nominal</th>
                         <th>Kategori</th>
+                        <th>Front Office</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +66,18 @@
                             <td><?= $cash['jenis'] == 'cr' ? 'Uang Masuk' : 'Uang Keluar' ?></td>
                             <td><?= number_format($cash['nominal'], 0, ',', '.'); ?></td>
                             <td><?= $cash['kategori'] ?></td>
+                            <td>
+                                <?php
+                                // Ambil instance dari UserModel
+                                $userModel = new \App\Models\UserModel();
+
+                                // Ambil data front office berdasarkan ID dari reservasi
+                                $frontOffice = $userModel->find($cash['front_office']);
+
+                                // Tampilkan nama front office jika ditemukan
+                                echo $frontOffice ? $frontOffice['nama'] : 'Nama tidak ditemukan';
+                                ?>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

@@ -78,6 +78,7 @@
             <div class="info">
                 <strong>Status Pembayaran:</strong> <?= $reservation['status_bayar'] ?>
             </div>
+
             <div class="info">
                 <strong>Front Office:</strong>
                 <?php

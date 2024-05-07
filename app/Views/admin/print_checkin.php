@@ -81,13 +81,24 @@
                 <strong>Status Order:</strong> <?= $checkin['status_order'] ?>
             </div>
             <div class="info">
-                <strong>Front Office:</strong> <?= $checkin['front_office'] ?>
+                <strong>Front Office:</strong>
+                <?php
+                // Ambil instance dari UserModel
+                $userModel = new \App\Models\UserModel();
+
+                // Cari front office berdasarkan ID
+                $frontOffice = $userModel->where('id', $checkin['front_office'])->first();
+
+                // Tampilkan nama jika front office ditemukan
+                echo $frontOffice ? $frontOffice['nama'] : 'Unknown';
+                ?>
             </div>
             <!-- Tambahkan informasi lain yang diperlukan -->
 
             <div class="nota-footer">
-                <p>Terima kasih telah memilih kami!</p>
+                <p><strong>Terima kasih telah memilih kami!</strong></p>
             </div>
+
         </div>
     </div>
 

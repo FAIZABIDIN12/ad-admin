@@ -16,6 +16,7 @@
                             <th>Jumlah Orang</th>
                             <th>Harga</th>
                             <th>Status Order</th>
+                            <th>Front Office</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,19 @@
                                 <td><?= $reservasi['jml_orang']; ?></td>
                                 <td><?= $reservasi['bayar']; ?></td>
                                 <td><?= $reservasi['status_order']; ?></td>
+                                <td>
+                                    <?php
+                                    // Ambil instance dari UserModel
+                                    $userModel = new \App\Models\UserModel();
+
+                                    // Ambil data front office berdasarkan ID dari reservasi
+                                    $frontOffice = $userModel->find($reservasi['front_office']);
+
+                                    // Tampilkan nama front office jika ditemukan
+                                    echo $frontOffice ? $frontOffice['nama'] : 'Nama tidak ditemukan';
+                                    ?>
+                                </td>
+
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
