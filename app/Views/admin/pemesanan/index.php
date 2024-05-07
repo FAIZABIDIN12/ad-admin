@@ -43,7 +43,7 @@
                             <th>Deposit</th>
                             <th>Status</th>
                             <th>FO</th>
-                            <th>Aksi</th>
+                            <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,9 +58,12 @@
                                 <td><?= number_format($row['bayar'], 0, ',', '.') ?></td>
                                 <td><?= $row['status_order'] ?></td>
                                 <td><?= $row['front_office'] ?></td>
-                                <td>
+                                <td class="text-center">
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="<?= base_url('/admin/pemesanan/printReservation/' . $row['id']) ?>" class="btn btn-sm btn-primary" target="_blank">
+                                        <i class="fas fa-print"></i>
                                     </a>
                                     <button type="button" class="btn btn-sm btn-info btn-detail" data-toggle="modal" data-reservation-id="<?= $row['id'] ?>" data-target="#detailModal">
                                         <i class="fas fa-info-circle"></i>

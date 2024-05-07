@@ -29,6 +29,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->post('pemesanan/tambah', 'ReservationController::tambah');
     $routes->get('pemesanan/tambah-data', 'ReservationController::tambahData');
     $routes->get('pemesanan/detail/(:num)', 'ReservationController::detail/$1');
+    $routes->get('pemesanan/printReservation/(:num)', 'ReservationController::printReservation/$1');
+
 
     //Kas
     $routes->get('finance', 'FinanceController::index');
@@ -51,6 +53,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('checkout/(:num)', 'CheckinController::checkout/$1');
     $routes->get('history', 'CheckinController::history');
     $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');
+    $routes->get('printCheckin/(:num)', 'CheckinController::printCheckin/$1');
 });
 
 // autentifikasi

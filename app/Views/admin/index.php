@@ -51,14 +51,22 @@
                                     <a href="/admin/checkout/<?= $checkin['id'] ?>" type="button" class="btn btn-danger input-reservation btn-sm" style="font-size: 0.7rem;">
                                         Check Out <i class="fas fa-sign-out-alt"></i>
                                     </a>
+                                    <a href="<?= base_url('admin/printCheckin/' . $checkin['id']) ?>" class="btn btn-primary ml-2 btn-sm" target="_blank" style="font-size: 0.7rem;">
+                                        Print Nota <i class="fas fa-print"></i>
+                                    </a>
                                     <button type="button" class="btn btn-info ml-2 detail btn-sm" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $room['id'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
                                         Detail <i class="fas fa-info-circle"></i>
                                     </button>
+                                    <!-- Tambahan tombol untuk mencetak nota -->
+
+
+
+
                                 </div>
                             <?php endif ?>
                         <?php endforeach ?>
                         <?php if (!$roomTaken) : ?>
-                            
+
                             <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-primary input-reservation btn-sm" data-toggle="modal" data-target="#inputReservationModal" data-kamar="<?= $room['id'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
                                     Checkin <i class="fas fa-calendar-plus"></i>
@@ -106,14 +114,15 @@
                     <div class="form-group">
                         <label for="order_id">Kode Order (Jika sudah resevasi)</label>
                         <select name="kode_order" id="order_id" class="form-control">
-                            <?php if($reservations) : ?>
+                            <?php if ($reservations) : ?>
                                 <option value="" selected>Choose...</option>
-                            
-                            <?php foreach($reservations as $reservation) : ?>
-                                <option value="<?= $reservation['kode_order'] ?>"><?= $reservation['kode_order'] ?> - <?= $reservation['nama'] ?></option>
-                            <?php endforeach; else: ?>
+
+                                <?php foreach ($reservations as $reservation) : ?>
+                                    <option value="<?= $reservation['kode_order'] ?>"><?= $reservation['kode_order'] ?> - <?= $reservation['nama'] ?></option>
+                                <?php endforeach;
+                            else : ?>
                                 <option value="" selected disabled>Belum ada data reservasi...</option>
-                            <?php endif;?>
+                            <?php endif; ?>
 
                         </select>
                     </div>
@@ -130,9 +139,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                    <label for="tanggal_checkout">Rencana Check-out:</label>
+                        <label for="tanggal_checkout">Rencana Check-out:</label>
                         <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                            <input type="text" name="checkout_plan" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                            <input type="text" name="checkout_plan" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
                             <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="far fa-calendar"></i></div>
                             </div>
@@ -178,7 +187,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        $(function () {
+        $(function() {
             $('#datetimepicker3').datetimepicker({
                 locale: 'id'
             });

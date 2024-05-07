@@ -8,6 +8,7 @@ use App\Models\CheckinModel;
 use App\Models\UserModel;
 use App\Models\FinanceModel;
 use App\Services\GenerateOrderCode;
+use Dompdf\Dompdf;
 
 class CheckinController extends BaseController
 {
@@ -32,11 +33,11 @@ class CheckinController extends BaseController
         $keterangan = $this->request->getPost('keterangan');
 
         $userData = session()->get('username');
-        
+
         $userModel = new UserModel();
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
-        
+
         $kodeOrder = $this->request->getPost('kode_order');
 
         if ($kodeOrder === null) {
@@ -107,7 +108,7 @@ class CheckinController extends BaseController
 
         $checkinModel = new CheckinModel();
         $detailCheckin = $checkinModel->getKamarById($id);
-        
+
         if ($detailCheckin) {
             // Jika data ditemukan, kirim respons JSON
             return $this->response->setJSON($detailCheckin);
@@ -115,5 +116,34 @@ class CheckinController extends BaseController
             // Jika data tidak ditemukan, kirim respons JSON dengan pesan error
             return $this->response->setJSON(['error' => 'Data not found'])->setStatusCode(404);
         }
+    }
+
+    public function printCheckin($checkinId)
+    {
+        // Inisialisasi model CheckinModel
+        $checkinModel = new CheckinModel();
+
+        // Lakukan proses pengambilan data checkin berdasarkan ID checkin
+        $checkin = $checkinModel->find($checkinId);
+
+        if (!$checkin) {
+            // Jika data checkin tidak ditemukan, redirect atau tampilkan pesan error
+            return redirect()->to('/admin/checkin')->with('error', 'Data checkin tidak ditemukan.');
+        }
+
+        // Load view untuk mencetak nota checkin dengan data yang telah diambil
+        $html = view('admin/print_checkin', ['checkin' => $checkin]);
+
+        // Inisialisasi objek Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Render PDF
+        $dompdf->render();
+
+        // Simpan PDF ke file atau tampilkan di browser
+        $dompdf->stream('nota_checkin.pdf');
     }
 }

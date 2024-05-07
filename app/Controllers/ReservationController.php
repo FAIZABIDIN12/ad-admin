@@ -6,6 +6,7 @@ use App\Models\ReservationModel;
 use App\Models\UserModel;
 use App\Models\FinanceModel;
 use App\Services\GenerateOrderCode;
+use Dompdf\Dompdf;
 
 class ReservationController extends BaseController
 {
@@ -171,5 +172,41 @@ class ReservationController extends BaseController
             // Jika data tidak ditemukan, kirim respons JSON dengan pesan error
             return $this->response->setJSON(['error' => 'Data not found'])->setStatusCode(404);
         }
+    }
+
+    public function printReservation($reservationId)
+    {
+        // Inisialisasi model ReservationModel
+        $reservationModel = new ReservationModel();
+
+        // Lakukan proses pengambilan data reservasi berdasarkan ID reservasi
+        $reservation = $reservationModel->find($reservationId);
+
+        // Periksa apakah data reservasi ditemukan
+        if (!$reservation) {
+            // Jika tidak ditemukan, redirect dengan pesan error
+            return redirect()->to('/admin/pemesanan')->with('error', 'Data reservasi tidak ditemukan.');
+        }
+
+        // Load view untuk mencetak nota reservasi dengan data yang telah diambil
+        $html = view('admin/pemesanan/print_reservation', ['reservation' => $reservation]);
+
+        // Inisialisasi objek Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Atur ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render PDF
+        $dompdf->render();
+
+        // Ubah nama file PDF
+        $filename = 'nota_reservasi_' . $reservationId . '.pdf';
+
+        // Keluarkan hasil PDF ke browser
+        $dompdf->stream($filename);
     }
 }
