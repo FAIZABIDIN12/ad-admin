@@ -167,7 +167,20 @@
         // Handle download Excel
         $('#downloadExcelBtn').on('click', function() {
             var table = $('#dataTable').DataTable();
-            var data = table.rows().data().toArray(); // Ambil data dari semua baris tabel
+            var data = [];
+
+            // Cek apakah filter telah diterapkan
+            if (filterFunction !== null) {
+                // Ambil hanya data yang terfilter
+                table.rows().every(function() {
+                    if (filterFunction(null, this.data(), this.index())) {
+                        data.push(this.data());
+                    }
+                });
+            } else {
+                // Jika tidak ada filter, ambil semua data
+                data = table.rows().data().toArray();
+            }
 
             // Buat workbook dan tambahkan worksheet
             var ws = XLSX.utils.json_to_sheet(data);
@@ -176,20 +189,28 @@
 
             // Simpan workbook ke file Excel dan unduh
             XLSX.writeFile(wb, 'data.xlsx');
-
-            // Hapus fungsi pencarian tambahan
-            if (filterFunction !== null) {
-                $.fn.dataTable.ext.search.pop();
-                filterFunction = null; // Atur kembali variabel filterFunction ke null
-            }
         });
+
         // Handle download CSV
         $('#downloadCsvBtn').on('click', function() {
             var table = $('#dataTable').DataTable();
-            var data = table.rows().data().toArray(); // Ambil data dari semua baris tabel
-            var csv = '';
+            var data = [];
+
+            // Cek apakah filter telah diterapkan
+            if (filterFunction !== null) {
+                // Ambil hanya data yang terfilter
+                table.rows().every(function() {
+                    if (filterFunction(null, this.data(), this.index())) {
+                        data.push(this.data());
+                    }
+                });
+            } else {
+                // Jika tidak ada filter, ambil semua data
+                data = table.rows().data().toArray();
+            }
 
             // Buat header CSV
+            var csv = '';
             var header = [];
             table.columns().every(function() {
                 header.push(this.header().textContent.trim());
@@ -215,6 +236,7 @@
             // Hapus elemen <a> setelah selesai mengunduh
             document.body.removeChild(link);
         });
+
     });
 </script>
 
