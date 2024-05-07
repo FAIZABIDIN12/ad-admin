@@ -32,10 +32,10 @@ class ReservationModel extends Model
     {
         // Ambil ID terakhir dari tabel reservasi
         $lastId = $this->select('id')
-                        ->orderBy('id', 'DESC')
-                        ->limit(1)
-                        ->get()
-                        ->getRowArray();
+            ->orderBy('id', 'DESC')
+            ->limit(1)
+            ->get()
+            ->getRowArray();
 
         if ($lastId) {
             return $lastId['id'];
@@ -43,5 +43,21 @@ class ReservationModel extends Model
             // Jika tabel kosong, kembalikan 0
             return 0;
         }
+    }
+
+    public function getUpcomingReservations()
+    {
+        // Ambil tanggal hari ini
+        $today = date('Y-m-d');
+
+        // Ambil tanggal 3 hari ke depan dari sekarang
+        $threeDaysAhead = new \DateTime();
+        $threeDaysAhead->modify('+3 days');
+        $threeDaysAhead = $threeDaysAhead->format('Y-m-d');
+
+        // Ambil data reservasi dengan tanggal check-in dalam rentang dari hari ini sampai 3 hari ke depan
+        return $this->where('tgl_checkin >=', $today)
+            ->where('tgl_checkin <=', $threeDaysAhead)
+            ->findAll();
     }
 }

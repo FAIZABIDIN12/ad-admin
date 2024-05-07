@@ -19,6 +19,29 @@
             </button>
         </div>
     <?php endif; ?>
+
+    <?php
+    // Ambil instance dari ReservationModel
+    $reservationModel = new \App\Models\ReservationModel();
+
+    // Ambil data reservasi yang akan datang
+    $upcomingReservations = $reservationModel->getUpcomingReservations();
+
+    // Tampilkan reminder jika ada reservasi yang akan datang dalam 3 hari
+    if (!empty($upcomingReservations)) {
+        echo '<div class="alert alert-info" role="alert">';
+        echo '<strong>Reminder:</strong> Data Reservasi 3 hari kedepan. Detailnya:';
+        echo '<ul>';
+        foreach ($upcomingReservations as $reservation) {
+            echo '<li>';
+            echo 'Kode Reservasi: ' . $reservation['kode_order'] . ', |Nama: ' . $reservation['nama'] . ', |Tgl Checkin: ' . $reservation['tgl_checkin'] . ', |Status Pembayaran: ' . $reservation['status_bayar'];;
+            echo '</li>';
+        }
+        echo '</ul>';
+        echo '</div>';
+    }
+    ?>
+
     <!-- Dashboard Title -->
     <div class="d-flex justify-content-between mb-2 align-items-center"> <!-- Mengurangi margin menjadi mb-2 -->
         <h5 class="font-weight-bold">Kamar</h5> <!-- Mengubah ukuran font menjadi 1.5rem -->
@@ -58,10 +81,6 @@
                                         Detail <i class="fas fa-info-circle"></i>
                                     </button>
                                     <!-- Tambahan tombol untuk mencetak nota -->
-
-
-
-
                                 </div>
                             <?php endif ?>
                         <?php endforeach ?>

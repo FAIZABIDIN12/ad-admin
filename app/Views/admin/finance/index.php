@@ -9,10 +9,10 @@
     <!-- Tambahkan input tanggal -->
 
     <div class="card-body">
-            <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
-                Tambah Data <i class="fas fa-plus"></i>
-            </button>
-    
+        <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
+            Tambah Data <i class="fas fa-plus"></i>
+        </button>
+
         <div class="row">
             <div class="col">
                 <div class="form-group row">
