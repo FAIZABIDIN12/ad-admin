@@ -163,8 +163,8 @@ class ReservationController extends BaseController
     public function detail($id)
     {
         // Ambil data reservasi berdasarkan ID
-        $reservation = new ReservationModel();
-        $detail = $reservation->find($id);
+        $reservationModel = new ReservationModel();
+        $detail = $reservationModel->find($id);
         if ($detail) {
             // Jika data ditemukan, kirim respons JSON
             return $this->response->setJSON($detail);

@@ -79,8 +79,19 @@
                 <strong>Status Pembayaran:</strong> <?= $reservation['status_bayar'] ?>
             </div>
             <div class="info">
-                <strong>Front Office:</strong> <?= $reservation['front_office'] ?>
+                <strong>Front Office:</strong>
+                <?php
+                // Ambil instance dari UserModel
+                $userModel = new \App\Models\UserModel();
+
+                // Cari front office berdasarkan ID
+                $frontOffice = $userModel->where('id', $reservation['front_office'])->first();
+
+                // Tampilkan nama jika front office ditemukan
+                echo $frontOffice ? $frontOffice['nama'] : 'Unknown';
+                ?>
             </div>
+
             <!-- Tambahkan informasi lain yang diperlukan -->
 
             <div class="nota-footer">

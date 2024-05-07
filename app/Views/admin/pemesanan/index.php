@@ -57,7 +57,19 @@
                                 <td><?= $row['jml_kamar'] ?></td>
                                 <td><?= number_format($row['bayar'], 0, ',', '.') ?></td>
                                 <td><?= $row['status_order'] ?></td>
-                                <td><?= $row['front_office'] ?></td>
+                                <td>
+                                    <?php
+                                    // Ambil instance dari UserModel
+                                    $userModel = new \App\Models\UserModel();
+
+                                    // Cari front office berdasarkan ID
+                                    $frontOffice = $userModel->where('id', $row['front_office'])->first();
+
+                                    // Tampilkan nama jika front office ditemukan
+                                    echo $frontOffice ? $frontOffice['nama'] : 'Unknown';
+                                    ?>
+                                </td>
+
                                 <td class="text-center">
                                     <a href="/admin/pemesanan/edit/<?= $row['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>

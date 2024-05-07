@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\CheckinModel;
 use App\Models\UserModel;
 use App\Models\FinanceModel;
+use App\Models\ReservationModelModel;
 use App\Services\GenerateOrderCode;
 use Dompdf\Dompdf;
 
