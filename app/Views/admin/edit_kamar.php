@@ -32,8 +32,8 @@
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select class="form-control" id="status" name="status">
-                                <option value="Ready">Ready</option>
-                                <option value="Proses">Proses</option>
+                                <option value="ready" <?php echo ($kamar['status'] == 'ready') ? 'selected' : ''; ?>>Ready</option>
+                                <option value="trouble" <?php echo ($kamar['status'] == 'trouble') ? 'selected' : ''; ?>>Trouble</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -48,6 +48,8 @@
         </div>
 
     </div>
+
+
 
 </div>
 <!-- /.container-fluid -->

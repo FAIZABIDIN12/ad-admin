@@ -6,6 +6,7 @@ use App\Models\ReservationModel;
 use App\Models\RoomModel;
 use CodeIgniter\Controller;
 use App\Models\CheckinModel;
+use App\Models\TroubleModel;
 
 class RoomController extends Controller
 {
@@ -75,6 +76,7 @@ class RoomController extends Controller
 
     public function updateKamar()
     {
+        date_default_timezone_set('Asia/Jakarta');
         // Mengambil data dari form
         $idKamar = $this->request->getPost('id_kamar');
         $noKamar = $this->request->getPost('no_kamar');
@@ -88,9 +90,21 @@ class RoomController extends Controller
             'keterangan' => $keterangan
         ];
 
+        $dataHistory = [
+            'tanggal' =>date("Y-m-d H:i:s"),
+            'no_kamar' => $noKamar,
+            'trouble' => $keterangan,
+            'is_done' => false
+        ];
+
         // Memanggil model untuk update data kamar
         $kamarModel = new RoomModel();
         $affectedRows = $kamarModel->where('id', $idKamar)->set($data)->update();
+
+        $troubleModel = new TroubleModel();
+        $troubleModel->insert($dataHistory);
+
+        
 
         if ($affectedRows > 0) {
             // Set pesan sukses jika ada baris yang terpengaruh
@@ -103,4 +117,5 @@ class RoomController extends Controller
         // Redirect kembali ke halaman utama
         return redirect()->to(base_url('admin'));
     }
+
 }

@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\CheckinModel;
 use App\Models\UserModel;
 use App\Models\FinanceModel;
-use App\Models\ReservationModelModel;
+use App\Models\ReservationModel;
 use App\Services\GenerateOrderCode;
 use Dompdf\Dompdf;
 
@@ -39,10 +39,18 @@ class CheckinController extends BaseController
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
 
+        $reservationModel = new ReservationModel();
+
+
         $kodeOrder = $this->request->getPost('kode_order');
 
         if ($kodeOrder === null) {
             $kodeOrder = GenerateOrderCode::generateOrderId();
+        } else {
+            $order = $reservationModel->where('kode_order', $kodeOrder)->first();
+            if($order) {
+                $reservationModel->set('status_order', 'checkin')->where('kode_order', $kodeOrder)->update();
+            }
         }
 
         $data = [
@@ -83,7 +91,15 @@ class CheckinController extends BaseController
     {
         date_default_timezone_set('Asia/Jakarta');
         $checkinModel = new CheckinModel();
-        $updated = $checkinModel->update($id, ['status_order' => 'done', 'checkout' => date('Y-m-d')]);
+        $kodeOrder = $checkinModel->select('kode_order')->find($id);
+        $updated = $checkinModel->update($id, ['status_order' => 'done', 'checkout' => date("Y-m-d H:i:s")]);
+
+        $reservationModel = new ReservationModel();
+        $order = $reservationModel->where('kode_order', $kodeOrder)->first();
+
+        if ($order) {
+            $reservationModel->set('status_order', 'done')->where('kode_order', $kodeOrder)->update();
+        }
 
         if ($updated) {
             return redirect()->to(base_url('admin'))->with('success', 'Berhasil Checkout');

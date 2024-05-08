@@ -18,6 +18,10 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('tambah-kamar', 'RoomController::tambahKamar');
     $routes->post('simpan-kamar', 'RoomController::simpanKamar');
 
+    $routes->get('trouble-kamar', 'TroubleController::index');
+    $routes->get('solved-room/(:num)', 'TroubleController::solved/$1');
+    $routes->post('progress-trouble', 'TroubleController::progress');
+
 
     $routes->post('simpan-reservasi', 'ReservasiController::simpanReservasi');
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');

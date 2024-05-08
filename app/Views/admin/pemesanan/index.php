@@ -7,14 +7,12 @@
     <?php if (session()->has('success')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= session('success') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif ?>
 
     <?php if (session()->has('error')) : ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <?= session('error') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif ?>
 
@@ -34,12 +32,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Tanggal Reservasi</th>
+                            <th>Reservasi</th>
                             <th>Kode Order</th>
                             <th>Nama Pemesan</th>
                             <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Jumlah Kamar</th>
+                            <th>Jml Kamar</th>
                             <th>Deposit</th>
                             <th>Status</th>
                             <th>FO</th>
@@ -49,11 +46,10 @@
                     <tbody>
                         <?php foreach ($pemesanan as $index => $row) : ?>
                             <tr>
-                                <td><?= $row['tgl'] ?></td>
+                                <td><?= date('d F Y', strtotime($row['tgl'])) ?></td>
                                 <td><?= $row['kode_order'] ?></td>
                                 <td><?= $row['nama'] ?></td>
                                 <td><?= date('d F Y', strtotime($row['tgl_checkin'])) ?></td>
-                                <td><?= date('d F Y', strtotime($row['tgl_checkout'])) ?></td>
                                 <td><?= $row['jml_kamar'] ?></td>
                                 <td><?= number_format($row['bayar'], 0, ',', '.') ?></td>
                                 <td><?= $row['status_order'] ?></td>
@@ -139,7 +135,7 @@
                         <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
                         <p>Harga: <span> Rp.${response.rate}</span></p>
                         <p>Deposit: <span> Rp.${response.bayar}</span></p>
-                        <p>Status Pembayaran: <span> Rp.${response.status_bayar}</span></p>
+                        <p>Status Pembayaran: <span> ${response.status_bayar}</span></p>
                         <p>Status Tamu: <span> ${response.status_order}</span></p>
                         `);
                     } else {

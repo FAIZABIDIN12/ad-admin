@@ -11,7 +11,7 @@ class ReportController extends BaseController
     public function index()
     {
         $checkinModel = new CheckinModel();
-        $allData = $checkinModel->where('status_order', 'done')->findAll();
+        $allData = $checkinModel->findAll();
 
         $dataPerTanggal = [];
 

@@ -24,12 +24,22 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="tgl_checkin">Tanggal Check-in:</label>
-                        <input type="date" class="form-control" id="tgl_checkin" name="tgl_checkin" value="<?= $reservation['tgl_checkin'] ?>" required>
+                        <label for="tanggal_checkin">Rencana Check-in:</label>
+                        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                            <input type="text" name="tanggal_checkin" class="form-control datetimepicker-input" data-target="#datetimepicker2"/>
+                            <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="tgl_checkout">Tanggal Check-out:</label>
-                        <input type="date" class="form-control" id="tgl_checkout" name="tgl_checkout" value="<?= $reservation['tgl_checkout'] ?>" required>
+                        <label for="tanggal_checkout">Rencana Check-out:</label>
+                        <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                            <input type="text" name="tanggal_checkout" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                            <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="far fa-calendar"></i></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
@@ -50,7 +60,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="status_order">Status reservation$reservation:</label>
+                    <label for="status_order">Status Reservasi:</label>
                     <select class="form-control" id="status_order" name="status_order" required>
                         <option value="BOOKING" <?= ($reservation['status_order'] == 'BOOKING') ? 'selected' : '' ?>>BOOKING</option>
                         <option value="DONE" <?= ($reservation['status_order'] == 'DONE') ? 'selected' : '' ?>>DONE</option>
@@ -65,5 +75,81 @@
     </div>
 
 </div>
+
+<script>
+            var reservationData = <?php echo json_encode($reservation); ?>;
+            $('input[name=tanggal_checkin]').val(ubahFormatTanggal(reservationData.tgl_checkin));
+            $('input[name=tanggal_checkout]').val(ubahFormatTanggal(reservationData.tgl_checkout));
+
+            function formatRupiah(angka) {
+            var number_string = angka.toString().replace(/[^,\d]/g, ''),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // Tambahkan titik sebagai pemisah ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            // Tambahkan koma untuk pecahan desimal
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+            return rupiah;
+        }
+
+        // Fungsi untuk mengubah nilai input menjadi format mata uang saat input berubah
+        $('.uang-input').on('input', function(e) {
+            var uang = e.target.value;
+
+            // Hilangkan semua karakter selain angka dan koma
+            uang = uang.replace(/[^\d,]/g, '');
+
+            // Ubah format menjadi format mata uang Indonesia
+            e.target.value = formatRupiah(uang);
+        });
+
+        $(function () {
+            $('#datetimepicker2').datetimepicker({
+                locale: 'id'
+            });
+            $('#datetimepicker3').datetimepicker({
+                locale: 'id'
+            });
+        });
+
+        function ubahFormatTanggal(tanggal) {
+            var tanggalWaktu = tanggal.split(" ");
+            var tanggalPart = tanggalWaktu[0];
+            var waktuPart = tanggalWaktu[1];
+
+            // Pisahkan tahun, bulan, dan hari
+            var tanggalArr = tanggalPart.split("-");
+            var tahun = tanggalArr[0];
+            var bulan = tanggalArr[1];
+            var hari = tanggalArr[2];
+
+            // Ubah format tanggal menjadi DD/MM/YYYY
+            var tanggalBaru = hari + "/" + bulan + "/" + tahun;
+
+            // Pisahkan jam dan menit
+            var waktuArr = waktuPart.split(":");
+            var jam = waktuArr[0];
+            var menit = waktuArr[1];
+
+            // Hapus "00" jika menit adalah "00"
+            menit = (menit === "00") ? "" : "." + menit;
+
+            // Gabungkan jam dan menit baru
+            var waktuBaru = jam + menit;
+
+            // Gabungkan tanggal dan waktu baru
+            var tanggalDanWaktuBaru = tanggalBaru + " " + waktuBaru;
+
+            return tanggalDanWaktuBaru;
+        }
+</script>
 <!-- /.container-fluid -->
 <?= $this->endSection() ?>

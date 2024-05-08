@@ -33,7 +33,7 @@
                 <a class="collapse-item" href="/admin/tambah-kamar">
                     <i class="fas fa-bed"></i> Tambah Kamar
                 </a>
-                <a class="collapse-item" href="/admin/troubel-kamar">
+                <a class="collapse-item" href="/admin/trouble-kamar">
                     <i class="fas fa-exclamation-triangle"></i> Troubel Kamar
                 </a>
 
@@ -74,7 +74,7 @@
     <li class="nav-item">
         <a class="nav-link" href="/admin/report">
             <i class="fas fa-chart-bar"></i>
-            <span>Laporan</span></a>
+            <span>Laporan Bulanan</span></a>
     </li>
     <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/komplain">
