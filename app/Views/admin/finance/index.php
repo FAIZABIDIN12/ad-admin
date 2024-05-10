@@ -7,44 +7,50 @@
         <h6 class="m-0 font-weight-bold text-primary">Laporan Keuangan</h6>
     </div>
     <!-- Tambahkan input tanggal -->
-
+    
     <div class="card-body">
-        <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
-            Tambah Data <i class="fas fa-plus"></i>
-        </button>
+
 
         <div class="row">
-            <div class="col">
-                <div class="form-group row">
-                    <label for="start_date" class="col-sm-5 col-form-label">Tanngal Awal</label>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="start_date" class="col col-form-label">Tanngal Awal</label>
                     <div class="">
                         <input type="date" class="form-control" id="start_date">
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="form-group row">
+                <div class="form-group">
                     <label for="end_date" class="col-sm-5 col-form-label">Tangal Akhir</label>
                     <div class="">
                         <input type="date" class="form-control" id="end_date">
                     </div>
                 </div>
-            </div>
-            <div class="form-group col">
-                <button type="button" class="btn btn-primary" id="filterBtn">Filter</button>
-            </div>
-            <div class="col text-right">
-                <!-- Tombol untuk download Excel -->
-                <button type="button" class="btn btn-success btn-lg mb-3 mr-2" id="downloadExcelBtn" style="font-size: 0.7rem;">
-                    Download Excel <i class="fas fa-file-excel"></i>
-                </button>
-                <!-- Tombol untuk download CSV -->
-                <button type="button" class="btn btn-success btn-lg mb-3" id="downloadCsvBtn" style="font-size: 0.7rem;">
-                    Download CSV <i class="fas fa-download"></i>
-                </button>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-block" id="filterBtn">Filter</button>
+                </div>
             </div>
         </div>
 
+
+        <div class="row mt-4">
+            <div class="col">
+                <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
+                Tambah Data <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="col text-right">
+            
+            <!-- Tombol untuk download Excel -->
+            <button type="button" class="btn btn-success btn-lg mb-3 mr-2" id="downloadExcelBtn" style="font-size: 0.7rem;">
+                Download Excel <i class="fas fa-file-excel"></i>
+            </button>
+            <!-- Tombol untuk download CSV -->
+            <button type="button" class="btn btn-success btn-lg mb-3" id="downloadCsvBtn" style="font-size: 0.7rem;">
+                Download CSV <i class="fas fa-download"></i>
+            </button>
+    </div>
+
+        </div>
 
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
