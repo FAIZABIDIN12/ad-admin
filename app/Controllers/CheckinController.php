@@ -48,7 +48,7 @@ class CheckinController extends BaseController
             $kodeOrder = GenerateOrderCode::generateOrderId();
         } else {
             $order = $reservationModel->where('kode_order', $kodeOrder)->first();
-            if($order) {
+            if ($order) {
                 $reservationModel->set('status_order', 'checkin')->where('kode_order', $kodeOrder)->update();
             }
         }
