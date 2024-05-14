@@ -2,15 +2,32 @@
 
 <?= $this->section('content') ?>
 
-<!-- Filter berdasarkan bulan -->
+<!-- Form Filter -->
+<form id="filterForm">
+    <div class="form-group">
+        <label for="bulan">Pilih Bulan</label>
+        <select name="bulan" id="bulan" class="form-control">
+            <option value="01">Januari</option>
+            <option value="02">Februari</option>
+            <option value="03">Maret</option>
+            <!-- Tambahkan opsi bulan lainnya -->
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="tahun">Pilih Tahun</label>
+        <input type="text" name="tahun" id="laporan" class="form-control" value="<?= date('Y') ?>">
+    </div>
+    <!-- Hapus tombol filter -->
+</form>
 
+<!-- Tabel Laporan -->
 <div class="card">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Report Bulanan</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="uang-masuk-table" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="laporanTable">
                 <thead>
                     <tr>
                         <th>Tanggal</th>
@@ -34,27 +51,29 @@
     </div>
 </div>
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- DataTables CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-<!-- DataTables JS -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<!-- Script JavaScript -->
 <script>
-    $(document).ready(function() {
-        // Initialize DataTables
-        var table = $('#uang').DataTable();
-
-        // Event listener untuk filter bulan
-        $('#bulan').change(function() {
-            var selectedMonth = $(this).val();
-            // Menentukan rentang tanggal berdasarkan bulan yang dipilih
-            var startDate = '2024-' + selectedMonth + '-01';
-            var endDate = '2024-' + selectedMonth + '-31'; // Ini asumsi 31 hari untuk setiap bulan
-            // Mengatur filter pada kolom pertama (tanggal) untuk rentang yang dipilih
-            table.column(0).search(startDate + ' to ' + endDate).draw();
+    // Fungsi untuk mengirim permintaan filter dan memperbarui tabel laporan
+    function filterLaporan() {
+        var formData = $('#filterForm').serialize();
+        $.ajax({
+            url: '<?= site_url('admin/report/filterByMonth') ?>',
+            method: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#laporanTable').html(response);
+            }
         });
+    }
+
+    // Saat dokumen siap, tambahkan event listener untuk perubahan pada pilihan bulan dan tahun
+    $(document).ready(function() {
+        $('#bulan, #tahun').change(filterLaporan);
+
+        // Panggil fungsi filterLaporan() untuk pertama kali saat halaman dimuat
+        filterLaporan();
     });
 </script>
+
 
 <?= $this->endSection() ?>

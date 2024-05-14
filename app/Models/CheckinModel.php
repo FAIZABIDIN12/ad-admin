@@ -41,4 +41,11 @@ class CheckinModel extends Model
         // Ambil data kamar berdasarkan id_kamar dari tabel reservasi
         return $this->db->table('checkin')->where('id_room', $idKamar)->where('status_order', 'checkin')->get()->getRowArray();
     }
+    public function filterByMonthYear($bulan, $tahun)
+    {
+        return $this->where('MONTH(checkout)', $bulan)
+            ->where('YEAR(checkout)', $tahun)
+            ->where('status_order', 'checkin') // Filter status order jika diperlukan
+            ->findAll();
+    }
 }
