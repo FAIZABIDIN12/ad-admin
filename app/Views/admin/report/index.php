@@ -3,27 +3,10 @@
 <?= $this->section('content') ?>
 
 <!-- Filter berdasarkan bulan -->
-<div class="mb-3">
-    <label for="bulan">Pilih Bulan:</label>
-    <select id="bulan">
-        <option value="01">Januari</option>
-        <option value="02">Februari</option>
-        <option value="03">Maret</option>
-        <option value="04">April</option>
-        <option value="05">Mei</option>
-        <option value="06">Juni</option>
-        <option value="07">Juli</option>
-        <option value="08">Agustus</option>
-        <option value="09">September</option>
-        <option value="10">Oktober</option>
-        <option value="11">November</option>
-        <option value="12">Desember</option>
-    </select>
-</div>
 
 <div class="card">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"></h6>
+        <h6 class="m-0 font-weight-bold text-primary">Report Bulanan</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -60,12 +43,16 @@
 <script>
     $(document).ready(function() {
         // Initialize DataTables
-        $('#uang-masuk-table').DataTable();
+        var table = $('#uang').DataTable();
 
         // Event listener untuk filter bulan
         $('#bulan').change(function() {
             var selectedMonth = $(this).val();
-            $('#uang-masuk-table').DataTable().column(0).search(selectedMonth).draw();
+            // Menentukan rentang tanggal berdasarkan bulan yang dipilih
+            var startDate = '2024-' + selectedMonth + '-01';
+            var endDate = '2024-' + selectedMonth + '-31'; // Ini asumsi 31 hari untuk setiap bulan
+            // Mengatur filter pada kolom pertama (tanggal) untuk rentang yang dipilih
+            table.column(0).search(startDate + ' to ' + endDate).draw();
         });
     });
 </script>
