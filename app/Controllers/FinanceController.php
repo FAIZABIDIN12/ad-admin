@@ -44,7 +44,7 @@ class FinanceController extends Controller
             'keterangan'   => $this->request->getPost('keterangan'),
             'jenis'   => $this->request->getPost('jenis'),
             'kategori'   => $this->request->getPost('kategori'),
-            'nominal' => $this->request->getPost('nominal'),
+            'nominal' => str_replace(array('.', ','), '', $this->request->getPost('nominal')),
             'front_office' => $frontOffice
         ];
 
@@ -53,8 +53,13 @@ class FinanceController extends Controller
         } else {
             // Jika penyimpanan gagal, tampilkan pesan kesalahan
             $data['errors'] = $model->errors();
-            return view(base_url('admin/finance'), $data);
+            return redirect()->to(base_url('admin/laporan-manual'), $data);
         }
+    }
+
+    public function manual_cashflow()
+    {
+        return view('admin/finance/tambah');
     }
 
 

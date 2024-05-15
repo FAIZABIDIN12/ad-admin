@@ -82,10 +82,27 @@
             <span>Komplain Tamu</span></a>
     </li> -->
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#finance" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-coins mr-2"></i>
+            <span>Keuangan</span>
+        </a>
+        <div id="finance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/admin/laporan-manual">
+                   Tambah Laporan
+                </a>
+                <a class="collapse-item" href="/admin/finance">
+                    Laporan Keuangan
+                </a>
+
+            </div>
+        </div>
+    </li>
+    <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/finance">
             <i class="fas fa-coins mr-2"></i>
             <span>Keuangan</span></a>
-    </li>
+    </li> -->
 
 
 

@@ -8,6 +8,7 @@ use App\Models\CheckinModel;
 use App\Models\UserModel;
 use App\Models\FinanceModel;
 use App\Models\ReservationModel;
+use App\Models\RoomModel;
 use App\Services\GenerateOrderCode;
 use Dompdf\Dompdf;
 
@@ -53,6 +54,9 @@ class CheckinController extends BaseController
             }
         }
 
+        $roomModel = new RoomModel();
+        $kamar = $roomModel->where('id', $idKamar)->first();
+
         $data = [
             'nama' => $nama,
             'kode_order' => $kodeOrder,
@@ -71,7 +75,7 @@ class CheckinController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan'   => 'Bayar checkin ' . $kodeOrder . ' ' . $nama,
+            'keterangan'   => 'Kamar No. ' . $kamar['no_kamar'] . ' ' . $nama,
             'jenis'   => 'cr',
             'kategori'   => 'checkin',
             'nominal' => str_replace('.', '', $bayar),

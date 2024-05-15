@@ -88,9 +88,12 @@
                                 <div class="mb-1 text-capitalize">
                                     <?= $checkin['nama'] ?> <!-- Menampilkan nama -->
                                 </div>
-                                <a href="/admin/checkout/<?= $checkin['id'] ?>" type="button" class="btn btn-danger input-reservation btn btn-sm btn-block" style="font-size: 0.7rem;">
+                                <!-- <a href="/admin/checkout/<?= $checkin['id'] ?>" type="button" class="btn btn-danger input-reservation btn btn-sm btn-block" style="font-size: 0.7rem;">
                                     Check Out <i class="fas fa-sign-out-alt"></i>
-                                </a>
+                                </a> -->
+                                <button type="button" class="btn btn-danger btn-block checkout-btn btn-sm" data-toggle="modal" data-target="#checkoutConfirm" data-kamar="<?=$room['id']?>" data-checkin="<?= $checkin['id'] ?>" style="font-size: 0.7rem;"> <!-- Mengubah ukuran font menjadi 0.7rem -->
+                                Check Out <i class="fas fa-sign-out-alt"></i>
+                                </button>
                                 <div class="btn-group d-flex mt-2" role="group">
                                     <a href="<?= base_url('admin/printCheckin/' . $checkin['id']) ?>" class="btn btn-primary btn-sm " target="_blank" style="font-size: 0.7rem;">
                                         <i class="fas fa-print"></i>
@@ -155,6 +158,24 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="checkoutConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Periksa data berikut sebelum check out</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="detail-checkout">
+        
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal untuk input reservasi -->
@@ -265,7 +286,8 @@
         });
         $(function() {
             $('#datetimepicker3').datetimepicker({
-                locale: 'id'
+                locale: 'id',
+                minDate: moment()
             });
         });
         $('.detail-kamar').click(function() {
@@ -329,6 +351,36 @@
             return tanggalDanWaktuBaru;
         }
 
+        $('.checkout-btn').click(function() {
+            var checkinId = $(this).data('checkin');
+            var kamarId = $(this).data('kamar');
+            $.ajax({
+                url: '/admin/detail-checkin/' + kamarId,
+                type: 'GET',
+                success: function(response) {
+                    if (response) {
+                        $('#detail-checkout').html(`
+                        <p>Nama: <span>${response.nama}</span></p>
+                        <p>No. HP: <span>${response.no_hp}</span></p>
+                        <p>Tanggal Check-in: <span>${response.checkin}</span></p>
+                        <p>Rencana Check-out: <span>${response.checkout_plan}</span></p>
+                        <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
+                        <p>Bayar: <span> Rp. ${formatRupiah(response.bayar)}</span></p>
+                        <p>Apakah anda yakin ingin check out?</p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <a href="/admin/checkout/${checkinId}" class="btn btn-danger">Check Out</a>
+                        </div>
+                    `);
+                    } else {
+                        $('#detail-checkout').html('<p>Data reservasi tidak ditemukan.</p>');
+                    }
+                },
+                error: function() {
+                    $('#detail-checkout').html('<p>Terjadi kesalahan saat mengambil data reservasi.</p>');
+                }
+            });
+        });
         $('.detail').click(function() {
             var kamarId = $(this).data('kamar');
             $.ajax({

@@ -74,7 +74,7 @@ class ReservationController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan' => 'Reservasi ' . $orderId . ' ' . $this->request->getPost('nama_pemesan'),
+            'keterangan' => 'RSV ' . $this->request->getPost('nama_pemesan') . " " . $tanggal_checkout,
             'jenis'   => 'cr',
             'kategori'   => 'reservasi',
             'nominal' => str_replace('.', '', $this->request->getPost('bayar')),

@@ -38,6 +38,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     //Kas
     $routes->get('finance', 'FinanceController::index');
+    $routes->get('laporan-manual', 'FinanceController::manual_cashflow');
     $routes->post('add-cash-flow', 'FinanceController::simpan');
 
     // report

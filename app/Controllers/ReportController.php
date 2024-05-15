@@ -18,7 +18,7 @@ class ReportController extends BaseController
         // Iterasi melalui data yang diperoleh dari database
         foreach ($allData as $data) {
             // Ambil tanggal checkout dari setiap entri
-            $tanggalCheckout = date("Y-m-d", strtotime($data['checkout']));
+            $tanggalCheckout = date("Y-m-d", strtotime($data['checkin']));
 
             // Jika tanggal tersebut belum ada dalam array $dataPerTanggal, inisialisasi array untuk tanggal tersebut
             if (!isset($dataPerTanggal[$tanggalCheckout])) {

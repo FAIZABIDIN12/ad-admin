@@ -139,10 +139,12 @@
 
         $(function () {
             $('#datetimepicker2').datetimepicker({
-                locale: 'id'
+                locale: 'id',
+                minDate: moment()
             });
             $('#datetimepicker3').datetimepicker({
-                locale: 'id'
+                locale: 'id',
+                minDate: moment()
             });
         });
 </script>
