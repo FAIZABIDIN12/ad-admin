@@ -11,6 +11,19 @@ class FinanceController extends Controller
     public function index()
     {
         $model = new FinanceModel();
+
+        // Fetch total uang masuk
+        $totalUangMasuk = $model->where('jenis', 'cr')->selectSum('nominal')->first();
+        $data['totalUangMasuk'] = $totalUangMasuk['nominal'];
+
+        // Fetch total uang keluar
+        $totalUangKeluar = $model->where('jenis', 'db')->selectSum('nominal')->first();
+        $data['totalUangKeluar'] = $totalUangKeluar['nominal'];
+
+        // Calculate saldo
+        $data['saldo'] = $data['totalUangMasuk'] - $data['totalUangKeluar'];
+
+        // Fetch all cash data
         $data['cashs'] = $model->findAll();
 
         return view('admin/finance/index', $data);

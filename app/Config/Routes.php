@@ -42,7 +42,8 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     // report
     $routes->get('report', 'ReportController::index');
-    $routes->get('report/getDataByMonth/(:segment)', 'ReportController::getDataByMonth/$1');
+    $routes->post('report/filterByMonth', 'ReportController::filterByMonth');
+
 
 
 

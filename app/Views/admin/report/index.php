@@ -13,13 +13,7 @@
             <!-- Tambahkan opsi bulan lainnya -->
         </select>
     </div>
-    <div class="form-group">
-        <label for="tahun">Pilih Tahun</label>
-        <input type="text" name="tahun" id="laporan" class="form-control" value="<?= date('Y') ?>">
-    </div>
-    <!-- Hapus tombol filter -->
 </form>
-
 <!-- Tabel Laporan -->
 <div class="card">
     <div class="card-header py-3">
@@ -50,30 +44,4 @@
         </div>
     </div>
 </div>
-
-<!-- Script JavaScript -->
-<script>
-    // Fungsi untuk mengirim permintaan filter dan memperbarui tabel laporan
-    function filterLaporan() {
-        var formData = $('#filterForm').serialize();
-        $.ajax({
-            url: '<?= site_url('admin/report/filterByMonth') ?>',
-            method: 'POST',
-            data: formData,
-            success: function(response) {
-                $('#laporanTable').html(response);
-            }
-        });
-    }
-
-    // Saat dokumen siap, tambahkan event listener untuk perubahan pada pilihan bulan dan tahun
-    $(document).ready(function() {
-        $('#bulan, #tahun').change(filterLaporan);
-
-        // Panggil fungsi filterLaporan() untuk pertama kali saat halaman dimuat
-        filterLaporan();
-    });
-</script>
-
-
 <?= $this->endSection() ?>

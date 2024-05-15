@@ -42,8 +42,6 @@ class ReportController extends BaseController
         return view('admin/report/index', $data);
     }
 
-    // Method untuk menangani filter berdasarkan bulan
-    // Method untuk menangani filter berdasarkan bulan
     public function filterByMonth()
     {
         $bulan = $this->request->getPost('bulan');

@@ -7,10 +7,10 @@
         <h6 class="m-0 font-weight-bold text-primary">Laporan Keuangan</h6>
     </div>
     <!-- Tambahkan input tanggal -->
-    
+
     <div class="card-body">
 
-
+        <!-- Tampilkan total saldo saat ini dari uang masuk -->
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
@@ -35,20 +35,20 @@
         <div class="row mt-4">
             <div class="col">
                 <button type="button" class="btn btn-primary btn-lg mb-3" data-toggle="modal" data-target="#inputDataModal" style="font-size: 0.7rem;">
-                Tambah Data <i class="fas fa-plus"></i>
+                    Tambah Data <i class="fas fa-plus"></i>
                 </button>
             </div>
             <div class="col text-right">
-            
-            <!-- Tombol untuk download Excel -->
-            <button type="button" class="btn btn-success btn-lg mb-3 mr-2" id="downloadExcelBtn" style="font-size: 0.7rem;">
-                Download Excel <i class="fas fa-file-excel"></i>
-            </button>
-            <!-- Tombol untuk download CSV -->
-            <button type="button" class="btn btn-success btn-lg mb-3" id="downloadCsvBtn" style="font-size: 0.7rem;">
-                Download CSV <i class="fas fa-download"></i>
-            </button>
-    </div>
+
+                <!-- Tombol untuk download Excel -->
+                <button type="button" class="btn btn-success btn-lg mb-3 mr-2" id="downloadExcelBtn" style="font-size: 0.7rem;">
+                    Download Excel <i class="fas fa-file-excel"></i>
+                </button>
+                <!-- Tombol untuk download CSV -->
+                <button type="button" class="btn btn-success btn-lg mb-3" id="downloadCsvBtn" style="font-size: 0.7rem;">
+                    Download CSV <i class="fas fa-download"></i>
+                </button>
+            </div>
 
         </div>
 
@@ -89,6 +89,10 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-4">
+            <h5>Total Saldo Saat ini:Rp. <?= number_format($saldo, 0, ',', '.') ?></h5>
+        </div>
+
     </div>
 
 </div>
