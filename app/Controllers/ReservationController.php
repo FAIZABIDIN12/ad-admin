@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ReservationModel;
 use App\Models\UserModel;
+use App\Models\KasModel;
 use App\Models\FinanceModel;
 use App\Services\GenerateOrderCode;
 use Dompdf\Dompdf;
@@ -30,6 +31,7 @@ class ReservationController extends BaseController
     public function tambah()
     {
         date_default_timezone_set('Asia/Jakarta');
+
         // Memeriksa apakah input untuk status_pemesanan tidak null
         $status_order = $this->request->getPost('status_order');
 
@@ -44,7 +46,6 @@ class ReservationController extends BaseController
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
         $orderId = GenerateOrderCode::generateOrderId();
-
 
         $tanggal_checkin = $this->request->getPost('tanggal_checkin');
         $tanggal_checkout = $this->request->getPost('tanggal_checkout');
@@ -81,20 +82,35 @@ class ReservationController extends BaseController
             'front_office' => $frontOffice
         ];
 
-
         $financeModel = new FinanceModel();
-        $reservationModel = new ReservationModel();
-        if ($reservationModel->insert($data) && $financeModel->save($dataFinance)) {
-            // Jika data berhasil ditambahkan, set notifikasi berhasil
+        $reservationModel = new ReservationModel(); // Tambahkan ini
+        $kasModel = new KasModel(); // Tambahkan ini
+
+        // Mulai transaksi database
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        if ($reservationModel->insert($data) && $financeModel->save($dataFinance) && $kasModel->insert([
+            'tgl_transaksi' => date('Y-m-d H:i:s'),
+            'uraian' => 'Pembayaran reservasi oleh ' . $this->request->getPost('nama_pemesan'),
+            'kas_masuk' => str_replace('.', '', $this->request->getPost('bayar')),
+        ])) {
+            // Jika semua data berhasil ditambahkan, commit transaksi
+            $db->transCommit();
+            // Set notifikasi berhasil
             session()->setFlashdata('success', 'Data berhasil ditambahkan');
         } else {
-            // Jika data gagal ditambahkan, set notifikasi gagal
+            // Jika ada data yang gagal ditambahkan, rollback transaksi
+            $db->transRollback();
+            // Set notifikasi gagal
             session()->setFlashdata('error', 'Gagal menambahkan data');
         }
 
         // Redirect ke halaman utama
         return redirect()->to(base_url('admin/pemesanan'));
     }
+
+
 
 
     public function edit($id)

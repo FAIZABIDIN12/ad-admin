@@ -89,7 +89,7 @@
         <div id="finance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="/admin/laporan-manual">
-                   Tambah Laporan
+                    Tambah Laporan
                 </a>
                 <a class="collapse-item" href="/admin/finance">
                     Laporan Keuangan
@@ -97,6 +97,13 @@
 
             </div>
         </div>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/kas_masuk">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Kas Masuk</span>
+        </a>
+    </li>
+
     </li>
     <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/finance">

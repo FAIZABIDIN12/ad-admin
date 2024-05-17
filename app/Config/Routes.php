@@ -40,7 +40,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('finance', 'FinanceController::index');
     $routes->get('laporan-manual', 'FinanceController::manual_cashflow');
     $routes->post('add-cash-flow', 'FinanceController::simpan');
-
+    $routes->get('kas_masuk', 'KasController::index');
     // report
     $routes->get('report', 'ReportController::index');
     $routes->post('report/filterByMonth', 'ReportController::filterByMonth');

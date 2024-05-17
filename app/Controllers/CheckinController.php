@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\CheckinModel;
 use App\Models\UserModel;
+use App\Models\KasModel;
 use App\Models\FinanceModel;
 use App\Models\ReservationModel;
 use App\Models\RoomModel;
@@ -29,7 +30,7 @@ class CheckinController extends BaseController
         $tglCheckout = $this->request->getPost('checkout_plan');
         $tgl_checkout = \DateTime::createFromFormat('d/m/Y H.i', $tglCheckout)->format('Y-m-d H:i:s');
         $jumlahOrang = $this->request->getPost('jumlah_orang');
-        $rate = $this->request->getPost('rate');
+        $rate = $this->request->getPost('rate'); // Ambil nilai rate dari form
         $bayar = $this->request->getPost('bayar');
         $metodeBayar = $this->request->getPost('metode_bayar');
         $keterangan = $this->request->getPost('keterangan');
@@ -82,8 +83,23 @@ class CheckinController extends BaseController
             'front_office' => $frontOffice
         ];
 
+        // Menyimpan data rate ke dalam tabel kas masuk
+        $kasModel = new KasModel();
+        $kasModel->insert([
+            'tgl_transaksi' => date('Y-m-d H:i:s'),
+            'uraian' => 'Rate untuk check-in oleh ' . $nama, // Menambahkan informasi bahwa ini adalah rate
+            'kas_masuk' => str_replace('.', '', $rate),
+        ]);
+
         $financeModel = new FinanceModel();
         $financeModel->save($dataFinance);
+
+        // Masukkan data pembayaran ke dalam tabel 'kas_masuk'
+        $kasModel->insert([
+            'tgl_transaksi' => date('Y-m-d H:i:s'),
+            'uraian' => 'Pembayaran check-in oleh ' . $nama,
+            'kas_masuk' => str_replace('.', '', $bayar),
+        ]);
 
         $checkinModel = new CheckinModel();
         $checkinModel->addCheckinData($data);
@@ -91,6 +107,9 @@ class CheckinController extends BaseController
         session()->setFlashdata('success', 'Data checkin berhasil disimpan.');
         return redirect()->to(base_url('admin'));
     }
+
+
+
     public function checkout($id)
     {
         date_default_timezone_set('Asia/Jakarta');
