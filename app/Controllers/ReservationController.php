@@ -12,47 +12,30 @@ use Dompdf\Dompdf;
 class ReservationController extends BaseController
 {
 
-    // Fungsi untuk menampilkan semua pemesanan
     public function index()
     {
         $model = new ReservationModel();
-        $data['pemesanan'] = $model->findAll();
+        $data['reservations'] = $model->findAll();
 
-        return view('admin/pemesanan/index', $data);
+        return view('admin/reservation/index', $data);
     }
 
-    // Fungsi untuk menambah pemesanan baru
-    public function tambahData()
+    public function add()
     {
-        // Menampilkan view form tambah data
-        return view('admin/pemesanan/tambah_data');
+        return view('admin/reservation/form_add');
     }
 
-    public function tambah()
+    public function store()
     {
         date_default_timezone_set('Asia/Jakarta');
 
-        // Memeriksa apakah input untuk status_pemesanan tidak null
-        $status_order = $this->request->getPost('status_order');
-
-        if ($status_order === null) {
-            // Jika nilai status_pemesanan null, berikan nilai default (misalnya 'booking')
-            $status_order = 'booking';
-        }
-
-        $userData = session()->get('username');
-
-        $userModel = new UserModel();
-        $user = $userModel->where('username', $userData)->first();
-        $frontOffice = $user['id'];
+        $frontOffice = $this->getFrontOfficeId();
         $orderId = GenerateOrderCode::generateOrderId();
 
-        $tanggal_checkin = $this->request->getPost('tanggal_checkin');
-        $tanggal_checkout = $this->request->getPost('tanggal_checkout');
-
-        // Buat objek DateTime dari tanggal yang diberikan dengan format yang tepat
-        $tgl_checkin = \DateTime::createFromFormat('d/m/Y H.i', $tanggal_checkin)->format('Y-m-d H:i:s');
-        $tgl_checkout = \DateTime::createFromFormat('d/m/Y H.i', $tanggal_checkout)->format('Y-m-d H:i:s');
+        $kurang_bayar = $this->request->getPost('kurang_bayar');
+        $status_bayar = $kurang_bayar > 0 ? 'belum_lunas' : 'lunas';
+        $tgl_checkin = $this->formatDate($this->request->getPost('tanggal_checkin'));
+        $tgl_checkout = $this->formatDate($this->request->getPost('tanggal_checkout'));
 
         $data = [
             'tgl' => date("Y-m-d H:i:s"),
@@ -63,19 +46,19 @@ class ReservationController extends BaseController
             'tgl_checkout' => $tgl_checkout,
             'jml_kamar' => $this->request->getPost('jumlah_kamar'),
             'jml_orang' => $this->request->getPost('jumlah_orang'),
-            'rate' => str_replace('.', '', $this->request->getPost('rate')),
-            'bayar' => str_replace('.', '', $this->request->getPost('bayar')),
-            'kurang_bayar' => 0,
+            'rate' => $this->sanitizeCurrency($this->request->getPost('rate')),
+            'bayar' => $this->sanitizeCurrency($this->request->getPost('bayar')),
+            'kurang_bayar' => $kurang_bayar,
             'metode_bayar' => $this->request->getPost('metode_bayar'),
             'keterangan' => $this->request->getPost('keterangan'),
-            'status_bayar' => $this->request->getPost('status_bayar'),
-            'status_order' => $status_order, // Menggunakan nilai yang sudah diverifikasi
-            'front_office' => $frontOffice, // Menggunakan nilai yang sudah diverifikasi
+            'status_bayar' => $status_bayar,
+            'status_order' => 'booking',
+            'front_office' => $frontOffice,
         ];
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan' => 'RSV ' . $this->request->getPost('nama_pemesan') . " " . $tanggal_checkout,
+            'keterangan' => 'RSV ' . $this->request->getPost('nama_pemesan') . " " . $tgl_checkin,
             'jenis'   => 'cr',
             'kategori'   => 'reservasi',
             'nominal' => str_replace('.', '', $this->request->getPost('bayar')),
@@ -83,31 +66,20 @@ class ReservationController extends BaseController
         ];
 
         $financeModel = new FinanceModel();
-        $reservationModel = new ReservationModel(); // Tambahkan ini
-        $kasModel = new KasModel(); // Tambahkan ini
-
-        // Mulai transaksi database
-        $db = \Config\Database::connect();
-        $db->transStart();
+        $reservationModel = new ReservationModel();
+        $kasModel = new KasModel();
 
         if ($reservationModel->insert($data) && $financeModel->save($dataFinance) && $kasModel->insert([
             'tgl_transaksi' => date('Y-m-d H:i:s'),
             'uraian' => 'Pembayaran reservasi oleh ' . $this->request->getPost('nama_pemesan'),
             'kas_masuk' => str_replace('.', '', $this->request->getPost('bayar')),
         ])) {
-            // Jika semua data berhasil ditambahkan, commit transaksi
-            $db->transCommit();
-            // Set notifikasi berhasil
             session()->setFlashdata('success', 'Data berhasil ditambahkan');
         } else {
-            // Jika ada data yang gagal ditambahkan, rollback transaksi
-            $db->transRollback();
-            // Set notifikasi gagal
             session()->setFlashdata('error', 'Gagal menambahkan data');
         }
 
-        // Redirect ke halaman utama
-        return redirect()->to(base_url('admin/pemesanan'));
+        return redirect()->to(base_url('admin/reservation'));
     }
 
 
@@ -224,5 +196,23 @@ class ReservationController extends BaseController
 
         // Keluarkan hasil PDF ke browser
         $dompdf->stream($filename);
+    }
+
+    private function formatDate($dateString)
+    {
+        return \DateTime::createFromFormat('d/m/Y H.i', $dateString)->format('Y-m-d H:i:s');
+    }
+
+    private function getFrontOfficeId()
+    {
+        $userData = session()->get('username');
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $userData)->first();
+        return $user['id'];
+    }
+
+    private function sanitizeCurrency($value)
+    {
+        return str_replace('.', '', $value);
     }
 }

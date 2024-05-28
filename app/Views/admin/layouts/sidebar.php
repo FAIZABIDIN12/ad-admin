@@ -16,6 +16,42 @@
             <i class="fas fa-home"></i>
             <span>Dashboard</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#finance" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-coins mr-2"></i>
+            <span>Keuangan</span>
+        </a>
+        <div id="finance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/admin/add-credit">
+                    Tambah Uang Masuk
+                </a>
+                <a class="collapse-item" href="/admin/add-debet">
+                    Tambah Uang Keluar
+                </a>
+                <a class="collapse-item" href="/admin/finance">
+                    Laporan Keuangan
+                </a>
+
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reservasi" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-bed"></i>
+            <span>Reservasi</span>
+        </a>
+        <div id="reservasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="/admin/reservation/add">
+                    <i class="fas fa-plus"></i> Tambah Reservasi
+                </a>
+                <a class="collapse-item" href="/admin/reservation">
+                    <i class="fas fa-bed"></i> Daftar Reservasi
+                </a>
+            </div>
+        </div>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -23,6 +59,7 @@
         Kamar
     </div> -->
     <!-- Nav Item - Pages Collapse Menu -->
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-cogs"></i>
@@ -40,23 +77,7 @@
             </div>
         </div>
     </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reservasi" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-bed"></i>
-            <span>Reservasi</span>
-        </a>
-        <div id="reservasi" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/admin/pemesanan">
-                    <i class="fas fa-bed"></i> Daftar Reservasi
-                </a>
-                <a class="collapse-item" href="/admin/pemesanan/tambah-data">
-                    <i class="fas fa-plus"></i> Tambah Reservasi
-                </a>
 
-            </div>
-        </div>
-    </li>
     <li class="nav-item">
         <a class="nav-link" href="/admin/komplain">
             <i class="fas fa-comment-alt mr-2"></i> <!-- Menggunakan ikon komplain -->
@@ -66,9 +87,9 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <!-- <div class="sidebar-heading">
         Keuangan
-    </div>
+    </div> -->
 
     <!-- Nav Item - Laporan -->
     <li class="nav-item">
@@ -76,35 +97,15 @@
             <i class="fas fa-chart-bar"></i>
             <span>Laporan Bulanan</span></a>
     </li>
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="/admin/komplain">
-            <i class="fas fa-exclamation-circle mr-2"></i>
-            <span>Komplain Tamu</span></a>
-    </li> -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#finance" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-coins mr-2"></i>
-            <span>Keuangan</span>
-        </a>
-        <div id="finance" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/admin/laporan-manual">
-                    Tambah Laporan
-                </a>
-                <a class="collapse-item" href="/admin/finance">
-                    Laporan Keuangan
-                </a>
 
-            </div>
-        </div>
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/kas_masuk">
+    <!-- <li class="nav-item">
+        <a class="nav-link" href="/admin/kas-masuk">
             <i class="fas fa-money-bill-wave"></i>
             <span>Kas Masuk</span>
         </a>
-    </li>
+    </li> -->
 
-    </li>
+
     <!-- <li class="nav-item">
         <a class="nav-link" href="/admin/finance">
             <i class="fas fa-coins mr-2"></i>

@@ -62,9 +62,10 @@
                 <div class="form-group">
                     <label for="status_order">Status Reservasi:</label>
                     <select class="form-control" id="status_order" name="status_order" required>
-                        <option value="BOOKING" <?= ($reservation['status_order'] == 'BOOKING') ? 'selected' : '' ?>>BOOKING</option>
-                        <option value="DONE" <?= ($reservation['status_order'] == 'DONE') ? 'selected' : '' ?>>DONE</option>
-                        <option value="BATAL" <?= ($reservation['status_order'] == 'BATAL') ? 'selected' : '' ?>>BATAL</option>
+                        <option value="booking" <?= ($reservation['status_order'] == 'booking') ? 'selected' : '' ?>>BOOKING</option>
+                        <option value="checkin" <?= ($reservation['status_order'] == 'checkin') ? 'selected' : '' ?>>CHECKIN</option>
+                        <option value="done" <?= ($reservation['status_order'] == 'done') ? 'selected' : '' ?>>DONE</option>
+                        <option value="cancel" <?= ($reservation['status_order'] == 'batal') ? 'selected' : '' ?>>BATAL</option>
                     </select>
                 </div>
 

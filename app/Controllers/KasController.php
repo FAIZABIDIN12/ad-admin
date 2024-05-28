@@ -25,9 +25,21 @@ class KasController extends BaseController
         // Memproses data pendapatan berdasarkan checkin
         $pendapatan = [];
         foreach ($checkinData as $checkin) {
-            // Ini akan membuat pendapatan dari setiap data checkin
-            $total_hari = (new \DateTime($checkin['checkout_plan']))->diff(new \DateTime($checkin['checkin']))->days;
-            $rate_per_hari = $checkin['rate'] / $total_hari; // Asumsi bahwa rate adalah total biaya menginap
+            $checkinDate = new \DateTime($checkin['checkin']);
+            $checkoutDate = new \DateTime($checkin['checkout_plan']);
+            
+            // Hitung selisih hari
+            $interval = $checkinDate->diff($checkoutDate);
+            $total_hari = $interval->days;
+            
+            // Jika checkout tidak sampai 24 jam, tetap dihitung 1 hari
+            if ($total_hari == 0 && $interval->h > 0) {
+                $total_hari = 1;
+            }
+            
+            // Hitung rate per hari
+            $rate_per_hari = $checkin['rate'] / $total_hari;
+            
             $bayar = $checkin['bayar'];
             $remaining_bayar = $bayar;
 

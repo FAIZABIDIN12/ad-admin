@@ -55,6 +55,10 @@ class Checkin extends Migration
                 'type' => 'INT',
                 'constraint' => 11,
             ],
+            'kurang_bayar' => [
+                'type' => 'INT',
+                'constraint' => 11,
+            ],
             'metode_bayar' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100,
@@ -68,6 +72,11 @@ class Checkin extends Migration
                 'constraint' => ['checkin', 'done'],
                 'default' => 'checkin',
             ],
+            'status_bayar' => [
+                'type' => 'ENUM',
+                'constraint' => ['lunas', 'belum_lunas'],
+                'default' => 'belum_lunas',
+            ],
             'front_office' => [
                 'type' => 'INT',
                 'constraint' => 11,
@@ -76,7 +85,7 @@ class Checkin extends Migration
         ]);
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('id_room', 'room', 'id');
-        $this->forge->addForeignKey('front_office','user','id');
+        $this->forge->addForeignKey('front_office', 'user', 'id');
         $this->forge->createTable('checkin');
     }
 

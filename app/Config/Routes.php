@@ -27,23 +27,26 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('laporan', 'ReservasiController::checkedOutReservations');
 
     // pemesanan
-    $routes->get('pemesanan', 'ReservationController::index');
-    $routes->get('pemesanan/edit/(:num)', 'ReservationController::edit/$1');
-    $routes->post('pemesanan/update-data/(:num)', 'ReservationController::updateData/$1');
-    $routes->post('pemesanan/tambah', 'ReservationController::tambah');
-    $routes->get('pemesanan/tambah-data', 'ReservationController::tambahData');
-    $routes->get('pemesanan/detail/(:num)', 'ReservationController::detail/$1');
-    $routes->get('pemesanan/printReservation/(:num)', 'ReservationController::printReservation/$1');
+    $routes->get('reservation', 'ReservationController::index');
+    $routes->get('reservation/edit/(:num)', 'ReservationController::edit/$1');
+    $routes->post('reservation/update-data/(:num)', 'ReservationController::updateData/$1');
+    $routes->post('reservation/store', 'ReservationController::store');
+    $routes->get('reservation/add', 'ReservationController::add');
+    $routes->get('reservation/detail/(:num)', 'ReservationController::detail/$1');
+    $routes->get('reservation/printReservation/(:num)', 'ReservationController::printReservation/$1');
 
 
     //Kas
     $routes->get('finance', 'FinanceController::index');
-    $routes->get('laporan-manual', 'FinanceController::manual_cashflow');
-    $routes->post('add-cash-flow', 'FinanceController::simpan');
-    $routes->get('kas_masuk', 'KasController::index');
+    $routes->get('add-credit', 'FinanceController::addCredit');
+    $routes->get('add-debet', 'FinanceController::addDebet');
+    $routes->post('save-credit', 'FinanceController::saveCredit');
+    $routes->post('save-debet', 'FinanceController::saveDebet');
+
+    $routes->get('kas-masuk', 'KasController::index');
     // report
     $routes->get('report', 'ReportController::index');
-    $routes->post('report/filterByMonth', 'ReportController::filterByMonth');
+    $routes->post('report/filter-by-month', 'ReportController::filterByMonth');
 
 
 

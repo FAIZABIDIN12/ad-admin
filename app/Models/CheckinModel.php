@@ -19,8 +19,10 @@ class CheckinModel extends Model
         'id_room',
         'rate',
         'bayar',
+        'kurang_bayar',
         'metode_bayar',
         'keterangan',
+        'status_bayar',
         'status_order',
         'front_office'
     ];

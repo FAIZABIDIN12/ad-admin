@@ -57,7 +57,7 @@ class ReservationModel extends Model
 
         // Ambil data reservasi dengan tanggal check-in dalam rentang dari hari ini sampai 3 hari ke depan
         return $this->where('tgl_checkin >=', $today)
-            ->where('tgl_checkin <=', $threeDaysAhead)->where('status_order', 'book')
+            ->where('tgl_checkin <=', $threeDaysAhead)->where('status_order', 'booking')
             ->findAll();
     }
 }

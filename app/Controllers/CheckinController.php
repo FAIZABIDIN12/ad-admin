@@ -23,40 +23,36 @@ class CheckinController extends BaseController
     public function simpan_checkin()
     {
         date_default_timezone_set('Asia/Jakarta');
+        $reservationModel = new ReservationModel();
+        $roomModel = new RoomModel();
 
         $idKamar = $this->request->getPost('id_kamar');
         $nama = $this->request->getPost('nama');
         $noHp = $this->request->getPost('no_hp');
-        $tglCheckout = $this->request->getPost('checkout_plan');
-        $tgl_checkout = \DateTime::createFromFormat('d/m/Y H.i', $tglCheckout)->format('Y-m-d H:i:s');
+        $tgl_checkout = $this->formatDate($this->request->getPost('checkout_plan'));
         $jumlahOrang = $this->request->getPost('jumlah_orang');
-        $rate = $this->request->getPost('rate'); // Ambil nilai rate dari form
-        $bayar = $this->request->getPost('bayar');
+        $rate = $this->sanitizeCurrency($this->request->getPost('rate'));
+        $bayar = $this->sanitizeCurrency($this->request->getPost('bayar'));
         $metodeBayar = $this->request->getPost('metode_bayar');
         $keterangan = $this->request->getPost('keterangan');
-
-        $userData = session()->get('username');
-
-        $userModel = new UserModel();
-        $user = $userModel->where('username', $userData)->first();
-        $frontOffice = $user['id'];
-
-        $reservationModel = new ReservationModel();
-
-
+        $frontOffice = $this->getFrontOfficeId();
         $kodeOrder = $this->request->getPost('kode_order');
+        $stay = $this->calculateDateDifference(date("Y-m-d H:i:s"), $tgl_checkout);
+        $kurangBayar = ($rate * $stay) - $bayar;
 
         if ($kodeOrder === null) {
             $kodeOrder = GenerateOrderCode::generateOrderId();
         } else {
             $order = $reservationModel->where('kode_order', $kodeOrder)->first();
             if ($order) {
+                $deposit = $order['bayar'];
+                $kurangBayar -= $deposit;
                 $reservationModel->set('status_order', 'checkin')->where('kode_order', $kodeOrder)->update();
             }
         }
 
-        $roomModel = new RoomModel();
         $kamar = $roomModel->where('id', $idKamar)->first();
+        $statusPembayaran = $kurangBayar > 0 ? 'belum_lunas' : 'lunas';
 
         $data = [
             'nama' => $nama,
@@ -66,11 +62,13 @@ class CheckinController extends BaseController
             'checkout_plan' => $tgl_checkout,
             'jml_orang' => $jumlahOrang,
             'id_room' => $idKamar,
-            'rate' => str_replace('.', '', $rate),
-            'bayar' => str_replace('.', '', $bayar),
+            'rate' => $rate,
+            'bayar' => $bayar,
             'metode_bayar' => $metodeBayar,
+            'kurang_bayar' => $kurangBayar,
             'keterangan' => $keterangan,
             'status_order' => 'checkin',
+            'status_bayar' => $statusPembayaran,
             'front_office' => $frontOffice
         ];
 
@@ -87,7 +85,7 @@ class CheckinController extends BaseController
         $kasModel = new KasModel();
         $kasModel->insert([
             'tgl_transaksi' => date('Y-m-d H:i:s'),
-            'uraian' => 'Rate untuk check-in oleh ' . $nama, // Menambahkan informasi bahwa ini adalah rate
+            'uraian' => 'Rate untuk check-in oleh ' . $nama,
             'kas_masuk' => str_replace('.', '', $rate),
         ]);
 
@@ -185,5 +183,35 @@ class CheckinController extends BaseController
 
         // Simpan PDF ke file atau tampilkan di browser
         $dompdf->stream('nota_checkin.pdf');
+    }
+
+    private function formatDate($dateString)
+    {
+        return \DateTime::createFromFormat('d/m/Y H.i', $dateString)->format('Y-m-d H:i:s');
+    }
+
+    private function sanitizeCurrency($value)
+    {
+        return str_replace('.', '', $value);
+    }
+
+    private function getFrontOfficeId()
+    {
+        $userData = session()->get('username');
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $userData)->first();
+        return $user['id'];
+    }
+
+    private function calculateDateDifference($startDate, $endDate)
+    {
+        $start = new \DateTime($startDate);
+        $start->setTime(0, 0, 0);
+
+        $end = new \DateTime($endDate);
+        $end->setTime(0, 0, 0);
+
+        $interval = $start->diff($end);
+        return $interval->days;
     }
 }

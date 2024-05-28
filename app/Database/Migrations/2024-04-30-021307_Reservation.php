@@ -71,8 +71,8 @@ class Reservation extends Migration
             ],
             'status_order' => [
                 'type' => 'ENUM',
-                'constraint' => ['book', 'cancel', 'checkin', 'done'],
-                'default' => 'book',
+                'constraint' => ['booking', 'cancel', 'checkin', 'done'],
+                'default' => 'booking',
             ],
             'front_office' => [
                 'type' => 'INT',

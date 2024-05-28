@@ -17,7 +17,7 @@ class RoomController extends Controller
         $checkinModel = new CheckinModel();
         $reservationModel = new ReservationModel();
 
-        $data['reservations'] = $reservationModel->where('status_order', 'book')->findAll();
+        $data['reservations'] = $reservationModel->where('status_order', 'booking')->findAll();
         $data['title'] = 'Dashboard';
         $data['rooms'] = $roomModel->semuaKamar();
         $data['checkins'] = $checkinModel->getAllCheckin();

@@ -29,7 +29,7 @@ class FinanceController extends Controller
         return view('admin/finance/index', $data);
     }
 
-    public function simpan()
+    public function saveCredit()
     {
         $model = new FinanceModel();
 
@@ -42,8 +42,8 @@ class FinanceController extends Controller
         $data = [
             'tanggal' => date("Y-m-d H:i:s"),
             'keterangan'   => $this->request->getPost('keterangan'),
-            'jenis'   => $this->request->getPost('jenis'),
-            'kategori'   => $this->request->getPost('kategori'),
+            'jenis'   => 'cr',
+            'kategori' => 'manual',
             'nominal' => str_replace(array('.', ','), '', $this->request->getPost('nominal')),
             'front_office' => $frontOffice
         ];
@@ -53,13 +53,44 @@ class FinanceController extends Controller
         } else {
             // Jika penyimpanan gagal, tampilkan pesan kesalahan
             $data['errors'] = $model->errors();
-            return redirect()->to(base_url('admin/laporan-manual'), $data);
+            return redirect()->to(base_url('admin/add-credit'), $data);
+        }
+    }
+    public function saveDebet()
+    {
+        $model = new FinanceModel();
+
+        $userData = session()->get('username');
+
+        $userModel = new UserModel();
+        $user = $userModel->where('username', $userData)->first();
+        $frontOffice = $user['id'];
+
+        $data = [
+            'tanggal' => date("Y-m-d H:i:s"),
+            'keterangan'   => $this->request->getPost('keterangan'),
+            'jenis'   => 'db',
+            'kategori' => 'manual',
+            'nominal' => str_replace(array('.', ','), '', $this->request->getPost('nominal')),
+            'front_office' => $frontOffice
+        ];
+
+        if ($model->save($data)) {
+            return redirect()->to(base_url('admin/finance'));
+        } else {
+            // Jika penyimpanan gagal, tampilkan pesan kesalahan
+            $data['errors'] = $model->errors();
+            return redirect()->to(base_url('admin/add-debet'), $data);
         }
     }
 
-    public function manual_cashflow()
+    public function addCredit()
     {
-        return view('admin/finance/tambah');
+        return view('admin/finance/add_credit');
+    }
+    public function addDebet()
+    {
+        return view('admin/finance/add_debet');
     }
 
 

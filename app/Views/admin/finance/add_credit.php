@@ -8,38 +8,17 @@
     <!-- Form Tambah Data -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cash Flow Manual</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Tambah Uang Masuk</h6>
         </div>
         <div class="card-body">
-        <form action="/admin/add-cash-flow" method="post">
+        <form action="/admin/save-credit" method="post">
                     <div class="form-group">
                         <label for="nominal">Nominal</label>
                         <input type="text" class="form-control uang-input" id="nominal" name="nominal" required>
                     </div>
                     <div class="form-group">
-                        <label for="keterangan">Keterangan</label>
-                        <input type="text" class="form-control" id="keterangan" name="keterangan" required>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label for="jenis">Jenis</label>
-                                <select name="jenis" id="jenis" class="form-control" required>
-                                    <option selected disabled>Pilih Jenis...</option>
-                                    <option value="cr">Uang Masuk</option>
-                                    <option value="db">Uang Keluar</option>
-                                </select>
-                            </div>
-                            <div class="col">
-                                <label for="kategori">Kategori</label>
-                                <select name="kategori" id="kategori" class="form-control">
-                                    <option selected disabled>Pilih Kategori...</option>
-                                    <option value="uang_makan">Uang Makan</option>
-                                    <option value="hk">HK</option>
-                                    <option value="other">Lainnya</option>
-                                </select>
-                            </div>
-                        </div>
+                        <label for="keterangan">Uraian</label>
+                        <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
