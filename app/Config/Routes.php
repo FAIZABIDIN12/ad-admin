@@ -62,6 +62,9 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     //checkin
     $routes->post('simpan-checkin', 'CheckinController::simpan_checkin');
     $routes->get('checkout/(:num)', 'CheckinController::checkout/$1');
+    $routes->post('pelunasan/(:num)', 'CheckinController::pelunasan/$1');
+    $routes->post('extend/(:num)', 'CheckinController::extend/$1');
+
     $routes->get('history', 'CheckinController::history');
     $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');
     $routes->get('printCheckin/(:num)', 'CheckinController::printCheckin/$1');

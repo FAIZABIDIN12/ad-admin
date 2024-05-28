@@ -130,7 +130,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailModalLabel">Detail Reservasi</h5>
+                <h5 class="modal-title font-weight-bold" id="detailModalLabel">Detail Reservasi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -363,9 +363,7 @@
             var jam = waktuArr[0];
             var menit = waktuArr[1];
 
-            menit = (menit === "00") ? "" : "." + menit;
-
-            var waktuBaru = jam + menit;
+            var waktuBaru = jam + "." + menit;
             var tanggalDanWaktuBaru = tanggalBaru + " " + waktuBaru;
 
             return tanggalDanWaktuBaru;
@@ -452,6 +450,7 @@
                 }
             });
         });
+
         $('.detail').click(function() {
             var kamarId = $(this).data('kamar');
             $.ajax({
@@ -460,14 +459,79 @@
                 success: function(response) {
                     if (response) {
                         $('#detail-reservasi').html(`
-                        <p>Nama: <span>${response.nama}</span></p>
-                        <p>No. HP: <span>${response.no_hp}</span></p>
-                        <p>Tanggal Check-in: <span>${response.checkin}</span></p>
-                        <p>Tanggal Check-out: <span>${response.checkout_plan}</span></p>
-                        <p>Jumlah Orang: <span>${response.jml_orang}</span></p>
-                        <p>Bayar: <span> Rp.${response.bayar}</span></p>
-                        <p>Status: <span> ${response.status_order}</span></p>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>Nama</td>
+                                <td>:</td>
+                                <td class="text-capitalize">${response.nama}</td>
+                            </tr>
+                            <tr>
+                                <td>No. HP</td>
+                                <td>:</td>
+                                <td>${response.no_hp}</td>
+                            </tr>
+                            <tr>
+                                <td>Check-in</td>
+                                <td>:</td>
+                                <td>${response.checkin}</td>
+                            </tr>
+                            <tr>
+                                <td>Rencana Check-out</td>
+                                <td>:</td>
+                                <td>${response.checkout_plan}</td>
+                            </tr>
+                            <tr>
+                                <td>Status Pelunasan</td>
+                                <td>:</td>
+                                <td>${response.status_bayar == 'lunas' ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-danger">Belum Lunas</span>'}</td>
+                            </tr>
+                            <tr>
+                                <td>Kurang Bayar</td>
+                                <td>:</td>
+                                <td>Rp. ${formatRupiah(response.kurang_bayar)}</td>
+                            </tr>
+                        </table>
+                        <div id="form-extend"></div>
+                        <div class="modal-footer">
+                            <button id="extend" class="btn btn-primary">Extend</button>
+                        </div>
+                        <div id="tagihan-extend"></div>
                     `);
+
+                        $('#extend').click(function() {
+                            $(this).addClass('d-none');
+                            $('#form-extend').html(`
+                                <form method="post" action="/admin/extend/${response.id}">
+                                    <div class="form-group">
+                                        <label>Extend Checkout</label>
+                                        <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                            <input id="date-extend" type="text" name="extend_checkout" class="form-control datetimepicker-input" data-target="#datetimepicker4" />
+                                            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="far fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="input-tagihan-extend" name="tagihan_extend">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning">Simpan</button>
+                                    </div>
+                                    
+                                </form>
+                            `)
+                            $(function() {
+                                $('#datetimepicker4').datetimepicker({
+                                    locale: 'id',
+                                    minDate: response.checkout_plan
+                                });
+                            });
+                            $('#date-extend').on('change input', function() {
+                                var selisihHari = calculateDateDifferenceIgnoringTime(response.checkout_plan, $(this).val());
+                                $('#tagihan-extend').html(`
+                                    <span>Total Tagihan: Rp. ${formatRupiah((response.rate * selisihHari) + parseInt(response.kurang_bayar))}</span>
+                                `)
+                                $('#input-tagihan-extend').val(formatRupiah((response.rate * selisihHari) + parseInt(response.kurang_bayar)))
+                            });
+                        })
                     } else {
                         $('#detail-reservasi').html('<p>Data reservasi tidak ditemukan.</p>');
                     }
@@ -480,12 +544,12 @@
 
         $('.input-reservation').click(function() {
             var idKamar = $(this).data('kamar');
-            $('#id_kamar').val(idKamar); // Set nilai id_kamar di input field tersembunyi
+            $('#id_kamar').val(idKamar);
         });
 
         function calculateTotalCost() {
             var checkoutDate = $('.datetimepicker-input').val();
-            var rate = $('#rate').val().replace(/\./g, ''); // Remove dots from rate
+            var rate = $('#rate').val().replace(/\./g, '');
 
 
             if (checkoutDate && rate) {
@@ -572,6 +636,39 @@
             // Ubah format menjadi format mata uang Indonesia
             e.target.value = formatRupiah(uang);
         });
+
+        function parseDate(dateString) {
+            let dateParts;
+            if (dateString.includes('/')) {
+                // Format dd/mm/yyyy hh.mm
+                dateParts = dateString.split(' ');
+                const [day, month, year] = dateParts[0].split('/');
+                const [hour, minute] = dateParts[1].split('.');
+                return new Date(year, month - 1, day, hour, minute);
+            } else if (dateString.includes('-')) {
+                // Format yyyy-mm-dd hh:mm:ss
+                return new Date(dateString);
+            } else {
+                throw new Error('Unsupported date format');
+            }
+        }
+
+        function calculateDateDifferenceIgnoringTime(dateStr1, dateStr2) {
+            const date1 = parseDate(dateStr1);
+            const date2 = parseDate(dateStr2);
+
+            // Set both dates to midnight to ignore the time part
+            date1.setHours(0, 0, 0, 0);
+            date2.setHours(0, 0, 0, 0);
+
+            // Calculate the difference in time (milliseconds)
+            const timeDifference = date2 - date1;
+
+            // Convert time difference to days
+            const dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+
+            return Math.abs(dayDifference);
+        }
     });
 </script>
 <?= $this->endSection() ?>

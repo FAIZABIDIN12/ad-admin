@@ -47,7 +47,11 @@ class CheckinController extends BaseController
             if ($order) {
                 $deposit = $order['bayar'];
                 $kurangBayar -= $deposit;
+                $bayar += $deposit;
                 $reservationModel->set('status_order', 'checkin')->where('kode_order', $kodeOrder)->update();
+                if ($kurangBayar === 0) {
+                    $reservationModel->set('status_bayar', 'lunas')->where('kode_order', $kodeOrder)->update();
+                }
             }
         }
 
@@ -77,27 +81,25 @@ class CheckinController extends BaseController
             'keterangan'   => 'Kamar No. ' . $kamar['no_kamar'] . ' ' . $nama,
             'jenis'   => 'cr',
             'kategori'   => 'checkin',
-            'nominal' => str_replace('.', '', $bayar),
+            'nominal' => $this->sanitizeCurrency($this->request->getPost('bayar')),
             'front_office' => $frontOffice
         ];
-
-        // Menyimpan data rate ke dalam tabel kas masuk
-        $kasModel = new KasModel();
-        $kasModel->insert([
-            'tgl_transaksi' => date('Y-m-d H:i:s'),
-            'uraian' => 'Rate untuk check-in oleh ' . $nama,
-            'kas_masuk' => str_replace('.', '', $rate),
-        ]);
 
         $financeModel = new FinanceModel();
         $financeModel->save($dataFinance);
 
-        // Masukkan data pembayaran ke dalam tabel 'kas_masuk'
-        $kasModel->insert([
-            'tgl_transaksi' => date('Y-m-d H:i:s'),
-            'uraian' => 'Pembayaran check-in oleh ' . $nama,
-            'kas_masuk' => str_replace('.', '', $bayar),
-        ]);
+        // $kasModel = new KasModel();
+        // $kasModel->insert([
+        //     'tgl_transaksi' => date('Y-m-d H:i:s'),
+        //     'uraian' => 'Rate untuk check-in oleh ' . $nama,
+        //     'kas_masuk' => str_replace('.', '', $rate),
+        // ]);
+        // // Masukkan data pembayaran ke dalam tabel 'kas_masuk'
+        // $kasModel->insert([
+        //     'tgl_transaksi' => date('Y-m-d H:i:s'),
+        //     'uraian' => 'Pembayaran check-in oleh ' . $nama,
+        //     'kas_masuk' => str_replace('.', '', $bayar),
+        // ]);
 
         $checkinModel = new CheckinModel();
         $checkinModel->addCheckinData($data);
@@ -127,6 +129,72 @@ class CheckinController extends BaseController
         } else {
             return redirect()->to(base_url('admin'))->with('error', 'Gagal checkout');
         }
+    }
+    public function pelunasan($id)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $checkinModel = new CheckinModel();
+        $dataCheckin = $checkinModel->find($id);
+
+        $kodeOrder = $dataCheckin['kode_order'];
+        $kurangBayar = $dataCheckin['kurang_bayar'];
+        $sisaBayar = $this->request->getPost('pelunasan');
+        $totalKurang = $kurangBayar - $sisaBayar;
+
+        $statusBayar = $totalKurang === 0 ? 'lunas' : 'belum_lunas';
+
+        $frontOffice = $this->getFrontOfficeId();
+
+        $updated = $checkinModel->update($id, ['status_order' => 'done', 'checkout' => date("Y-m-d H:i:s"), 'kurang_bayar' => $totalKurang, 'status_bayar' => $statusBayar]);
+
+        $reservationModel = new ReservationModel();
+        $order = $reservationModel->where('kode_order', $kodeOrder)->first();
+
+        if ($order) {
+            $reservationModel->set('status_order', 'done')->where('kode_order', $kodeOrder)->update();
+        }
+
+        if ($updated) {
+            $dataFinance = [
+                'tanggal' => date("Y-m-d H:i:s"),
+                'keterangan'   => 'Pelunasan Kamar No. ' . $dataCheckin['id_room'] . ' ' . $dataCheckin['nama'],
+                'jenis'   => 'cr',
+                'kategori'   => 'pelunasan',
+                'nominal' => str_replace('.', '', $sisaBayar),
+                'front_office' => $frontOffice
+            ];
+
+            $financeModel = new FinanceModel();
+            $financeModel->save($dataFinance);
+
+            return redirect()->to(base_url('admin'))->with('success', 'Berhasil Checkout');
+        } else {
+            return redirect()->to(base_url('admin'))->with('error', 'Gagal checkout');
+        }
+    }
+
+    public function extend($id)
+    {
+        $checkoutExtend = $this->formatDate($this->request->getPost('extend_checkout'));
+        $tagihanExtend = $this->sanitizeCurrency($this->request->getPost('tagihan_extend'));
+
+        $checkinModel = new CheckinModel();
+        $dataCheckin = $checkinModel->find($id);
+
+        if (!$dataCheckin) {
+            return redirect()->back()->with('error', 'Data tidak ditemukan');
+        }
+
+        $statusBayar = $tagihanExtend > 0 ? 'belum_lunas' : 'lunas';
+
+        $updatedData = [
+            'checkout_plan' => $checkoutExtend,
+            'kurang_bayar' => $tagihanExtend,
+            'status_bayar' => $statusBayar
+        ];
+
+        $checkinModel->update($id, $updatedData);
+        return redirect()->to('/admin')->with('success', 'Berhasil extend');
     }
 
     public function history()
