@@ -198,7 +198,7 @@
                             <tr>
                                 <td>Status Pembayaran</td>
                                 <td>:</td>
-                                <td>${response.status_bayar == '<span class="badge badge-success">Lunas</span>' ? 'Lunas' : '<span class="badge badge-danger">Belum Lunas</span>'}</td>
+                                <td>${response.status_bayar == 'lunas' ? '<span class="badge badge-success">Lunas</span>' : '<span class="badge badge-danger">Belum Lunas</span>'}</td>
                             </tr>
                             <tr>
                                 <td>Status Tamu</td>
