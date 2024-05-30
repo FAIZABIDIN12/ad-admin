@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota Checkin</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,53 +44,98 @@
         }
     </style>
 </head>
+<?php
+function formatRupiah($angka, $prefix = "Rp ")
+{
+    $angka = (int)$angka;
+    $formatted = number_format($angka, 0, ',', '.');
+    return $prefix . $formatted;
+}
+
+function calculateDateDifference($startDate, $endDate)
+{
+    $start = new \DateTime($startDate);
+    $start->setTime(0, 0, 0);
+
+    $end = new \DateTime($endDate);
+    $end->setTime(0, 0, 0);
+
+    $interval = $start->diff($end);
+    return $interval->days;
+}
+
+$jmlHari = calculateDateDifference($checkin['checkin'], $checkin['checkout_plan']);
+$tagihan = $checkin['rate'] * $jmlHari;
+
+?>
 
 <body>
     <div class="container">
         <div class="nota">
-            <h2 class="text-center">Nota Checkin</h2>
-            <div class="info">
-                <strong>Kode Order:</strong> <?= $checkin['kode_order'] ?>
+            <div class="text-center">
+                <img class="mb-3" src="<?= base_url('img/logo-asri.png') ?>" height="50">
+                <h2 class="text-center">Nota Checkin</h2>
+                <p>Jl. Veteran No.184 A, Pandeyan, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55161</p>
+                <hr>
             </div>
-            <div class="info">
-                <strong>Nama Tamu:</strong> <?= $checkin['nama'] ?>
-            </div>
-            <div class="info">
-                <strong>Nomor Kamar:</strong> <?= $checkin['id_room'] ?>
-            </div>
-            <div class="info">
-                <strong>Tanggal Check-in:</strong> <?= $checkin['checkin'] ?>
-            </div>
-            <div class="info">
-                <strong>Tanggal Check-out:</strong> <?= $checkin['checkout_plan'] ?>
-            </div>
-            <div class="info">
-                <strong>Jumlah Orang:</strong> <?= $checkin['jml_orang'] ?>
-            </div>
-            <div class="info">
-                <strong>Harga:</strong> <?= $checkin['rate'] ?>
-            </div>
-            <div class="info">
-                <strong>Bayar:</strong> <?= $checkin['bayar'] ?>
-            </div>
-            <div class="info">
-                <strong>Keterangan:</strong> <?= $checkin['keterangan'] ?>
-            </div>
-            <div class="info">
-                <strong>Status Order:</strong> <?= $checkin['status_order'] ?>
-            </div>
-            <div class="info">
-                <strong>Front Office:</strong>
-                <?php
-                // Ambil instance dari UserModel
-                $userModel = new \App\Models\UserModel();
 
-                // Cari front office berdasarkan ID
-                $frontOffice = $userModel->where('id', $checkin['front_office'])->first();
+            <table class="table table-borderless">
+                <tr>
+                    <td><strong>Kode Order</strong></td>
+                    <td>:</td>
+                    <td><?= $checkin['kode_order'] ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Nama</strong></td>
+                    <td>:</td>
+                    <td><?= $checkin['nama'] ?></td>
+                </tr>
+                <tr>
+                    <td><strong>No. Kamar</strong></td>
+                    <td>:</td>
+                    <td><?= $checkin['id_room'] ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Tanggal Check-in</strong></td>
+                    <td>:</td>
+                    <td><?= $checkin['checkin'] ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Tanggal Check-out</strong></td>
+                    <td>:</td>
+                    <td><?= $checkin['checkout_plan'] ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Harga</strong></td>
+                    <td>:</td>
+                    <td><?= formatRupiah($tagihan) ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Bayar</strong></td>
+                    <td>:</td>
+                    <td><?= formatRupiah($checkin['bayar']) ?></td>
+                </tr>
+                <?php if ($checkin['kurang_bayar'] > 0) : ?>
+                    <tr>
+                        <td><strong>Kurang Bayar</strong></td>
+                        <td>:</td>
+                        <td><?= formatRupiah($checkin['kurang_bayar']) ?></td>
+                    </tr>
+                <?php endif; ?>
+            </table>
+            <hr>
+            <div class="d-flex flex-column gap-3 align-items-end">
+                <div>
+                    Front Office
+                </div>
+                <div>
+                    <?php
+                    $userModel = new \App\Models\UserModel();
+                    $frontOffice = $userModel->where('id', $checkin['front_office'])->first();
+                    echo $frontOffice ? $frontOffice['nama'] : 'Unknown';
+                    ?>
+                </div>
 
-                // Tampilkan nama jika front office ditemukan
-                echo $frontOffice ? $frontOffice['nama'] : 'Unknown';
-                ?>
             </div>
             <!-- Tambahkan informasi lain yang diperlukan -->
 
@@ -102,8 +146,8 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 
 </html>

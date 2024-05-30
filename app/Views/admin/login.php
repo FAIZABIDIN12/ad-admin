@@ -35,12 +35,9 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
 
-                            <div class="col-lg-12 m-auto"> <!-- Tambahkan kelas m-auto untuk membuat form input berada di tengah secara horizontal -->
-                                <div class="p-5 text-center"> <!-- Tambahkan kelas text-center di sini untuk membuat form input berada di tengah secara vertikal -->
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login Asri Graha Admin</h1>
-
-                                    </div>
+                            <div class="col-lg-12 m-auto">
+                                <div class="p-5 text-center">
+                                    <img class="mb-4" src="<?= base_url('img/logo-asri.png') ?>" height="60" alt="Asri Graha Admin">
                                     <?php if (session()->getFlashdata('errors')) : ?>
                                         <div class="alert alert-danger" role="alert">
                                             <?php foreach (session()->getFlashdata('errors') as $error) : ?>

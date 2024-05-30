@@ -12,6 +12,7 @@ use App\Models\ReservationModel;
 use App\Models\RoomModel;
 use App\Services\GenerateOrderCode;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class CheckinController extends BaseController
 {
@@ -226,31 +227,31 @@ class CheckinController extends BaseController
 
     public function printCheckin($checkinId)
     {
-        // Inisialisasi model CheckinModel
         $checkinModel = new CheckinModel();
 
-        // Lakukan proses pengambilan data checkin berdasarkan ID checkin
         $checkin = $checkinModel->find($checkinId);
 
         if (!$checkin) {
-            // Jika data checkin tidak ditemukan, redirect atau tampilkan pesan error
             return redirect()->to('/admin/checkin')->with('error', 'Data checkin tidak ditemukan.');
         }
 
-        // Load view untuk mencetak nota checkin dengan data yang telah diambil
+        // return view('admin/print_checkin', ['checkin' => $checkin]);
+
         $html = view('admin/print_checkin', ['checkin' => $checkin]);
 
-        // Inisialisasi objek Dompdf
+        $bootstrapCss = '
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        ';
+
+        $htmlWithCss = "
+        $bootstrapCss
+        $html
+        ";
+
         $dompdf = new Dompdf();
-
-        // Load HTML ke Dompdf
-        $dompdf->loadHtml($html);
-
-        // Render PDF
+        $dompdf->loadHtml($htmlWithCss);
         $dompdf->render();
-
-        // Simpan PDF ke file atau tampilkan di browser
-        $dompdf->stream('nota_checkin.pdf');
+        $dompdf->stream('nota_checkin_' . $checkin['kode_order'] . '_' . $checkin['nama'] . '.pdf');
     }
 
     private function formatDate($dateString)

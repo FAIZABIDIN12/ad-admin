@@ -67,13 +67,8 @@ class ReservationController extends BaseController
 
         $financeModel = new FinanceModel();
         $reservationModel = new ReservationModel();
-        $kasModel = new KasModel();
 
-        if ($reservationModel->insert($data) && $financeModel->save($dataFinance) && $kasModel->insert([
-            'tgl_transaksi' => date('Y-m-d H:i:s'),
-            'uraian' => 'Pembayaran reservasi oleh ' . $this->request->getPost('nama_pemesan'),
-            'kas_masuk' => str_replace('.', '', $this->request->getPost('bayar')),
-        ])) {
+        if ($reservationModel->insert($data) && $financeModel->save($dataFinance)) {
             session()->setFlashdata('success', 'Data berhasil ditambahkan');
         } else {
             session()->setFlashdata('error', 'Gagal menambahkan data');

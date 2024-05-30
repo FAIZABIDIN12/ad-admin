@@ -93,7 +93,7 @@
                                     Check Out <i class="fas fa-sign-out-alt"></i>
                                 </button>
                                 <div class="btn-group d-flex mt-2" role="group">
-                                    <a href="<?= base_url('admin/printCheckin/' . $checkin['id']) ?>" class="btn btn-primary btn-sm " target="_blank" style="font-size: 0.7rem;">
+                                    <a href="<?= base_url('admin/print-checkin/' . $checkin['id']) ?>" class="btn btn-primary btn-sm " target="_blank" style="font-size: 0.7rem;">
                                         <i class="fas fa-print"></i>
                                     </a>
                                     <button type="button" class="btn btn-info detail btn-sm" data-toggle="modal" data-target="#detailModal" data-kamar="<?= $room['id'] ?>" style="font-size: 0.7rem;">

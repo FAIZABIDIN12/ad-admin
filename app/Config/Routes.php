@@ -48,9 +48,6 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('report', 'ReportController::index');
     $routes->post('report/filter-by-month', 'ReportController::filterByMonth');
 
-
-
-
     // komplain
     $routes->get('komplain', 'KomplainController::index');
     $routes->get('komplain/tambah', 'KomplainController::tambah');
@@ -67,7 +64,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('history', 'CheckinController::history');
     $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');
-    $routes->get('printCheckin/(:num)', 'CheckinController::printCheckin/$1');
+    $routes->get('print-checkin/(:num)', 'CheckinController::printCheckin/$1');
 });
 
 // autentifikasi

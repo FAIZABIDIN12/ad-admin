@@ -1,11 +1,9 @@
-<ul class="navbar-nav bg-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion bg-primary" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
-        <div class="sidebar-brand-icon">
-            <i class="fas fa-hotel"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Asri Graha</div>
+        <img src="<?= base_url('img/logo-header.png') ?>" width="" height="45" alt="">
+
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">

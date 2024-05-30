@@ -1,31 +1,24 @@
-<!-- app/Views/layouts/main.php -->
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+    <title><?= isset($title) ? $title . ' - ' : '' ?>Asri Graha Admin</title>
 
-<title><?= isset($title) ? $title . ' - ' : '' ?>Asri Graha Admin</title>
-
-<!-- Custom fonts for this template-->
-<!-- Menggunakan base URL untuk stylesheet dari CDN Bootstrap -->
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- Menggunakan base URL untuk stylesheet Font Awesome -->
-<link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
-<!-- Menggunakan base URL untuk font dari Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-<!-- Menggunakan base URL untuk stylesheet kustom -->
-<link href="<?= base_url('css/sb-admin-2.min.css') ?>" rel="stylesheet">
-<!-- Menggunakan base URL untuk jQuery -->
-<script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
-
-<script src="<?= base_url('js/moment.js') ?>"></script>
-<script src="<?= base_url('js/tempusdominus-bootstrap-4.min.js') ?>"></script>
-<link rel="stylesheet" href="<?= base_url('css/tempusdominus-bootstrap-4.min.css') ?>" />
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="icon" href="<?= base_url('img/favicon-asri.svg') ?>" type="image/svg+xml">
+    <link href="<?= base_url('vendor/fontawesome-free/css/all.min.css') ?>" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="<?= base_url('css/sb-admin-2.min.css') ?>" rel="stylesheet">
+    <script src="<?= base_url('vendor/jquery/jquery.min.js') ?>"></script>
+    <script src="<?= base_url('js/moment.js') ?>"></script>
+    <script src="<?= base_url('js/tempusdominus-bootstrap-4.min.js') ?>"></script>
+    <link rel="stylesheet" href="<?= base_url('css/tempusdominus-bootstrap-4.min.css') ?>" />
 </head>
 
 
@@ -81,15 +74,16 @@
         </div>
     </div>
 
-<!-- Menggunakan base URL untuk Bootstrap JavaScript -->
-<script src="<?= base_url('vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+    <!-- Menggunakan base URL untuk Bootstrap JavaScript -->
+    <script src="<?= base_url('vendor/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 
-<!-- Menggunakan base URL untuk plugin jQuery Easing -->
-<script src="<?= base_url('vendor/jquery-easing/jquery.easing.min.js') ?>"></script>
+    <!-- Menggunakan base URL untuk plugin jQuery Easing -->
+    <script src="<?= base_url('vendor/jquery-easing/jquery.easing.min.js') ?>"></script>
 
-<!-- Menggunakan base URL untuk custom scripts -->
-<script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
+    <!-- Menggunakan base URL untuk custom scripts -->
+    <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
 
 
 </body>
+
 </html>
