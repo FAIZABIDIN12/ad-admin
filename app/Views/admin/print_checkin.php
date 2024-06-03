@@ -42,6 +42,10 @@
             margin-top: 30px;
             text-align: center;
         }
+
+        .text-center {
+            text-align: center;
+        }
     </style>
 </head>
 <?php
@@ -74,7 +78,7 @@ $tagihan = $checkin['rate'] * $jmlHari;
         <div class="nota">
             <div class="text-center">
                 <img class="mb-3" src="<?= base_url('img/logo-asri.png') ?>" height="50">
-                <h2 class="text-center">Nota Checkin</h2>
+                <!-- <h2 class="text-center">Nota Checkin</h2> -->
                 <p>Jl. Veteran No.184 A, Pandeyan, Kec. Umbulharjo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55161</p>
                 <hr>
             </div>

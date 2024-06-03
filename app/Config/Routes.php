@@ -53,7 +53,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('komplain/tambah', 'KomplainController::tambah');
     $routes->post('komplain/simpan', 'KomplainController::simpan');
     $routes->get('komplain/edit/(:num)', 'KomplainController::edit/$1');
-    $routes->POST('komplain/update/(:num)', 'KomplainController::update/$1');
+    $routes->post('komplain/update/(:num)', 'KomplainController::update/$1');
 
 
     //checkin
@@ -65,6 +65,11 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('history', 'CheckinController::history');
     $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');
     $routes->get('print-checkin/(:num)', 'CheckinController::printCheckin/$1');
+
+    // user
+    $routes->get('list-users', 'UserController::index');
+    $routes->get('profile', 'UserController::profile');
+    $routes->post('change-profile', 'UserController::changeProfile');
 });
 
 // autentifikasi

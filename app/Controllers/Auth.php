@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\UserModel;
 use CodeIgniter\HTTP\Request;
 
@@ -8,8 +9,19 @@ class Auth extends BaseController
 {
     public function register()
     {
-        // Tampilkan halaman register
-        return view('admin/register');
+        $username = session()->get('username');
+        $userModel = new UserModel();
+
+        if ($username) {
+            $userData = $userModel->where('username', $username)->first();
+            if ($userData && $userData['role'] === 'super_admin') {
+                return view('admin/register');
+            } else {
+                return redirect()->to(base_url('login'));
+            }
+        } else {
+            return redirect()->to(base_url('login'));
+        }
     }
 
     public function signup()
@@ -48,16 +60,16 @@ class Auth extends BaseController
             //     'username' => 'required',
             //     'password' => 'required',
             // ];
-    
+
             // if (!$this->validate($rules)) {
             //     // Jika validasi gagal, kembali ke halaman login dengan pesan kesalahan
             //     return redirect()->to(base_url('login'))->withInput()->with('errors', $this->validator->getErrors());
             // }
-    
+
             // Cari pengguna berdasarkan email
             $userModel = new UserModel();
             $user = $userModel->where('username', $this->request->getVar('username'))->first();
-    
+
             if ($user) {
                 // Verifikasi password
                 if (password_verify($this->request->getVar('password'), $user['password'])) {
@@ -69,7 +81,7 @@ class Auth extends BaseController
                     return redirect()->to(base_url('admin'));
                 }
             }
-    
+
             // Jika login gagal, kembali ke halaman login dengan pesan kesalahan
             return redirect()->to(base_url('login'))->withInput()->with('error', 'Email atau password salah.');
         }

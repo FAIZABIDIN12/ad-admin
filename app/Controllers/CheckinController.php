@@ -11,8 +11,6 @@ use App\Models\FinanceModel;
 use App\Models\ReservationModel;
 use App\Models\RoomModel;
 use App\Services\GenerateOrderCode;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 class CheckinController extends BaseController
 {
@@ -135,7 +133,9 @@ class CheckinController extends BaseController
     {
         date_default_timezone_set('Asia/Jakarta');
         $checkinModel = new CheckinModel();
+        $roomModel = new RoomModel();
         $dataCheckin = $checkinModel->find($id);
+        $dataKamar = $roomModel->find($dataCheckin['id_room']);
 
         $kodeOrder = $dataCheckin['kode_order'];
         $kurangBayar = $dataCheckin['kurang_bayar'];
@@ -158,7 +158,7 @@ class CheckinController extends BaseController
         if ($updated) {
             $dataFinance = [
                 'tanggal' => date("Y-m-d H:i:s"),
-                'keterangan'   => 'Pelunasan Kamar No. ' . $dataCheckin['id_room'] . ' ' . $dataCheckin['nama'],
+                'keterangan'   => 'Pelunasan Kamar No. ' . $dataKamar['no_kamar'] . ' ' . $dataCheckin['nama'],
                 'jenis'   => 'cr',
                 'kategori'   => 'pelunasan',
                 'nominal' => str_replace('.', '', $sisaBayar),
@@ -235,23 +235,13 @@ class CheckinController extends BaseController
             return redirect()->to('/admin/checkin')->with('error', 'Data checkin tidak ditemukan.');
         }
 
-        // return view('admin/print_checkin', ['checkin' => $checkin]);
+        return view('admin/print_checkin', ['checkin' => $checkin]);
 
-        $html = view('admin/print_checkin', ['checkin' => $checkin]);
+        // $html = view('admin/print_checkin', ['checkin' => $checkin]);
 
-        $bootstrapCss = '
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        ';
 
-        $htmlWithCss = "
-        $bootstrapCss
-        $html
-        ";
 
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($htmlWithCss);
-        $dompdf->render();
-        $dompdf->stream('nota_checkin_' . $checkin['kode_order'] . '_' . $checkin['nama'] . '.pdf');
+        // $pdf->Output('nota_checkin_' . $checkin['kode_order'] . '_' . $checkin['nama'] . '.pdf', 'I');
     }
 
     private function formatDate($dateString)
