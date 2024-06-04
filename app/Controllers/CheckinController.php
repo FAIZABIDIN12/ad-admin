@@ -27,6 +27,9 @@ class CheckinController extends BaseController
 
         $idKamar = $this->request->getPost('id_kamar');
         $nama = $this->request->getPost('nama');
+        if (is_string($nama)) {
+            $nama = ucwords($nama);
+        }
         $noHp = $this->request->getPost('no_hp');
         $tgl_checkout = $this->formatDate($this->request->getPost('checkout_plan'));
         $jumlahOrang = $this->request->getPost('jumlah_orang');
@@ -38,7 +41,7 @@ class CheckinController extends BaseController
         $kodeOrder = $this->request->getPost('kode_order');
         $stay = $this->calculateDateDifference(date("Y-m-d H:i:s"), $tgl_checkout);
         $kurangBayar = ($rate * $stay) - $bayar;
-
+        $shift = $this->getShift(date("H"));
         if ($kodeOrder === null) {
             $kodeOrder = GenerateOrderCode::generateOrderId();
         } else {
@@ -77,15 +80,19 @@ class CheckinController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan'   => 'Kamar No. ' . $kamar['no_kamar'] . ' ' . $nama,
+            'keterangan'   => 'Kamar No. ' . $kamar['no_kamar'] . ' ' . $nama . ' (' . $kodeOrder . ')',
             'jenis'   => 'cr',
             'kategori'   => 'checkin',
             'nominal' => $this->sanitizeCurrency($this->request->getPost('bayar')),
-            'front_office' => $frontOffice
+            'front_office' => $frontOffice,
+            'shift' => $shift
         ];
 
-        $financeModel = new FinanceModel();
-        $financeModel->save($dataFinance);
+        if ($this->sanitizeCurrency($this->request->getPost('bayar')) > 0) {
+            $financeModel = new FinanceModel();
+            $financeModel->save($dataFinance);
+        }
+
 
         // $kasModel = new KasModel();
         // $kasModel->insert([
@@ -150,7 +157,7 @@ class CheckinController extends BaseController
 
         $reservationModel = new ReservationModel();
         $order = $reservationModel->where('kode_order', $kodeOrder)->first();
-
+        $shift = $this->getShift(date("H"));
         if ($order) {
             $reservationModel->set('status_order', 'done')->where('kode_order', $kodeOrder)->update();
         }
@@ -162,7 +169,8 @@ class CheckinController extends BaseController
                 'jenis'   => 'cr',
                 'kategori'   => 'pelunasan',
                 'nominal' => str_replace('.', '', $sisaBayar),
-                'front_office' => $frontOffice
+                'front_office' => $frontOffice,
+                'shift' => $shift
             ];
 
             $financeModel = new FinanceModel();
@@ -196,6 +204,25 @@ class CheckinController extends BaseController
 
         $checkinModel->update($id, $updatedData);
         return redirect()->to('/admin')->with('success', 'Berhasil extend');
+    }
+
+    public function roomSwitch($id)
+    {
+        $idRoom = $this->request->getPost('new_room');
+        $roomModel = new RoomModel();
+        $room = $roomModel->find($idRoom);
+
+        if ($room) {
+            $checkinModel = new CheckinModel();
+            $update = $checkinModel->update($id, ['id_room' => $idRoom]);
+
+            if ($update) {
+                return redirect()->to(base_url('admin'))->with('sucess', 'Berhasil memindahkan kamar.');
+            }
+            return redirect()->to(base_url('admin'))->with('error', 'Gagal memindahkan kamar.');
+        }
+
+        return redirect()->to(base_url('admin'))->with('error', 'Gagal memindahkan kamar.');
     }
 
     public function history()
@@ -272,5 +299,13 @@ class CheckinController extends BaseController
 
         $interval = $start->diff($end);
         return $interval->days;
+    }
+    private function getShift($jam)
+    {
+        if ($jam >= 7 && $jam < 19) {
+            return "pagi";
+        } else {
+            return "malam";
+        }
     }
 }

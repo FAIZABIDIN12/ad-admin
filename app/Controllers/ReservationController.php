@@ -7,6 +7,7 @@ use App\Models\UserModel;
 use App\Models\KasModel;
 use App\Models\FinanceModel;
 use App\Services\GenerateOrderCode;
+use DateTime;
 use Dompdf\Dompdf;
 
 class ReservationController extends BaseController
@@ -37,6 +38,8 @@ class ReservationController extends BaseController
         $tgl_checkin = $this->formatDate($this->request->getPost('tanggal_checkin'));
         $tgl_checkout = $this->formatDate($this->request->getPost('tanggal_checkout'));
 
+        $shift = $this->getShift(date("H"));
+
         $data = [
             'tgl' => date("Y-m-d H:i:s"),
             'kode_order' => $orderId,
@@ -58,17 +61,22 @@ class ReservationController extends BaseController
 
         $dataFinance = [
             'tanggal' => date("Y-m-d H:i:s"),
-            'keterangan' => 'RSV ' . $this->request->getPost('nama_pemesan') . " " . $tgl_checkin,
+            'keterangan' => 'RSV ' . ucwords($this->request->getVar('nama_pemesan')) . ' (' . $orderId . ') ' . (new DateTime($tgl_checkin))->format('d/m/Y'),
             'jenis'   => 'cr',
             'kategori'   => 'reservasi',
             'nominal' => str_replace('.', '', $this->request->getPost('bayar')),
-            'front_office' => $frontOffice
+            'front_office' => $frontOffice,
+            'shift' => $shift
         ];
 
-        $financeModel = new FinanceModel();
+        if ($this->request->getPost('bayar') > 0) {
+            $financeModel = new FinanceModel();
+            $financeModel->save($dataFinance);
+        }
+
         $reservationModel = new ReservationModel();
 
-        if ($reservationModel->insert($data) && $financeModel->save($dataFinance)) {
+        if ($reservationModel->insert($data)) {
             session()->setFlashdata('success', 'Data berhasil ditambahkan');
         } else {
             session()->setFlashdata('error', 'Gagal menambahkan data');
@@ -76,8 +84,6 @@ class ReservationController extends BaseController
 
         return redirect()->to(base_url('admin/reservation'));
     }
-
-
 
 
     public function edit($id)
@@ -173,24 +179,6 @@ class ReservationController extends BaseController
 
         // Load view untuk mencetak nota reservasi dengan data yang telah diambil
         $html = view('admin/pemesanan/print_reservation', ['reservation' => $reservation]);
-
-        // Inisialisasi objek Dompdf
-        $dompdf = new Dompdf();
-
-        // Load HTML ke Dompdf
-        $dompdf->loadHtml($html);
-
-        // Atur ukuran dan orientasi halaman
-        $dompdf->setPaper('A4', 'portrait');
-
-        // Render PDF
-        $dompdf->render();
-
-        // Ubah nama file PDF
-        $filename = 'nota_reservasi_' . $reservationId . '.pdf';
-
-        // Keluarkan hasil PDF ke browser
-        $dompdf->stream($filename);
     }
 
     private function formatDate($dateString)
@@ -209,5 +197,14 @@ class ReservationController extends BaseController
     private function sanitizeCurrency($value)
     {
         return str_replace('.', '', $value);
+    }
+
+    private function getShift($jam)
+    {
+        if ($jam >= 7 && $jam < 19) {
+            return "pagi";
+        } else {
+            return "malam";
+        }
     }
 }

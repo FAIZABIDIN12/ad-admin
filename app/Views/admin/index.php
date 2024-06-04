@@ -68,7 +68,7 @@
             }
             ?>
             <?php $roomTaken = false; ?>
-            <div class="col-md-2 mb-4">
+            <div class="col-md-3 mb-4">
                 <div class="card">
                     <div class="card-header  <?= $roomReady == false ? 'bg-danger' : 'bg-primary' ?> text-white d-flex justify-content-between align-items-center py-2">
                         <h6 class="font-weight-bold card-title mb-0"><i class="fas fa-bed"></i><span class="ml-1"><?= $room['no_kamar'] ?></span></h6>
@@ -210,7 +210,7 @@
                             </div>
                             <div class="col">
                                 <label for="no_hp">No. HP</label>
-                                <input type="text" class="form-control" id="no_hp" name="no_hp" required>
+                                <input type="text" class="form-control" id="no_hp" name="no_hp">
                             </div>
 
                         </div>
@@ -221,7 +221,7 @@
                             <div class="col">
                                 <label for="tanggal_checkout">Rencana Check-out:</label>
                                 <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                                    <input type="text" name="checkout_plan" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
+                                    <input id="checkout_plan" type="text" name="checkout_plan" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
                                     <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="far fa-calendar"></i></div>
                                     </div>
@@ -301,12 +301,7 @@
             $(this).text(tanggalBaru);
         });
 
-        $(function() {
-            $('#datetimepicker3').datetimepicker({
-                locale: 'id',
-                minDate: moment().add(1, 'days')
-            });
-        });
+
         $('.detail-kamar').click(function() {
             var kamarId = $(this).data('kamar');
             var keterangan = $(`input[data-kamar="${kamarId}"].keterangan`).val();
@@ -331,7 +326,7 @@
                         if (response) {
                             $('#dp-wrap').removeClass('d-none');
                             $('#nama').val(response.nama);
-                            $('#no_hp').val(response.no_hp);
+                            $('#no_hp').val(response.no_hp ? response.no_hp : '');
                             $('#dp').val(formatRupiah(response.bayar));
                             $('.datetimepicker-input').val(ubahFormatTanggal(response.tgl_checkout));
                             $('#jumlah_orang').val(response.jml_orang);
@@ -387,7 +382,7 @@
                             <tr>
                                 <td>No. HP</td>
                                 <td>:</td>
-                                <td>${response.no_hp}</td>
+                                <td>${response.no_hp ? response.no_hp : '-'}</td>
                             </tr>
                             <tr>
                                 <td>Check-in</td>
@@ -459,6 +454,7 @@
                 success: function(response) {
                     if (response) {
                         $('#detail-reservasi').html(`
+                        <input id="id-checkin" type="hidden" value="${response.id}">
                         <table class="table table-borderless">
                             <tr>
                                 <td>Nama</td>
@@ -468,7 +464,7 @@
                             <tr>
                                 <td>No. HP</td>
                                 <td>:</td>
-                                <td>${response.no_hp}</td>
+                                <td>${response.no_hp ? response.no_hp : '-'}</td>
                             </tr>
                             <tr>
                                 <td>Check-in</td>
@@ -492,14 +488,37 @@
                             </tr>
                         </table>
                         <div id="form-extend"></div>
+                        <div id="form-switch"></div>
                         <div class="modal-footer">
+                            <button id="switch" class="btn btn-warning">Pindah Kamar</button>
                             <button id="extend" class="btn btn-primary">Extend</button>
                         </div>
                         <div id="tagihan-extend"></div>
                     `);
 
+                        $('#switch').click(function() {
+                            $(this).addClass('d-none');
+                            $('#extend').addClass('d-none');
+                            var idCheckin = $('#id-checkin').val();
+                            $('#form-switch').html(`
+                                <form method="post" action="<?= base_url('admin/room-switch') ?>/${idCheckin}">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect2">Pilih Kamar:</label>
+                                        <select name="new_room" class="form-control">
+                                            <?php foreach ($rooms as $room) : ?>
+                                            <option value="<?= $room['id']; ?>"><?= $room['no_kamar'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                        <button type="submit" class="mt-3 btn btn-success">Pindah Kamar</button>
+                                    </div>
+                                </form>
+                            `)
+                        })
+
+
                         $('#extend').click(function() {
                             $(this).addClass('d-none');
+                            $('#switch').addClass('d-none');
                             $('#form-extend').html(`
                                 <form method="post" action="/admin/extend/${response.id}">
                                     <div class="form-group">
@@ -570,7 +589,16 @@
 
         }
 
+        $(function() {
+            $('#datetimepicker3').datetimepicker({
+                locale: 'id',
+                minDate: moment().add(1, 'days')
+            });
+        });
+
+        $('#checkout_plan').on('change input', calculateTotalCost);
         $('#rate').on('change keyup', calculateTotalCost);
+
 
         function calculateTotalBayar() {
             var checkoutDate = $('.datetimepicker-input').val();
@@ -605,7 +633,7 @@
             }
         }
 
-        $('#bayar').on('change keyup', calculateTotalBayar);
+        $('#bayar, #checkout_plan').on('change keyup', calculateTotalBayar);
 
         function formatRupiah(angka) {
             var number_string = angka.toString().replace(/[^,\d]/g, ''),

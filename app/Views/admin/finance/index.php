@@ -62,6 +62,7 @@
                         <th>Nominal</th>
                         <th>Kategori</th>
                         <th>Front Office</th>
+                        <th>Shift</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,16 +75,12 @@
                             <td><?= $cash['kategori'] ?></td>
                             <td>
                                 <?php
-                                // Ambil instance dari UserModel
                                 $userModel = new \App\Models\UserModel();
-
-                                // Ambil data front office berdasarkan ID dari reservasi
                                 $frontOffice = $userModel->find($cash['front_office']);
-
-                                // Tampilkan nama front office jika ditemukan
                                 echo $frontOffice ? $frontOffice['nama'] : 'Nama tidak ditemukan';
                                 ?>
                             </td>
+                            <td class="text-capitalize"><?= $cash['shift'] ?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>

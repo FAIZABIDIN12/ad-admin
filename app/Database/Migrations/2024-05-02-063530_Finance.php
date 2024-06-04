@@ -30,8 +30,7 @@ class Finance extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 50,
                 'null' => true
-            ]
-            ,
+            ],
             'nominal' => [
                 'type' => 'DECIMAL',
                 'constraint' => '10,2',
@@ -41,9 +40,14 @@ class Finance extends Migration
                 'constraint' => 11,
                 'unsigned' => true,
             ],
+            'shift' => [
+                'type' => 'ENUM',
+                'constraint' => ['pagi', 'siang'],
+                'default' => 'pagi',
+            ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('front_office','user','id');
+        $this->forge->addForeignKey('front_office', 'user', 'id');
         $this->forge->createTable('finance');
     }
 

@@ -31,6 +31,7 @@ class FinanceController extends Controller
 
     public function saveCredit()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $model = new FinanceModel();
 
         $userData = session()->get('username');
@@ -38,14 +39,15 @@ class FinanceController extends Controller
         $userModel = new UserModel();
         $user = $userModel->where('username', $userData)->first();
         $frontOffice = $user['id'];
-
+        $shift = $this->getShift(date("H"));
         $data = [
             'tanggal' => date("Y-m-d H:i:s"),
             'keterangan'   => $this->request->getPost('keterangan'),
             'jenis'   => 'cr',
             'kategori' => 'manual',
             'nominal' => str_replace(array('.', ','), '', $this->request->getPost('nominal')),
-            'front_office' => $frontOffice
+            'front_office' => $frontOffice,
+            'shift' => $shift
         ];
 
         if ($model->save($data)) {
@@ -58,6 +60,8 @@ class FinanceController extends Controller
     }
     public function saveDebet()
     {
+        date_default_timezone_set('Asia/Jakarta');
+        $shift = $this->getShift(date("H"));
         $model = new FinanceModel();
 
         $userData = session()->get('username');
@@ -72,7 +76,8 @@ class FinanceController extends Controller
             'jenis'   => 'db',
             'kategori' => 'manual',
             'nominal' => str_replace(array('.', ','), '', $this->request->getPost('nominal')),
-            'front_office' => $frontOffice
+            'front_office' => $frontOffice,
+            'shift' => $shift
         ];
 
         if ($model->save($data)) {
@@ -92,7 +97,14 @@ class FinanceController extends Controller
     {
         return view('admin/finance/add_debet');
     }
-
+    private function getShift($jam)
+    {
+        if ($jam >= 7 && $jam < 19) {
+            return "pagi";
+        } else {
+            return "malam";
+        }
+    }
 
     // Metode lainnya seperti edit, update, delete, dll dapat ditambahkan sesuai kebutuhan
 }

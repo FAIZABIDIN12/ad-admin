@@ -61,6 +61,7 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
     $routes->get('checkout/(:num)', 'CheckinController::checkout/$1');
     $routes->post('pelunasan/(:num)', 'CheckinController::pelunasan/$1');
     $routes->post('extend/(:num)', 'CheckinController::extend/$1');
+    $routes->post('room-switch/(:num)', 'CheckinController::roomSwitch/$1');
 
     $routes->get('history', 'CheckinController::history');
     $routes->get('detail-checkin/(:num)', 'CheckinController::detailCheckin/$1');

@@ -141,8 +141,6 @@ $tagihan = $checkin['rate'] * $jmlHari;
                 </div>
 
             </div>
-            <!-- Tambahkan informasi lain yang diperlukan -->
-
             <div class="nota-footer">
                 <p><strong>Terima kasih telah memilih kami!</strong></p>
             </div>

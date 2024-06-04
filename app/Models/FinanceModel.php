@@ -8,7 +8,7 @@ class FinanceModel extends Model
 {
     protected $table = 'finance';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['tanggal', 'keterangan', 'jenis', 'kategori', 'nominal', 'front_office'];
+    protected $allowedFields = ['tanggal', 'keterangan', 'jenis', 'kategori', 'nominal', 'front_office', 'shift'];
 
     protected $returnType = 'array';
     protected $useTimestamps = false;

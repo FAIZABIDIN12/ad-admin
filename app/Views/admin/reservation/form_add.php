@@ -15,7 +15,7 @@
                     </div>
                     <div class="form-group col">
                         <label for="no_hp">No. Hp:</label>
-                        <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan No. HP" required>
+                        <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan No. HP">
                     </div>
                 </div>
                 <div class="form-row">
@@ -109,7 +109,7 @@
             }
         }
 
-        $('#tanggal_checkin, #tanggal_checkout, #rate').on('change keyup', calculateTotalCost);
+        $('#tanggal_checkin, #tanggal_checkout, #rate').on('change input keyup', calculateTotalCost);
 
         function calculateKurangBayar() {
             var bayar = $('#bayar').val().replace(/\./g, '');
@@ -119,7 +119,7 @@
             $('#kurang-bayar').html('Kurang Bayar: <span class="font-weight-bold text-danger">' + new Intl.NumberFormat('id-ID').format(totalTagihan) + "</span>");
             $('#input-kurang-bayar').val(totalTagihan);
         }
-        $('#bayar, #rate').on('change keyup', calculateKurangBayar);
+        $('#bayar, #rate, #tanggal_checkin, #tanggal_checkout').on('change input keyup', calculateKurangBayar);
     });
 
 
