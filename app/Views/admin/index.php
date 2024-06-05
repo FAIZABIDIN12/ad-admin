@@ -317,8 +317,8 @@
             $('#rate').prop('disabled', false);
         })
         $('#order_id option').click(function() {
-            var orderId = $(this).data('order');
-            if (orderId !== null) {
+            var orderId = $('#order_id option:selected').data('order');
+            if (orderId !== null && orderId !== undefined) {
                 $.ajax({
                     url: '/admin/reservation/detail/' + orderId,
                     type: 'GET',
@@ -338,6 +338,8 @@
                         alert('Data tidak ditemukan')
                     }
                 })
+            } else {
+                console.warn('Order ID is null or undefined');
             }
 
         })
