@@ -316,7 +316,7 @@
             $('#jumlah_orang').prop('disabled', false);
             $('#rate').prop('disabled', false);
         })
-        $('#order_id option').click(function() {
+        $('#order_id').change(function() {
             var orderId = $('#order_id option:selected').data('order');
             if (orderId !== null && orderId !== undefined) {
                 $.ajax({
