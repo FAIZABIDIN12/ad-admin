@@ -42,6 +42,14 @@ class CheckinController extends BaseController
         $stay = $this->calculateDateDifference(date("Y-m-d H:i:s"), $tgl_checkout);
         $kurangBayar = ($rate * $stay) - $bayar;
         $shift = $this->getShift(date("H"));
+
+        // Check if the room is already checked in
+        $kamar = $roomModel->where('id', $idKamar)->first();
+        if ($kamar['status'] === 'checkin') {
+            session()->setFlashdata('error', 'Kamar sudah dalam status checkin dan tidak bisa di-checkin lagi.');
+            return redirect()->to(base_url('admin'));
+        }
+
         if ($kodeOrder === null) {
             $kodeOrder = GenerateOrderCode::generateOrderId();
         } else {
@@ -57,7 +65,6 @@ class CheckinController extends BaseController
             }
         }
 
-        $kamar = $roomModel->where('id', $idKamar)->first();
         $statusPembayaran = $kurangBayar > 0 ? 'belum_lunas' : 'lunas';
 
         $data = [
@@ -93,26 +100,16 @@ class CheckinController extends BaseController
             $financeModel->save($dataFinance);
         }
 
-
-        // $kasModel = new KasModel();
-        // $kasModel->insert([
-        //     'tgl_transaksi' => date('Y-m-d H:i:s'),
-        //     'uraian' => 'Rate untuk check-in oleh ' . $nama,
-        //     'kas_masuk' => str_replace('.', '', $rate),
-        // ]);
-        // // Masukkan data pembayaran ke dalam tabel 'kas_masuk'
-        // $kasModel->insert([
-        //     'tgl_transaksi' => date('Y-m-d H:i:s'),
-        //     'uraian' => 'Pembayaran check-in oleh ' . $nama,
-        //     'kas_masuk' => str_replace('.', '', $bayar),
-        // ]);
-
         $checkinModel = new CheckinModel();
         $checkinModel->addCheckinData($data);
+
+        // Update room status to checkin
+        $roomModel->set('status', 'checkin')->where('id', $idKamar)->update();
 
         session()->setFlashdata('success', 'Data checkin berhasil disimpan.');
         return redirect()->to(base_url('admin'));
     }
+
 
 
 
