@@ -116,8 +116,10 @@ class CheckinController extends BaseController
     public function checkout($id)
     {
         date_default_timezone_set('Asia/Jakarta');
+        $roomModel = new RoomModel();
         $checkinModel = new CheckinModel();
         $kodeOrder = $checkinModel->select('kode_order')->find($id);
+        $idRoom = $checkinModel->select('id_room')->find($id);
         $updated = $checkinModel->update($id, ['status_order' => 'done', 'checkout' => date("Y-m-d H:i:s")]);
 
         $reservationModel = new ReservationModel();
@@ -128,6 +130,7 @@ class CheckinController extends BaseController
         }
 
         if ($updated) {
+            $roomModel->set('status', 'chekout')->where('id', $idRoom)->update();
             return redirect()->to(base_url('admin'))->with('success', 'Berhasil Checkout');
         } else {
             return redirect()->to(base_url('admin'))->with('error', 'Gagal checkout');

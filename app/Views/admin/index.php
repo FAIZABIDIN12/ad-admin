@@ -618,6 +618,7 @@
 
                 if (checkoutMoment.isValid()) {
                     var duration = checkoutMoment.diff(checkinMoment, 'days');
+                    console.log(duration);
                     var totalCost = duration * parseInt(rate);
 
                     var jumlah = totalCost - bayar;
