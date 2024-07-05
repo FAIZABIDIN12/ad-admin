@@ -59,10 +59,10 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <a href="/admin/pemesanan/edit/<?= $reservation['id'] ?>" class="btn btn-sm btn-warning">
+                                    <a href="/admin/reservation/edit/<?= $reservation['id'] ?>" class="btn btn-sm btn-warning">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="<?= base_url('/admin/pemesanan/printReservation/' . $reservation['id']) ?>" class="btn btn-sm btn-primary" target="_blank">
+                                    <a href="<?= base_url('/admin/reservation/printReservation/' . $reservation['id']) ?>" class="btn btn-sm btn-primary" target="_blank">
                                         <i class="fas fa-print"></i>
                                     </a>
                                     <button type="button" class="btn btn-sm btn-info btn-detail" data-toggle="modal" data-reservation-id="<?= $reservation['id'] ?>" data-target="#detailModal">

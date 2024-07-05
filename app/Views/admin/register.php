@@ -23,13 +23,13 @@
 <body class="bg-gradient-primary">
 
     <div class="container">
-    <?php if(session()->getFlashdata('errors')): ?>
-    <div class="alert alert-danger" role="alert">
-        <?php foreach (session()->getFlashdata('errors') as $error) : ?>
-            <?= esc($error) ?><br>
-        <?php endforeach ?>
-    </div>
-<?php endif ?>
+        <?php if (session()->getFlashdata('errors')) : ?>
+            <div class="alert alert-danger" role="alert">
+                <?php foreach (session()->getFlashdata('errors') as $error) : ?>
+                    <?= esc($error) ?><br>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
@@ -51,13 +51,13 @@
                                     <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
-                                <select name="role" class="rounded-pill custom-select" id="inputGroupSelect01">
-                                    <option selected>Choose...</option>
-                                    <option value="super_admin">Super Admin</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="front_office">FO</option>
-                                </select>
-                              </div>
+                                    <select name="role" class="rounded-pill custom-select" id="inputGroupSelect01">
+                                        <option selected>Choose...</option>
+                                        <option value="super_admin">Super Admin</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="front_office">FO</option>
+                                    </select>
+                                </div>
                                 <button class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </button>

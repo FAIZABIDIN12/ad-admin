@@ -9,35 +9,36 @@ class Auth extends BaseController
 {
     public function register()
     {
-        $username = session()->get('username');
-        $userModel = new UserModel();
+        return view('admin/register');
+        // $username = session()->get('username');
+        // $userModel = new UserModel();
 
-        if ($username) {
-            $userData = $userModel->where('username', $username)->first();
-            if ($userData && $userData['role'] === 'super_admin') {
-                return view('admin/register');
-            } else {
-                return redirect()->to(base_url('login'));
-            }
-        } else {
-            return redirect()->to(base_url('login'));
-        }
+        // if ($username) {
+        //     $userData = $userModel->where('username', $username)->first();
+        //     if ($userData && $userData['role'] === 'admin') {
+        //         return view('admin/register');
+        //     } else {
+        //         return redirect()->to(base_url('login'));
+        //     }
+        // } else {
+        //     return redirect()->to(base_url('login'));
+        // }
     }
 
     public function signup()
     {
         // Validasi input
-        // $rules = [
-        //     'username' => 'required|is_unique[akun.username]',
-        //     'password' => 'required|min_length[8]',
-        //     'nama' => 'required',
-        //     'role' => 'required'
-        // ];
+        $rules = [
+            'username' => 'required|is_unique[user.username]',
+            'password' => 'required|min_length[8]',
+            'nama' => 'required',s
+            'role' => 'required'
+        ];
 
-        // if (!$this->validate($rules)) {
-        //     // Jika validasi gagal, kembali ke halaman register dengan pesan kesalahan
-        //     return redirect()->to('/register')->withInput()->with('errors', $this->validator->getErrors());
-        // }
+        if (!$this->validate($rules)) {
+            // Jika validasi gagal, kembali ke halaman register dengan pesan kesalahan
+            return redirect()->to('/register')->withInput()->with('errors', $this->validator->getErrors());
+        }
 
         // Simpan data pengguna ke database
         $userModel = new UserModel();

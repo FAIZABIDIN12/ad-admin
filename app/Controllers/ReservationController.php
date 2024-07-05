@@ -95,7 +95,7 @@ class ReservationController extends BaseController
         $data['reservation'] = $reservationmodel->find($id);
 
         // Menampilkan view untuk mengedit data
-        return view('admin/pemesanan/edit', $data);
+        return view('admin/reservation/edit', $data);
     }
 
     public function updateData($id)
@@ -125,7 +125,7 @@ class ReservationController extends BaseController
         }
 
         // Redirect ke halaman pemesanan setelah pembaruan berhasil
-        return redirect()->to(base_url('admin/pemesanan'));
+        return redirect()->to(base_url('admin/reservation'));
     }
 
     public function updateStatusPembayaran($id)
@@ -145,7 +145,7 @@ class ReservationController extends BaseController
             session()->setFlashdata('error', 'Gagal memperbarui status pembayaran');
         }
 
-        return redirect()->to(base_url('admin/pemesanan'));
+        return redirect()->to(base_url('admin/reservation'));
     }
 
     // Dalam Controller
@@ -178,7 +178,7 @@ class ReservationController extends BaseController
         }
 
         // Load view untuk mencetak nota reservasi dengan data yang telah diambil
-        $html = view('admin/pemesanan/print_reservation', ['reservation' => $reservation]);
+        $html = view('admin/reservation/print_reservation', ['reservation' => $reservation]);
     }
 
     private function formatDate($dateString)
